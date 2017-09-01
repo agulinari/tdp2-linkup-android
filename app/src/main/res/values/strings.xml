@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">LinkUp</string>
+    <string name="facebook_app_id">113321996025647</string>
+    <string name="fb_login_protocol_scheme">fb113321996025647</string>
+    <string name="logout">Logout</string>
+    <string name="cancel_login">Login Cancelado</string>
+    <string name="error_login">Error en Login</string>
 </resources>
