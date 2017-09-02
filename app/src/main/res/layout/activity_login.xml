@@ -6,14 +6,43 @@
     android:layout_height="match_parent"
     tools:context="com.tddp2.grupo2.linkup.LoginActivity">
 
+    <TextView
+            android:id="@+id/loginBottom"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:text="No te preocupes, no vamos a publicar nada en Facebook sin tu consentimiento."
+            android:layout_marginTop="12dp" android:layout_below="@+id/loginTop"
+    />
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:layout_centerVertical="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:id="@+id/loginTop"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            android:text="Para comenzar, por favor:"
+            android:layout_marginBottom="58dp"
+            android:layout_alignBottom="@+id/login_button" android:layout_centerHorizontal="true"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/linkup_logo"
+            android:id="@+id/imageView"
+            android:layout_marginBottom="18dp" android:layout_above="@+id/loginTop"
+            android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
