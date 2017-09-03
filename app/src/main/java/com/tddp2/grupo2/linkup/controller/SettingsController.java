@@ -13,12 +13,12 @@ import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import java.util.ArrayList;
 
 
-public class ProfileController {
+public class SettingsController {
 
     private ProfileService profileService;
     private BaseView view;
 
-    public ProfileController(BaseView view) {
+    public SettingsController(BaseView view) {
         this.profileService = ServiceFactory.getProfileService();
         this.view = view;
     }

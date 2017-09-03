@@ -18,7 +18,7 @@ import com.facebook.login.LoginManager;
 
 import com.tddp2.grupo2.linkup.model.Profile;
 
-import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class SettingsActivity extends AppCompatActivity implements BaseView {
@@ -29,7 +29,7 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
     @BindView(R.id.seek_distance)
     SeekBar seekBarDistance;
 
-    ProfileController controller;
+    SettingsController controller;
     private ProgressDialog progressDialog;
 
     @Override
@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         ServiceFactory.init();
-        controller = new ProfileController(this);
+        controller = new SettingsController(this);
     }
 
     /* On Click button saveProfile */
