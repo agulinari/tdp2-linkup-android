@@ -5,4 +5,16 @@
     <string name="logout">Logout</string>
     <string name="cancel_login">Login Cancelado</string>
     <string name="error_login">Error en Login</string>
+    <string name="max_distance">Distancia Máxima</string>
+    <string name="age_range">Rango de Edad</string>
+    <string name="i_want">Quiero buscar</string>
+    <string name="just_friends">Sólo amigos</string>
+    <string name="males">Hombres</string>
+    <string name="females">Mujeres</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="invisible">Modo invisible</string>
+    <string name="more_preferences">Más preferencias</string>
+    <string name="update_profile">Actualizar</string>
+    <string name="saving_profile">Guardando Información de Perfil</string>
+    <string name="no_connection_to_server">No hay conexión con el servidor</string>
 </resources>
