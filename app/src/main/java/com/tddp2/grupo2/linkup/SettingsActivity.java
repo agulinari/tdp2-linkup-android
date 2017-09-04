@@ -21,10 +21,11 @@ import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 
 import com.tddp2.grupo2.linkup.adapter.GridViewAdapter;
+import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
     @BindView(R.id.image_grid)
     GridView gridView;
     
-    ProfileController controller;
+    SettingsController controller;
+
     private ProgressDialog progressDialog;
     private GridViewAdapter gridAdapter;
 
@@ -50,7 +52,8 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         ServiceFactory.init();
-        controller = new ProfileController(this);
+
+        controller = new SettingsController(this);
         gridAdapter = new GridViewAdapter(this, R.layout.image_item, getData());
         gridView.setAdapter(gridAdapter);
     }
@@ -66,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
             imageItems.add(image);
         }
         return imageItems;
+
     }
 
     /* On Click button saveProfile */

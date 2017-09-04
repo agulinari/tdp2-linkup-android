@@ -10,6 +10,8 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.exception.APIError;
+import android.os.Bundle;
+import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
@@ -19,6 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -82,8 +90,31 @@ public class ProfileServiceImpl extends ProfileService {
         }
     }
 
+    @Override
+    public void loadDataFromFacebook(Profile profile) {
+        GraphRequest request = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me"
+
+        );
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id,first_name");
+        request.setParameters(parameters);
+        GraphResponse response = request.executeAndWait();
+        JSONObject jsonResponse = response.getJSONObject();
+        profile.setFirstName(getStringParam(jsonResponse, "first_name"));
+    }
 
     public void saveUser(Profile profile) {
         //   this.database.setUser(user);
+    }
+
+    private String getStringParam(JSONObject object, String key) {
+        try {
+            return object.getString(key);
+        } catch (JSONException e) {
+            Log.e("FacebookData", "Missing parameter " + key);
+            return "";
+        }
     }
 }
