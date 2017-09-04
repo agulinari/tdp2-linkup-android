@@ -23,6 +23,10 @@
         android:orientation="vertical">
 
         <include
+            android:id="@+id/image_grid"
+            layout="@layout/image_grid" />
+
+        <include
             android:id="@+id/preferences"
             layout="@layout/card_settings_preferences" />
 
