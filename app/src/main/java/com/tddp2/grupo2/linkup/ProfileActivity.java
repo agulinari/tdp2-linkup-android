@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
@@ -24,6 +25,13 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     public void onSettingsClick(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void logout(View view) {
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
