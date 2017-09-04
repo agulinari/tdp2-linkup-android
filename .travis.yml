@@ -1,3 +1,10 @@
+notifications:
+  email:
+    recipients:
+      - sivori.daniel@gmail.com
+      - agustinlinari@gmail.com
+      - jlopezpecora@gmail.com
+      - paulasaffioti@gmail.com
 language: android
 android:
   components:
