@@ -18,6 +18,8 @@ public abstract class ProfileService implements LinkupService{
 
     public abstract void saveUser(Profile profile);
 
+    public abstract void loadDataFromFacebook(Profile profile);
+
     public ServiceType getType() {
         return ServiceType.PROFILE;
     }
