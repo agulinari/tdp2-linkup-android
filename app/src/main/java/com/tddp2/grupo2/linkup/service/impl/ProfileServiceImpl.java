@@ -1,6 +1,14 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +17,9 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -16,6 +27,9 @@ import com.facebook.GraphResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+
 
 
 public class ProfileServiceImpl extends ProfileService {
@@ -26,30 +40,27 @@ public class ProfileServiceImpl extends ProfileService {
 
     @Override
     public void createProfile(Profile profile) throws ServiceException {
-        /*MatchClient matchClient = clientService.getClient();
-        Call<MatchResponse> call = matchClient.users.createUser(new UserRequest(user));
-        try {
-            Response<MatchResponse> response = call.execute();
-            if (response.isSuccessful()) {
-                //Save User
-                MatchResponse matchResponse = response.body();
-                user.setId(matchResponse.getData());
-                saveUser(user);
-                //Save Token
-                clientService.saveToken(response.headers());
-            } else {
-                APIError error = ErrorUtils.parseError(response);
-                throw new ServiceException(error);
+        String url = "https://linkup.herokuapp.com/user";
+
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        client.post(url,  new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
             }
-        } catch (IOException e) {
-            throw new ServiceException(e.getLocalizedMessage());
-        }*/
-        try {
-            Thread.sleep(3000);
-            // Do some stuff
-        } catch (Exception e) {
-            e.getLocalizedMessage();
-        }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable t, JSONObject res) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+                Log.e("ERROR", String.valueOf(statusCode));
+            }
+        });
     }
 
     @Override

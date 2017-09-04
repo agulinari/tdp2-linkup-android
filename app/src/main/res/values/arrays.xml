@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="image_ids">
+        <item>@drawable/linkup_logo</item>
+        <item>@drawable/linkup_logo</item>
+        <item>@drawable/linkup_logo</item>
+        <item>@drawable/linkup_logo</item>
+        <item>@drawable/linkup_logo</item>
+        <item>@drawable/linkup_logo</item>
+    </array>
+</resources>
