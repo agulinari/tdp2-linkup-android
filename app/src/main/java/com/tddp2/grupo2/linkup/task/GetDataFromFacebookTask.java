@@ -24,9 +24,9 @@ public class GetDataFromFacebookTask extends AsyncTask<Object, Void, TaskRespons
 
     @Override
     protected TaskResponse doInBackground(Object... params) {
-        loginService.loadDataFromFacebook();
-        FacebookTaskResponse response = new FacebookTaskResponse();
         Profile localProfile = new Profile();
+        loginService.loadDataFromFacebook(localProfile);
+        FacebookTaskResponse response = new FacebookTaskResponse();
         response.setProfileResponse(localProfile);
         return response;
     }

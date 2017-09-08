@@ -6,6 +6,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +18,7 @@ public class LoginServiceImpl extends LoginService {
     }
 
     @Override
-    public void loadDataFromFacebook() {
+    public void loadDataFromFacebook(Profile profile) {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/me"
@@ -30,14 +31,12 @@ public class LoginServiceImpl extends LoginService {
         JSONObject jsonResponse = response.getJSONObject();
 
         Log.i("FacebookData", jsonResponse.toString());
-
-        //profile.setFbid(getStringParam(jsonResponse, "id"));
-
-        //profile.setFirstName(getStringParam(jsonResponse, "first_name"));
-        //profile.setLastName(getStringParam(jsonResponse, "last_name"));
-        //profile.setGender(getStringParam(jsonResponse, "gender"));
-        //profile.setBirthday(getStringParam(jsonResponse, "birthday"));
-        //profile.setComments(getStringParam(jsonResponse, "about"));
+        profile.setFbid(getStringParam(jsonResponse, "id"));
+        profile.setFirstName(getStringParam(jsonResponse, "first_name"));
+        profile.setLastName(getStringParam(jsonResponse, "last_name"));
+        profile.setGender(getStringParam(jsonResponse, "gender"));
+        profile.setBirthday(getStringParam(jsonResponse, "birthday"));
+        profile.setComments(getStringParam(jsonResponse, "about"));
     }
 
     private String getStringParam(JSONObject object, String key) {
