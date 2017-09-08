@@ -12,6 +12,7 @@ public class Profile implements Serializable {
     private String fbid;
     private String firstName;
     private String lastName;
+    private String birthday;
     private String gender;
     private String occupation;
     private String education;
@@ -43,6 +44,14 @@ public class Profile implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBirthday() {
+        return birthday;
     }
 
     public String getOccupation() {
