@@ -1,12 +1,12 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
-
 import android.os.Bundle;
 import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -14,7 +14,6 @@ import com.tddp2.grupo2.linkup.service.api.ProfileService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 
 public class ProfileServiceImpl extends ProfileService {
@@ -58,32 +57,7 @@ public class ProfileServiceImpl extends ProfileService {
         }
     }
 
-    @Override
-    public void loadDataFromFacebook(Profile profile) {
-        GraphRequest request = new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/me"
-
-        );
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,first_name,last_name,gender,birthday,work,education,about");
-        request.setParameters(parameters);
-        GraphResponse response = request.executeAndWait();
-        JSONObject jsonResponse = response.getJSONObject();
-        Log.i("FacebookData", jsonResponse.toString());
-        profile.setFirstName(getStringParam(jsonResponse, "first_name"));
-    }
-
     public void saveUser(Profile profile) {
            this.database.setProfile(profile);
-    }
-
-    private String getStringParam(JSONObject object, String key) {
-        try {
-            return object.getString(key);
-        } catch (JSONException e) {
-            Log.e("FacebookData", "Missing parameter " + key);
-            return "";
-        }
     }
 }

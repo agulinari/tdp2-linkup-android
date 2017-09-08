@@ -18,8 +18,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        controller = new ProfileController(this);
-        controller.updateProfile();
     }
 
     public void onSettingsClick(View view) {

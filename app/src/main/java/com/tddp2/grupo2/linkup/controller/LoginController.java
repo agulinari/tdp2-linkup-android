@@ -1,17 +1,23 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import com.tddp2.grupo2.linkup.ProfileView;
-import com.tddp2.grupo2.linkup.service.api.ProfileService;
+import com.tddp2.grupo2.linkup.LoginView;
+import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
-public class ProfileController {
+import com.tddp2.grupo2.linkup.task.GetDataFromFacebookTask;
 
-    private ProfileService profileService;
-    private ProfileView view;
+public class LoginController {
+    private LoginService loginService;
+    private LoginView view;
 
-    public ProfileController(ProfileView view) {
-        this.profileService = ServiceFactory.getProfileService();
+    public LoginController(LoginView view) {
+        this.loginService = ServiceFactory.getLoginService();
         this.view = view;
+    }
+
+    public void loadProfile() {
+        GetDataFromFacebookTask task = new GetDataFromFacebookTask(loginService, this);
+        task.execute();
     }
 
     public void initTask() {
@@ -29,8 +35,7 @@ public class ProfileController {
         } else if (response.hasError()) {
             view.onError(response.getError());
         } else {
-            //Profile profile = response.getProfile();
-            //view.updateFirstName(profile.getFirstName());
+           view.goProfileScreen();
         }
     }
 }
