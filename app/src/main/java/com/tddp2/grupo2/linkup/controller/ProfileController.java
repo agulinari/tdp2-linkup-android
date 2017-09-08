@@ -47,6 +47,14 @@ public class ProfileController {
         LocalDate now = new LocalDate();
         Years age = Years.yearsBetween(birthdayDate, now);
 
+        if (!profile.getOccupation().equals("")) {
+            view.updateOccupation(profile.getOccupation());
+        }
+
+        if (!profile.getEducation().equals("")) {
+            view.updateEducation(profile.getEducation());
+        }
+
         view.updateFirstNameAndAge(profile.getFirstName(), age.getYears());
     }
 }

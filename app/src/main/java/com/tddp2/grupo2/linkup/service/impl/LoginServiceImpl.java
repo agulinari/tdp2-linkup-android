@@ -9,6 +9,7 @@ import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -39,6 +40,8 @@ public class LoginServiceImpl extends LoginService {
         profile.setGender(getStringParam(jsonResponse, "gender"));
         profile.setBirthday(getStringParam(jsonResponse, "birthday"));
         profile.setComments(getStringParam(jsonResponse, "about"));
+        profile.setOccupation(getWork(jsonResponse));
+        profile.setEducation(getEducation(jsonResponse));
 
         database.setProfile(profile);
 
@@ -74,6 +77,30 @@ public class LoginServiceImpl extends LoginService {
         } catch (JSONException e) {
             Log.i("FacebookData", "Missing parameter " + key);
             return false;
+        }
+    }
+
+    private String getWork(JSONObject jsonResponse) {
+        try {
+            JSONArray workHistory = jsonResponse.getJSONArray("work");
+            JSONObject lastWork = workHistory.getJSONObject(workHistory.length() - 1);
+            JSONObject position = lastWork.getJSONObject("position");
+            return position.getString("name");
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter work");
+            return "";
+        }
+    }
+
+    private String getEducation(JSONObject jsonResponse) {
+        try {
+            JSONArray educationHistory = jsonResponse.getJSONArray("education");
+            JSONObject lastEducation = educationHistory.getJSONObject(educationHistory.length() - 1);
+            JSONObject position = lastEducation.getJSONObject("school");
+            return position.getString("name");
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter education");
+            return "";
         }
     }
 }

@@ -37,8 +37,20 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void updateFirstNameAndAge(String firstName, int age) {
-        TextView userNameText = (TextView) findViewById(R.id.userNameAndAge);
-        userNameText.setText(firstName + ", " + String.valueOf(age));
+        TextView textView = (TextView) findViewById(R.id.userNameAndAge);
+        textView.setText(firstName + ", " + String.valueOf(age));
+    }
+
+    @Override
+    public void updateOccupation(String occupation) {
+        TextView textView = (TextView) findViewById(R.id.userWorkText);
+        textView.setText(occupation);
+    }
+
+    @Override
+    public void updateEducation(String education) {
+        TextView textView = (TextView) findViewById(R.id.userStudiesText);
+        textView.setText(education);
     }
 
     @Override
