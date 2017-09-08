@@ -37,6 +37,7 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import java.util.ArrayList;
 
 import static com.tddp2.grupo2.linkup.R.id.distance;
+import static cz.msebera.android.httpclient.extras.PRNGFixes.apply;
 
 public class SettingsActivity extends AppCompatActivity implements BaseView {
 
@@ -106,13 +107,8 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
             minAge = 0;
             maxDistance = 1;
         }
-        seekBarDistance.setMinValue(1).apply();
-        seekBarDistance.setMaxValue(100).apply();
-        seekBarDistance.setMinStartValue(maxDistance).apply();
-        seekBarAge.setMinValue(18).apply();
-        seekBarAge.setMaxValue(99).apply();
-        seekBarAge.setMinStartValue(minAge).apply();
-        seekBarAge.setMaxStartValue(maxAge).apply();
+        seekBarDistance.setMinValue(1).setMaxValue(100).setMinStartValue(maxDistance).apply();
+        seekBarAge.setMinValue(18).setMaxValue(99).setMinStartValue(minAge).setMaxStartValue(maxAge).apply();
     }
 
     // Prepare some dummy data for gridview
