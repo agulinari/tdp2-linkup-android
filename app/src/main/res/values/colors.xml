@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="loadingPanel">#333232</color>
     <color name="profileCard">#EFF2F7</color>
+    <color name="white">#FFF</color>
+    <color name="button_disable">#F8BBD0</color>
 </resources>
