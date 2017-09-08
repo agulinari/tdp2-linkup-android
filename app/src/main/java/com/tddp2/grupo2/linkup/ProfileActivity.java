@@ -2,14 +2,13 @@ package com.tddp2.grupo2.linkup;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileView {
     ProfileController controller;
@@ -18,8 +17,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        controller = new ProfileController(this);
-        controller.updateProfile();
     }
 
     public void onSettingsClick(View view) {
