@@ -1,12 +1,8 @@
 package com.tddp2.grupo2.linkup.service.api;
 
-import android.content.res.Configuration;
-import android.util.Log;
-
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
-import java.io.IOException;
 
 
 

@@ -6,38 +6,28 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.GridView;
-import android.widget.RadioGroup;
-import android.widget.SeekBar;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
-import com.facebook.AccessToken;
-import com.facebook.login.LoginManager;
-
-import com.tddp2.grupo2.linkup.adapter.GridViewAdapter;
-import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
-
-import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import java.util.ArrayList;
 
-import static com.tddp2.grupo2.linkup.R.id.distance;
-import static cz.msebera.android.httpclient.extras.PRNGFixes.apply;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity implements BaseView {
 
@@ -53,17 +43,33 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
     @BindView(R.id.text_age)
     TextView textViewAge;
 
-    @BindView(R.id.image_grid)
-    GridView gridView;
-    
+    @BindView(R.id.switch_friends)
+    Switch switchFriends;
+
+    @BindView(R.id.switch_males)
+    Switch switchMales;
+
+    @BindView(R.id.switch_females)
+    Switch switchFemales;
+
+    @BindView(R.id.switch_notifications)
+    Switch switchNotifications;
+
+    @BindView(R.id.switch_invisible)
+    Switch switchInvisible;
+
     SettingsController controller;
 
     private ProgressDialog progressDialog;
-    private GridViewAdapter gridAdapter;
 
     private int maxDistance = 0;
     private int minAge = 18;
     private int maxAge = 99;
+    private boolean onlyFriends = false;
+    private boolean searchMales = false;
+    private boolean searchFemales = false;
+    private boolean notifications = false;
+    private boolean invisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,7 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         ButterKnife.bind(this);
 
         controller = new SettingsController(this);
-        gridAdapter = new GridViewAdapter(this, R.layout.image_item, getData());
-        gridView.setAdapter(gridAdapter);
+
         initSettings();
 
         seekBarDistance.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
@@ -92,6 +97,41 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
                 maxAge = maxValue.intValue();
             }
         });
+
+        switchFriends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                onlyFriends = isChecked;
+            }
+        });
+
+        switchMales.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                searchMales = isChecked;
+            }
+        });
+
+        switchFemales.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                searchFemales = isChecked;
+            }
+        });
+
+        switchNotifications.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                notifications = isChecked;
+            }
+        });
+
+        switchInvisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                invisible = isChecked;
+            }
+        });
     }
 
     private void initSettings() {
@@ -101,14 +141,29 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
             maxAge = settings.getMaxAge();
             minAge = settings.getMinAge();
             maxDistance = settings.getMaxDistance();
+            onlyFriends = settings.isOnlyFriends();
+            searchMales = settings.isSearchMales();
+            searchFemales = settings.isSearchFemales();
+            notifications = settings.isNotifications();
+            invisible = settings.isInvisible();
 
         }else{
             maxAge = 99;
             minAge = 0;
             maxDistance = 1;
+            searchMales = false;
+            searchFemales = false;
+            onlyFriends = false;
+            notifications = false;
+            invisible = false;
         }
         seekBarDistance.setMinValue(1).setMaxValue(100).setMinStartValue(maxDistance).apply();
         seekBarAge.setMinValue(18).setMaxValue(99).setMinStartValue(minAge).setMaxStartValue(maxAge).apply();
+        switchFriends.setChecked(onlyFriends);
+        switchFemales.setChecked(searchFemales);
+        switchMales.setChecked(searchMales);
+        switchInvisible.setChecked(invisible);
+        switchNotifications.setChecked(notifications);
     }
 
     // Prepare some dummy data for gridview
@@ -131,6 +186,11 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         settings.setMaxDistance(maxDistance);
         settings.setMinAge(minAge);
         settings.setMaxAge(maxAge);
+        settings.setOnlyFriends(onlyFriends);
+        settings.setSearchFemales(searchFemales);
+        settings.setSearchMales(searchMales);
+        settings.setNotifications(notifications);
+        settings.setInvisible(invisible);
         controller.saveProfile("1", "Juan", settings);
     }
 

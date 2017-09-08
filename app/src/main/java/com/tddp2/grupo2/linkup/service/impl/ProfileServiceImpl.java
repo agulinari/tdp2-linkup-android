@@ -1,11 +1,19 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
+import android.os.Bundle;
+import android.util.Log;
+
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ProfileServiceImpl extends ProfileService {
