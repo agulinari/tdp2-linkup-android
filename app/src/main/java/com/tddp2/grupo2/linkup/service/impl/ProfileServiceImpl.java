@@ -13,6 +13,7 @@ import com.tddp2.grupo2.linkup.exception.APIError;
 import android.os.Bundle;
 import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
+import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
@@ -34,33 +35,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class ProfileServiceImpl extends ProfileService {
 
-    public ProfileServiceImpl() {
-        super();
+    public ProfileServiceImpl(Database database) {
+        super(database);
     }
 
     @Override
     public void createProfile(Profile profile) throws ServiceException {
-        String url = "https://linkup.herokuapp.com/user";
 
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.post(url,  new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String res, Throwable t) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable t, JSONObject res) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.e("ERROR", String.valueOf(statusCode));
-            }
-        });
     }
 
     @Override
@@ -82,6 +63,9 @@ public class ProfileServiceImpl extends ProfileService {
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
         }*/
+
+        saveUser(profile);
+
         try {
             Thread.sleep(3000);
             // Do some stuff
@@ -106,7 +90,7 @@ public class ProfileServiceImpl extends ProfileService {
     }
 
     public void saveUser(Profile profile) {
-        //   this.database.setUser(user);
+           this.database.setProfile(profile);
     }
 
     private String getStringParam(JSONObject object, String key) {

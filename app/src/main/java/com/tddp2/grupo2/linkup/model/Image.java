@@ -2,9 +2,10 @@ package com.tddp2.grupo2.linkup.model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
 
 
-public class Image {
+public class Image implements Serializable{
 
     private String fbid;
     private Bitmap image;

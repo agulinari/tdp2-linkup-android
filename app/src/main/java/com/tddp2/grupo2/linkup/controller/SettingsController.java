@@ -12,6 +12,8 @@ import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 
 import java.util.ArrayList;
 
+import static com.tddp2.grupo2.linkup.R.id.distance;
+
 
 public class SettingsController {
 
@@ -23,11 +25,10 @@ public class SettingsController {
         this.view = view;
     }
 
-    public void saveProfile() {
+    public void saveProfile(String fbid, String name, Settings settings) {
 
       UpdateProfileTask task = new UpdateProfileTask(profileService, this);
-
-        task.execute("1", "Juan", new ArrayList<Interest>(), new Settings());
+        task.execute(fbid, name, new ArrayList<Interest>(), settings);
 
     }
 

@@ -43,6 +43,7 @@ public class UpdateProfileTask  extends AsyncTask<Object, Void, TaskResponse> {
             Profile localProfile = new Profile();
             localProfile.setFbid(fibd);
             localProfile.setFirstName(name);
+            localProfile.setSettings(settings);
             profileService.updateProfile(localProfile);
         } catch (ServiceException e) {
             TaskResponse response = new TaskResponse(e.getMessage());

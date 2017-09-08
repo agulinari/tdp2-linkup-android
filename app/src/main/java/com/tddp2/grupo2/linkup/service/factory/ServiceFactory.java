@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.service.factory;
 
+import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.service.api.LinkupService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.api.ServiceType;
@@ -17,14 +18,14 @@ public class ServiceFactory {
     private ServiceFactory() {
     }
 
-    public static void init() {
+    public static void init(Database database) {
 
         //chatMapper = new MatchChatMapper();
-        buildServices();
+        buildServices(database);
     }
 
-    private static void buildServices() {
-        buildRealServices();
+    private static void buildServices(Database database) {
+        buildRealServices(database);
         /*if (type.equals(Services.REAL)) {
             buildRealServices(database);
         } else {
@@ -32,8 +33,8 @@ public class ServiceFactory {
         }*/
     }
 
-    private static void buildRealServices() {
-        ProfileService profileService = new ProfileServiceImpl();
+    private static void buildRealServices(Database database) {
+        ProfileService profileService = new ProfileServiceImpl(database);
         save(profileService);
     }
 

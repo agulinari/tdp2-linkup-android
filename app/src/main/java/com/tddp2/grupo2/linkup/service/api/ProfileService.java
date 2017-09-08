@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.util.Log;
 
 import com.tddp2.grupo2.linkup.exception.ServiceException;
+import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import java.io.IOException;
 
@@ -11,6 +12,11 @@ import java.io.IOException;
 
 public abstract class ProfileService implements LinkupService{
 
+    protected Database database;
+
+    protected ProfileService(Database database) {
+        this.database = database;
+    }
 
     public abstract void createProfile(Profile profile) throws ServiceException;
 
@@ -22,5 +28,9 @@ public abstract class ProfileService implements LinkupService{
 
     public ServiceType getType() {
         return ServiceType.PROFILE;
+    }
+
+    public Profile getLocalProfile() {
+        return database.getProfile();
     }
 }
