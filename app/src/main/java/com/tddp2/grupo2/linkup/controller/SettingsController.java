@@ -21,10 +21,10 @@ public class SettingsController {
         this.view = view;
     }
 
-    public void saveProfile(String fbid, String name, Settings settings) {
+    public void saveProfile(Settings settings) {
 
       UpdateProfileTask task = new UpdateProfileTask(profileService, this);
-        task.execute(fbid, name, new ArrayList<Interest>(), settings);
+        task.execute(settings);
 
     }
 

@@ -1,5 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
+import android.util.Log;
+
 import com.tddp2.grupo2.linkup.ProfileView;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;

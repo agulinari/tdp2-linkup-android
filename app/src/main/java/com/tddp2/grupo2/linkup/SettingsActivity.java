@@ -136,27 +136,19 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
 
     private void initSettings() {
         Profile localProfile = ServiceFactory.getProfileService().getLocalProfile();
+        Settings settings = new Settings();
         if (localProfile != null) {
-            Settings settings = localProfile.getSettings();
-            maxAge = settings.getMaxAge();
-            minAge = settings.getMinAge();
-            maxDistance = settings.getMaxDistance();
-            onlyFriends = settings.isOnlyFriends();
-            searchMales = settings.isSearchMales();
-            searchFemales = settings.isSearchFemales();
-            notifications = settings.isNotifications();
-            invisible = settings.isInvisible();
-
-        }else{
-            maxAge = 99;
-            minAge = 0;
-            maxDistance = 1;
-            searchMales = false;
-            searchFemales = false;
-            onlyFriends = false;
-            notifications = false;
-            invisible = false;
+            settings = localProfile.getSettings();
         }
+        maxAge = settings.getMaxAge();
+        minAge = settings.getMinAge();
+        maxDistance = settings.getMaxDistance();
+        onlyFriends = settings.isOnlyFriends();
+        searchMales = settings.isSearchMales();
+        searchFemales = settings.isSearchFemales();
+        notifications = settings.isNotifications();
+        invisible = settings.isInvisible();
+
         seekBarDistance.setMinValue(1).setMaxValue(100).setMinStartValue(maxDistance).apply();
         seekBarAge.setMinValue(18).setMaxValue(99).setMinStartValue(minAge).setMaxStartValue(maxAge).apply();
         switchFriends.setChecked(onlyFriends);
@@ -191,7 +183,7 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         settings.setSearchMales(searchMales);
         settings.setNotifications(notifications);
         settings.setInvisible(invisible);
-        controller.saveProfile("1", "Juan", settings);
+        controller.saveProfile(settings);
     }
 
     @Override

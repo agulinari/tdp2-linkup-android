@@ -20,7 +20,7 @@ public class Profile implements Serializable {
     private String accountType;
     private List<Interest> interests = new ArrayList<Interest>();
     private List<Image> images = new ArrayList<Image>();
-    private Settings settings;
+    private Settings settings = new Settings();
 
     public String getFbid() {
         return fbid;
