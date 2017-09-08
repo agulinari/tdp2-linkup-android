@@ -82,10 +82,11 @@ public class ProfileServiceImpl extends ProfileService {
 
         );
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,first_name");
+        parameters.putString("fields", "id,first_name,last_name,gender,birthday,work,education,about");
         request.setParameters(parameters);
         GraphResponse response = request.executeAndWait();
         JSONObject jsonResponse = response.getJSONObject();
+        Log.i("FacebookData", jsonResponse.toString());
         profile.setFirstName(getStringParam(jsonResponse, "first_name"));
     }
 
