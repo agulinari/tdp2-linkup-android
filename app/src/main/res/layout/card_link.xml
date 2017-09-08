@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="56dp"
+    android:orientation="horizontal"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="285dp">
+
+            <ImageView
+                android:id="@+id/candidateImage"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:scaleType="centerCrop" />
+
+            <ProgressBar
+                android:id="@+id/progressImage"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="72dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:background="@android:drawable/screen_background_dark_transparent">
+
+                <TextView
+                    android:id="@+id/candidateName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="32dp"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="Nombre"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/candidateAge"
+                    android:layout_width="fill_parent"
+                    android:layout_height="16dp"
+                    android:layout_below="@+id/candidateName"
+                    android:drawableEnd="@null"
+                    android:drawableStart="@null"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="Edad"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/candidateInterests"
+                    android:layout_width="fill_parent"
+                    android:layout_height="22dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/candidateAge"
+                    android:drawableEnd="@null"
+                    android:drawableStart="@null"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:text="Intereses"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
