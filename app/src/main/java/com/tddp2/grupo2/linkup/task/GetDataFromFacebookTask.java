@@ -1,7 +1,7 @@
 package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
-import android.util.Log;
+
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;

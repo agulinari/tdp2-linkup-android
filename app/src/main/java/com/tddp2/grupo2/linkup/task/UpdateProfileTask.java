@@ -1,15 +1,13 @@
 package com.tddp2.grupo2.linkup.task;
 
-import android.graphics.Bitmap;
-import android.location.Location;
 import android.os.AsyncTask;
 
+import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Interest;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
-import com.tddp2.grupo2.linkup.controller.SettingsController;
 
 import java.util.List;
 

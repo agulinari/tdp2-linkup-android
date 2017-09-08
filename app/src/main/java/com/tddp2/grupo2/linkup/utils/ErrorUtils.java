@@ -2,14 +2,9 @@ package com.tddp2.grupo2.linkup.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
 
 import com.tddp2.grupo2.linkup.R;
-import com.tddp2.grupo2.linkup.exception.APIError;
-
-import java.io.IOException;
-import java.lang.annotation.Annotation;
 
 
 public class ErrorUtils {

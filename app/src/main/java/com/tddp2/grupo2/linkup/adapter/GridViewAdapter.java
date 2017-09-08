@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.Image;

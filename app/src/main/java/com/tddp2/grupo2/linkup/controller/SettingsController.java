@@ -1,7 +1,5 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import android.view.View;
-
 import com.tddp2.grupo2.linkup.BaseView;
 import com.tddp2.grupo2.linkup.model.Interest;
 import com.tddp2.grupo2.linkup.model.Settings;
@@ -11,8 +9,6 @@ import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 
 import java.util.ArrayList;
-
-import static com.tddp2.grupo2.linkup.R.id.distance;
 
 
 public class SettingsController {

@@ -1,35 +1,19 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.tddp2.grupo2.linkup.R;
-import com.tddp2.grupo2.linkup.exception.APIError;
 import android.os.Bundle;
 import android.util.Log;
+
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
-import com.tddp2.grupo2.linkup.utils.ErrorUtils;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 
 
 
