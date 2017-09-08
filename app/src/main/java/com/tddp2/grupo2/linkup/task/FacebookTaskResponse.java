@@ -1,15 +1,22 @@
 package com.tddp2.grupo2.linkup.task;
 
-import com.tddp2.grupo2.linkup.model.Profile;
-
 public class FacebookTaskResponse extends TaskResponse {
-    private Profile profile;
+    private String birthday;
+    private boolean hasProfilePicture;
 
-    public void setProfileResponse(Profile profile) {
-        this.profile = profile;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 
-    public Profile getProfile() {
-        return this.profile;
+    public String getBirthday() {
+        return this.birthday;
+    }
+
+    public void setHasProfilePicture(boolean hasProfilePicture) {
+        this.hasProfilePicture = hasProfilePicture;
+    }
+
+    public boolean hasProfilePicture() {
+        return this.hasProfilePicture;
     }
 }

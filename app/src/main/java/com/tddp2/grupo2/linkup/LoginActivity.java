@@ -93,6 +93,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         startActivity(intent);
     }
 
+    public void showProfilePictureRestrictionAndEnd() {
+        showPopUpAndEnd("Lo sentimos, es necesario tener una foto de perfil en Facebook para poder utilizar esta aplicación. Por favor, agrega una y vuelve a intentarlo.");
+    }
+
     public void showAgeRestrictionAndEnd() {
         showPopUpAndEnd("Lo sentimos, debes ser mayor de 18 años para utilizar esta aplicación.");
     }

@@ -4,5 +4,6 @@ public interface LoginView extends BaseView {
     void goProfileScreen();
     void showMissingAgeAndEnd();
     void showAgeRestrictionAndEnd();
+    void showProfilePictureRestrictionAndEnd();
 }
 

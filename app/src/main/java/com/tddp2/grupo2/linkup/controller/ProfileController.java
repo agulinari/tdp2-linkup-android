@@ -3,7 +3,6 @@ package com.tddp2.grupo2.linkup.controller;
 import com.tddp2.grupo2.linkup.ProfileView;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
 public class ProfileController {
 
     private ProfileService profileService;
@@ -23,7 +22,7 @@ public class ProfileController {
     }
 
     public void onResult(Object result) {
-        FacebookTaskResponse response = (FacebookTaskResponse) result;
+       /* FacebookTaskResponse response = (FacebookTaskResponse) result;
         if (response.sessionExpired()) {
             view.sessionExpired();
         } else if (response.hasError()) {
@@ -31,6 +30,6 @@ public class ProfileController {
         } else {
             //Profile profile = response.getProfile();
             //view.updateFirstName(profile.getFirstName());
-        }
+        }*/
     }
 }
