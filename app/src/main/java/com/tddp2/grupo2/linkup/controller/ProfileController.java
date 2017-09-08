@@ -1,8 +1,14 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.ProfileView;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 public class ProfileController {
 
     private ProfileService profileService;
@@ -31,5 +37,16 @@ public class ProfileController {
             //Profile profile = response.getProfile();
             //view.updateFirstName(profile.getFirstName());
         }*/
+    }
+
+    public void update() {
+        Profile profile = this.profileService.getLocalProfile();
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy");
+        LocalDate birthdayDate = formatter.parseLocalDate(profile.getBirthday());
+        LocalDate now = new LocalDate();
+        Years age = Years.yearsBetween(birthdayDate, now);
+
+        view.updateFirstNameAndAge(profile.getFirstName(), age.getYears());
     }
 }

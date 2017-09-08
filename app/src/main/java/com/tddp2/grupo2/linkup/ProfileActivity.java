@@ -18,6 +18,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        controller = new ProfileController(this);
+        controller.update();
     }
 
     public void onSettingsClick(View view) {
@@ -34,9 +36,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     }
 
     @Override
-    public void updateFirstName(String firstName) {
+    public void updateFirstNameAndAge(String firstName, int age) {
         TextView userNameText = (TextView) findViewById(R.id.userNameAndAge);
-        userNameText.setText(firstName);
+        userNameText.setText(firstName + ", " + String.valueOf(age));
     }
 
     @Override
