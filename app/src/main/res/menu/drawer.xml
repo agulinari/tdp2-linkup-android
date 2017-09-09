@@ -5,7 +5,7 @@
         <item
             android:id="@+id/drawer_search_links"
             android:checked="false"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_group_black_24dp"
             android:title="@string/item_search_links" />
 
         <item
@@ -17,7 +17,7 @@
         <item
             android:id="@+id/drawer_settings"
             android:checked="false"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_build_black_24dp"
             android:title="@string/item_settings" />
 
     </group>
