@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,12 +44,16 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void updateOccupation(String occupation) {
+        CardView cardView = (CardView) findViewById(R.id.userOccupationCard);
+        cardView.setVisibility(View.VISIBLE);
         TextView textView = (TextView) findViewById(R.id.userWorkText);
         textView.setText(occupation);
     }
 
     @Override
     public void updateEducation(String education) {
+        CardView cardView = (CardView) findViewById(R.id.userEducationCard);
+        cardView.setVisibility(View.VISIBLE);
         TextView textView = (TextView) findViewById(R.id.userStudiesText);
         textView.setText(education);
     }

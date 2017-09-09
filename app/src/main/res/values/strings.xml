@@ -17,4 +17,6 @@
     <string name="update_profile">Actualizar</string>
     <string name="saving_profile">Guardando Información de Perfil</string>
     <string name="no_connection_to_server">No hay conexión con el servidor</string>
+    <string name="go_to_settings">Preferencias</string>
+    <string name="reload_facebook">Actualizar información</string>
 </resources>
