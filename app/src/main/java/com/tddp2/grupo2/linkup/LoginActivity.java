@@ -1,11 +1,13 @@
 package com.tddp2.grupo2.linkup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.facebook.CallbackManager;
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 "user_work_history",
                 "user_about_me"
         ));
-
         loginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
@@ -61,11 +64,16 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showProgress() {
         findViewById(R.id.loadingLogin).setVisibility(View.VISIBLE);
+        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.fetching_facebook_info), true, false);
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
         findViewById(R.id.loadingLogin).setVisibility(View.GONE);
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -95,15 +103,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     public void showProfilePictureRestrictionAndEnd() {
-        showPopUpAndEnd("Lo sentimos, es necesario tener una foto de perfil en Facebook para poder utilizar esta aplicación. Por favor, agrega una y vuelve a intentarlo.");
+        showPopUpAndEnd(getResources().getString(R.string.missing_photo));
     }
 
     public void showAgeRestrictionAndEnd() {
-        showPopUpAndEnd("Lo sentimos, debes ser mayor de 18 años para utilizar esta aplicación.");
+        showPopUpAndEnd(getResources().getString(R.string.age_restriction));
     }
 
     public void showMissingAgeAndEnd() {
-        showPopUpAndEnd("Lo sentimos, es necesario conocer tu edad para que puedas usar esta aplicación. Por favor, agrega esa información en Facebook y vuelve a intentarlo.");
+        showPopUpAndEnd(getResources().getString(R.string.missing_age));
     }
 
     private void showPopUpAndEnd(String message) {

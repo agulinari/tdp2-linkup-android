@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Image implements Serializable{
 
     private String fbid;
-    private Bitmap image;
+    private String image; //base64
     private int order;
 
     public String getFbid() {
@@ -19,11 +19,11 @@ public class Image implements Serializable{
         this.fbid = fbid;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(Bitmap image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

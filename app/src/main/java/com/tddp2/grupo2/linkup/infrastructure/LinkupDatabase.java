@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 /**
@@ -52,4 +53,5 @@ public class LinkupDatabase implements Database
         String json = sharedPref.getString(key, "");
         return gson.fromJson(json, classValue);
     }
+
 }

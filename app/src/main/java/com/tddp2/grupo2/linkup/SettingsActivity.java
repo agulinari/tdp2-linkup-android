@@ -158,20 +158,6 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         switchNotifications.setChecked(notifications);
     }
 
-    // Prepare some dummy data for gridview
-    private ArrayList<Image> getData() {
-        final ArrayList<Image> imageItems = new ArrayList<>();
-        TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
-        for (int i = 0; i < imgs.length(); i++) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i,-1));
-            Image image = new Image();
-            image.setImage(bitmap);
-            imageItems.add(image);
-        }
-        return imageItems;
-
-    }
-
     /* On Click button saveProfile */
     public void saveProfile(View view){
         Settings settings = new Settings();
