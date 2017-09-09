@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
+import com.tddp2.grupo2.linkup.activity.ProfileFragment;
 import com.tddp2.grupo2.linkup.activity.SettingsFragment;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
@@ -103,6 +104,10 @@ public class LinksActivity extends AppCompatActivity {
             case R.id.drawer_settings:
                 fragment = new SettingsFragment();
                 currentFragment = getResources().getString(R.string.item_perfil);
+                break;
+            case R.id.drawer_profile:
+                fragment = new ProfileFragment();
+                currentFragment = getResources().getString(R.string.item_settings);
                 break;
             default:
                 break;
