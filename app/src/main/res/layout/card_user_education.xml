@@ -18,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:paddingBottom="3dp">
+            android:paddingBottom="5dp">
         <ImageView
                 android:layout_width="32dp"
                 android:layout_height="32dp"
