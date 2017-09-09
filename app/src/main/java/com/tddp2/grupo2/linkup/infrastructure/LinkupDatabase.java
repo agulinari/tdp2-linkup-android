@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.infrastructure;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;

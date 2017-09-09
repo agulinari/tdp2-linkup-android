@@ -30,17 +30,10 @@ public class UpdateProfileTask  extends AsyncTask<Object, Void, TaskResponse> {
 
     @Override
     protected TaskResponse doInBackground(Object... params) {
-        String fibd = (String) params[0];
-        String name = (String) params[1];
-        List<Interest> interests = (List<Interest>) params[2];
-        Settings settings = (Settings) params[3];
-
+        Settings settings = (Settings) params[0];
         try {
 
-            //Profile localProfile = profileService.getLocalProfile();
-            Profile localProfile = new Profile();
-            localProfile.setFbid(fibd);
-            localProfile.setFirstName(name);
+            Profile localProfile = profileService.getLocalProfile();
             localProfile.setSettings(settings);
             profileService.updateProfile(localProfile);
         } catch (ServiceException e) {

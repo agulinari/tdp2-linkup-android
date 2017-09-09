@@ -5,14 +5,14 @@ import java.io.Serializable;
 
 public class Settings implements Serializable {
 
-    private int maxDistance;
-    private int minAge;
-    private int maxAge;
-    private boolean onlyFriends;
-    private boolean searchFemales;
-    private boolean searchMales;
-    private boolean notifications;
-    private boolean invisible;
+    private int maxDistance = 1;
+    private int minAge = 18;
+    private int maxAge = 99;
+    private boolean onlyFriends = false;
+    private boolean searchFemales = false;
+    private boolean searchMales = false;
+    private boolean notifications = false;
+    private boolean invisible = false ;
 
     public int getMaxDistance() {
         return maxDistance;
