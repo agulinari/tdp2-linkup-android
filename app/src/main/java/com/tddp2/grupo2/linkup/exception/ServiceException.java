@@ -9,6 +9,11 @@ public class ServiceException extends Exception{
         super(messagge);
     }
 
+    public ServiceException(APIError error) {
+        super(error.getData());
+        this.error = error;
+    }
+
     public boolean isSessionExpired() {
         if (error != null) {
             return error.isSessionExpired();
