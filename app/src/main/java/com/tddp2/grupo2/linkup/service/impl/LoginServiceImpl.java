@@ -117,7 +117,7 @@ public class LoginServiceImpl extends LoginService {
 
     private Bitmap loadProfilePicture(String fbid) {
         try {
-            URL url = new URL("https://graph.facebook.com/" + fbid + "/picture?width=9999");
+            URL url = new URL("https://graph.facebook.com/" + fbid + "/picture?width=999");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
