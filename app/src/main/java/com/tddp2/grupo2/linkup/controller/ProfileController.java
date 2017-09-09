@@ -64,4 +64,8 @@ public class ProfileController {
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         view.updateProfilePicture(bitmap);
     }
+
+    public void saveNewComment(String newComment) {
+        view.updateComment(newComment);
+    }
 }
