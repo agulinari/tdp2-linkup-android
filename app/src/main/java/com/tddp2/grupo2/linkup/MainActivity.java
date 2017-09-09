@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.facebook.AccessToken;
 
@@ -12,10 +13,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Log.i("MAIN", "HOLA");
         if (AccessToken.getCurrentAccessToken() == null){
+            Log.i("MAIN", "A LOGIN");
             goLoginScreen();
         } else {
+            Log.i("MAIN", "A PROFILE");
             goProfileScreen();
         }
     }

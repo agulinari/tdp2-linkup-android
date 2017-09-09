@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 /**
@@ -17,10 +18,10 @@ public class LinkupDatabase implements Database
 
     private static final String DB = "DB";
     private static final String PROFILE = "PROFILE";
-
+    private static final String IMAGE = "IMAGE";
 
     private Profile profile;
-
+    private Image image;
 
     public LinkupDatabase() {
         profile = get(PROFILE, Profile.class);
@@ -35,6 +36,20 @@ public class LinkupDatabase implements Database
     public void setProfile(Profile profile) {
         this.profile = profile;
         save(PROFILE, profile);
+    }
+
+    @Override
+    public Image getImage() {
+        if (image == null){
+            image = get(IMAGE, Image.class);
+        }
+        return image;
+    }
+
+    @Override
+    public void setImage(Image image) {
+        this.image = image;
+        save(IMAGE, image);
     }
 
     public void save(String key, Object value) {
@@ -52,4 +67,5 @@ public class LinkupDatabase implements Database
         String json = sharedPref.getString(key, "");
         return gson.fromJson(json, classValue);
     }
+
 }

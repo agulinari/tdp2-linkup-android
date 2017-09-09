@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.facebook.CallbackManager;
@@ -41,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 "user_work_history",
                 "user_about_me"
         ));
-
+        Log.i("LOGIN", "HOLA");
         loginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override

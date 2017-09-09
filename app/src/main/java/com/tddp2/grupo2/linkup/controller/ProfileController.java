@@ -56,6 +56,6 @@ public class ProfileController {
         }
 
         view.updateFirstNameAndAge(profile.getFirstName(), age.getYears());
-        view.updateProfilePicture(profile.getImages().get(0).getImage());
+        //view.updateProfilePicture(profile.getImages().get(0).getImage());
     }
 }
