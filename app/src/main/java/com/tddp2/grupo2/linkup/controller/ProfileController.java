@@ -55,6 +55,10 @@ public class ProfileController {
             view.updateEducation(profile.getEducation());
         }
 
+        if (!profile.getComments().equals("")) {
+           view.updateComment(profile.getComments());
+        }
+
         view.updateFirstNameAndAge(profile.getFirstName(), age.getYears());
         view.updateProfilePicture(profile.getImages().get(0).getImage());
     }

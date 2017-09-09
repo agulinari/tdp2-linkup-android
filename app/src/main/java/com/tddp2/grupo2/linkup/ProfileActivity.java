@@ -61,6 +61,14 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     }
 
     @Override
+    public void updateComment(String comment) {
+        CardView cardView = (CardView) findViewById(R.id.userCommentCard);
+        cardView.setVisibility(View.VISIBLE);
+        TextView textView = (TextView) findViewById(R.id.userCommentText);
+        textView.setText(comment);
+    }
+
+    @Override
     public void updateProfilePicture(Bitmap picture) {
         ImageView profilePicture = (ImageView) findViewById(R.id.userProfilePicture);
         profilePicture.setImageBitmap(picture);
