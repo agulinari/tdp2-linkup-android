@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.tddp2.grupo2.linkup.controller.LoginController;
@@ -42,7 +43,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        loadProfile();
+                        loadUser();
                     }
 
                     @Override
@@ -106,6 +107,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     private void showPopUpAndEnd(String message) {
+        LoginManager.getInstance().logOut();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setCancelable(false)
@@ -125,8 +127,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void loadProfile() {
+    private void loadUser() {
         LoginController controller = new LoginController(this);
-        controller.loadProfile();
+        controller.loadUser();
     }
 }

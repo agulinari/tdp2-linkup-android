@@ -1,15 +1,10 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.LoginView;
-import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 import com.tddp2.grupo2.linkup.task.LoadUserTask;
-import org.joda.time.LocalDate;
-import org.joda.time.Years;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
+import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 
 public class LoginController {
     private LoginService loginService;
@@ -20,7 +15,7 @@ public class LoginController {
         this.view = view;
     }
 
-    public void loadProfile() {
+    public void loadUser() {
         LoadUserTask task = new LoadUserTask(loginService, this);
         task.execute();
     }
@@ -40,37 +35,27 @@ public class LoginController {
         } else if (response.hasError()) {
             view.onError(response.getError());
         } else {
-            String birthday = response.getBirthday();
-            boolean hasProfilePicture = response.hasProfilePicture();
-            if (!hasProfilePicture) {
-                view.showProfilePictureRestrictionAndEnd();
+            if (response.isNewUser) {
+                validateRequiredData(response);
             } else {
-                try {
-                    int age = getAgeFromBirthday(birthday);
-                    if (age >= 18) {
-                        view.goProfileScreen();
-                    } else {
-                        view.showAgeRestrictionAndEnd();
-                    }
-                } catch (MissingAgeException e) {
-                    view.showMissingAgeAndEnd();
-                }
+                view.goProfileScreen();
             }
         }
     }
 
-    private int getAgeFromBirthday(String birthday) throws MissingAgeException {
-        if (birthday.equals("")) {
-            throw new MissingAgeException();
+    private void validateRequiredData(LoadUserTaskResponse response) {
+        if (response.hasBirthday) {
+            if (response.isAdult) {
+                if (response.hasProfilePicture) {
+                    view.goProfileScreen();
+                } else {
+                    view.showProfilePictureRestrictionAndEnd();
+                }
+            } else {
+                view.showAgeRestrictionAndEnd();
+            }
+        } else {
+            view.showMissingAgeAndEnd();
         }
-        try {
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy");
-            LocalDate birthdayDate = formatter.parseLocalDate(birthday);
-            LocalDate now = new LocalDate();
-            Years age = Years.yearsBetween(birthdayDate, now);
-            return age.getYears();
-        } catch (IllegalArgumentException e) {
-            throw new MissingAgeException();
-         }
     }
 }

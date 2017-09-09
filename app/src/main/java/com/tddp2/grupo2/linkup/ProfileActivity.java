@@ -2,10 +2,12 @@ package com.tddp2.grupo2.linkup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +58,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         cardView.setVisibility(View.VISIBLE);
         TextView textView = (TextView) findViewById(R.id.userStudiesText);
         textView.setText(education);
+    }
+
+    @Override
+    public void updateProfilePicture(Bitmap picture) {
+        ImageView profilePicture = (ImageView) findViewById(R.id.userProfilePicture);
+        profilePicture.setImageBitmap(picture);
     }
 
     @Override

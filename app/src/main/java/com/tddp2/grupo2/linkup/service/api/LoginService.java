@@ -11,6 +11,8 @@ public abstract class LoginService implements LinkupService {
         this.database = database;
     }
 
+    public abstract void loadUserData(LoadUserTaskResponse facebookData);
+
     public abstract void loadDataFromFacebook(LoadUserTaskResponse facebookData);
 
     public ServiceType getType() {

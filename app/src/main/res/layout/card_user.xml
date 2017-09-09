@@ -25,7 +25,7 @@
             android:layout_height="285dp">
 
             <ImageView
-                android:id="@+id/candidateImage"
+                android:id="@+id/userProfilePicture"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:layout_alignParentBottom="true"

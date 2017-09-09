@@ -1,7 +1,5 @@
 package com.tddp2.grupo2.linkup.model;
 
-import android.media.Image;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

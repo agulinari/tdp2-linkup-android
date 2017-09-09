@@ -23,7 +23,7 @@ public class LoadUserTask extends AsyncTask<Object, Void, TaskResponse> {
     @Override
     protected TaskResponse doInBackground(Object... params) {
         LoadUserTaskResponse facebookData = new LoadUserTaskResponse();
-        loginService.loadDataFromFacebook(facebookData);
+        loginService.loadUserData(facebookData);
         return facebookData;
     }
 
