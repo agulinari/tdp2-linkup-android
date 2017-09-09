@@ -7,6 +7,7 @@ public interface ProfileView extends BaseView {
     void updateFirstNameAndAge(String firstName, int age);
     void updateOccupation(String occupation);
     void updateEducation(String education);
+    void updateComment(String comment);
     void updateProfilePicture(Bitmap picture);
 }
 

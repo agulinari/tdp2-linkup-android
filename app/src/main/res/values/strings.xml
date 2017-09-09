@@ -23,6 +23,9 @@
     <string name="missing_photo">Lo sentimos, es necesario tener una foto de perfil en Facebook para poder utilizar esta aplicación. Por favor, agrega una y vuelve a intentarlo.</string>
     <string name="age_restriction">Lo sentimos, debes ser mayor de 18 años para utilizar esta aplicación.</string>
     <string name="missing_age">Lo sentimos, es necesario conocer tu edad para que puedas usar esta aplicación. Por favor, agrega esa información en Facebook y vuelve a intentarlo.</string>
+    <string name="comment_edit">Escriba algo sobre usted:</string>
+    <string name="comment_edit_save">Guardar</string>
+    <string name="comment_edit_cancel">Cancelar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

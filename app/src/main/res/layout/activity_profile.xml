@@ -8,6 +8,9 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         tools:context="com.tddp2.grupo2.linkup.ProfileActivity">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
@@ -23,6 +26,9 @@
                     android:id="@+id/userEducationCard"
                     android:visibility="gone"
                     layout="@layout/card_user_education" />
+            <include
+                android:id="@+id/userCommentCard"
+                layout="@layout/card_comment" />
             <RelativeLayout
                     android:id="@+id/loadingUser"
                     android:layout_width="match_parent"
@@ -70,4 +76,5 @@
                         android:text="@string/reload_facebook" />
             </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
