@@ -112,6 +112,11 @@ public class ProfileFragment extends Fragment implements ProfileView{
     }
 
     @Override
+    public void updateComment(String comment) {
+
+    }
+
+    @Override
     public void updateProfilePicture(Bitmap picture) {
         profilePicture.setImageBitmap(picture);
     }
