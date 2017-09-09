@@ -4,8 +4,8 @@ import com.tddp2.grupo2.linkup.LoginView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
-import com.tddp2.grupo2.linkup.task.GetDataFromFacebookTask;
+import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
+import com.tddp2.grupo2.linkup.task.LoadUserTask;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
@@ -21,7 +21,7 @@ public class LoginController {
     }
 
     public void loadProfile() {
-        GetDataFromFacebookTask task = new GetDataFromFacebookTask(loginService, this);
+        LoadUserTask task = new LoadUserTask(loginService, this);
         task.execute();
     }
 
@@ -34,7 +34,7 @@ public class LoginController {
     }
 
     public void onResult(Object result) {
-        FacebookTaskResponse response = (FacebookTaskResponse) result;
+        LoadUserTaskResponse response = (LoadUserTaskResponse) result;
         if (response.sessionExpired()) {
             view.sessionExpired();
         } else if (response.hasError()) {

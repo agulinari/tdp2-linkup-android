@@ -8,7 +8,7 @@ import com.facebook.GraphResponse;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
-import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
+import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,7 +20,7 @@ public class LoginServiceImpl extends LoginService {
     }
 
     @Override
-    public void loadDataFromFacebook(FacebookTaskResponse facebookData) {
+    public void loadUserData(LoadUserTaskResponse facebookData) {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/me"

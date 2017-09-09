@@ -1,6 +1,6 @@
 package com.tddp2.grupo2.linkup.task;
 
-public class FacebookTaskResponse extends TaskResponse {
+public class LoadUserTaskResponse extends TaskResponse {
     private String birthday;
     private boolean hasProfilePicture;
 

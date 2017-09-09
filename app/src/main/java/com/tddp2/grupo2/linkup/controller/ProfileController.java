@@ -30,7 +30,7 @@ public class ProfileController {
     }
 
     public void onResult(Object result) {
-       /* FacebookTaskResponse response = (FacebookTaskResponse) result;
+       /* LoadUserTaskResponse response = (LoadUserTaskResponse) result;
         if (response.sessionExpired()) {
             view.sessionExpired();
         } else if (response.hasError()) {

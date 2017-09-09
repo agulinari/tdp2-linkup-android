@@ -1,7 +1,7 @@
 package com.tddp2.grupo2.linkup.service.api;
 
 import com.tddp2.grupo2.linkup.infrastructure.Database;
-import com.tddp2.grupo2.linkup.task.FacebookTaskResponse;
+import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 
 public abstract class LoginService implements LinkupService {
 
@@ -11,7 +11,7 @@ public abstract class LoginService implements LinkupService {
         this.database = database;
     }
 
-    public abstract void loadDataFromFacebook(FacebookTaskResponse facebookData);
+    public abstract void loadDataFromFacebook(LoadUserTaskResponse facebookData);
 
     public ServiceType getType() {
         return ServiceType.LOGIN;
