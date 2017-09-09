@@ -13,12 +13,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i("MAIN", "HOLA");
         if (AccessToken.getCurrentAccessToken() == null){
-            Log.i("MAIN", "A LOGIN");
             goLoginScreen();
         } else {
-            Log.i("MAIN", "A PROFILE");
             goProfileScreen();
         }
     }

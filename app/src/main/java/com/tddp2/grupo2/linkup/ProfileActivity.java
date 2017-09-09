@@ -11,16 +11,39 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ProfileActivity extends AppCompatActivity implements ProfileView {
     ProfileController controller;
+
+    @BindView(R.id.userNameAndAge)
+    TextView textViewUserNameAndAge;
+
+    @BindView(R.id.userOccupationCard)
+    CardView cardViewUserOccupation;
+
+    @BindView(R.id.userWorkText)
+    TextView textViewUserWork;
+
+    @BindView(R.id.userEducationCard)
+    CardView cardViewUserEducation;
+
+    @BindView(R.id.userStudiesText)
+    TextView textViewUserStudies;
+
+    @BindView(R.id.userProfilePicture)
+    ImageView profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ButterKnife.bind(this);
         controller = new ProfileController(this);
         controller.update();
     }
@@ -40,29 +63,23 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void updateFirstNameAndAge(String firstName, int age) {
-        TextView textView = (TextView) findViewById(R.id.userNameAndAge);
-        textView.setText(firstName + ", " + String.valueOf(age));
+        textViewUserNameAndAge.setText(firstName + ", " + String.valueOf(age));
     }
 
     @Override
     public void updateOccupation(String occupation) {
-        CardView cardView = (CardView) findViewById(R.id.userOccupationCard);
-        cardView.setVisibility(View.VISIBLE);
-        TextView textView = (TextView) findViewById(R.id.userWorkText);
-        textView.setText(occupation);
+        cardViewUserOccupation.setVisibility(View.VISIBLE);
+        textViewUserWork.setText(occupation);
     }
 
     @Override
     public void updateEducation(String education) {
-        CardView cardView = (CardView) findViewById(R.id.userEducationCard);
-        cardView.setVisibility(View.VISIBLE);
-        TextView textView = (TextView) findViewById(R.id.userStudiesText);
-        textView.setText(education);
+        cardViewUserEducation.setVisibility(View.VISIBLE);
+        textViewUserStudies.setText(education);
     }
 
     @Override
     public void updateProfilePicture(Bitmap picture) {
-        ImageView profilePicture = (ImageView) findViewById(R.id.userProfilePicture);
         profilePicture.setImageBitmap(picture);
     }
 
