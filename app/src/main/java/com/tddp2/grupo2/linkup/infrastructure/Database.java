@@ -11,8 +11,4 @@ public interface Database {
 
     void setProfile(Profile profile);
 
-    Image getImage();
-
-    void setImage(Image image);
-
 }

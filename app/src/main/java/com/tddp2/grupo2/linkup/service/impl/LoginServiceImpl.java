@@ -13,6 +13,8 @@ import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
+
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
@@ -27,6 +29,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.bitmap;
 
 public class LoginServiceImpl extends LoginService {
 
@@ -105,7 +109,8 @@ public class LoginServiceImpl extends LoginService {
             profile.setEducation(getEducation(jsonResponse));
 
             Image image = new Image();
-            Bitmap profileImage = loadProfilePicture(profile.getFbid());
+            Bitmap bitmap = loadProfilePicture(profile.getFbid());
+            String profileImage = ImageUtils.bitmapToBase64(bitmap);
             image.setImage(profileImage);
             List<Image> images = new ArrayList<>();
             images.add(image);

@@ -29,7 +29,4 @@ public abstract class ProfileService implements LinkupService{
         return database.getProfile();
     }
 
-    public Image getLocalImage() {
-        return database.getImage();
-    }
 }

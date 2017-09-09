@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 "user_work_history",
                 "user_about_me"
         ));
-        Log.i("LOGIN", "HOLA");
         loginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
