@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         if (AccessToken.getCurrentAccessToken() == null){
             goLoginScreen();
         } else {
-            goProfileScreen();
+            goLinksScreen();
         }
     }
 
@@ -27,8 +27,8 @@ public class MainActivity extends Activity {
         finish();
     }
 
-    private void goProfileScreen() {
-        Intent intent = new Intent(this, ProfileActivity.class);
+    private void goLinksScreen() {
+        Intent intent = new Intent(this, LinksActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();

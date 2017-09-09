@@ -26,4 +26,14 @@
     <string name="comment_edit">Escriba algo sobre usted:</string>
     <string name="comment_edit_save">Guardar</string>
     <string name="comment_edit_cancel">Cancelar</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="chat">Chat</string>
+    <string name="action_logout">Salir</string>
+    <string name="item_perfil">Perfil</string>
+    <string name="item_settings">Preferencias</string>
+    <string name="openDrawer">Abrir Menú</string>
+    <string name="closeDrawer">Cerrar Menú</string>
+    <string name="item_search_links">Buscar Links</string>
 </resources>
