@@ -28,7 +28,6 @@
                     layout="@layout/card_user_education" />
             <include
                 android:id="@+id/userCommentCard"
-                android:visibility="gone"
                 layout="@layout/card_comment" />
             <RelativeLayout
                     android:id="@+id/loadingUser"

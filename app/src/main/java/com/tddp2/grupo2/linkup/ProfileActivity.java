@@ -39,6 +39,9 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     @BindView(R.id.userProfilePicture)
     ImageView profilePicture;
 
+    @BindView(R.id.userCommentText)
+    TextView textViewUserComment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,10 +83,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void updateComment(String comment) {
-        CardView cardView = (CardView) findViewById(R.id.userCommentCard);
-        cardView.setVisibility(View.VISIBLE);
-        TextView textView = (TextView) findViewById(R.id.userCommentText);
-        textView.setText(comment);
+        textViewUserComment.setText(comment);
     }
 
     @Override
