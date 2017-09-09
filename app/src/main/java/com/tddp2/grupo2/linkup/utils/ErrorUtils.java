@@ -5,6 +5,15 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.exception.APIError;
+import com.tddp2.grupo2.linkup.infrastructure.client.ServiceGenerator;
+
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
+import retrofit2.Response;
 
 
 public class ErrorUtils {
@@ -25,7 +34,7 @@ public class ErrorUtils {
         return alert;
     }
 
-    /*public static APIError parseError(Response<?> response) {
+    public static APIError parseError(Response<?> response) {
         APIError error;
         if (sessionExpired(response)) {
             error = new APIError();
@@ -43,9 +52,9 @@ public class ErrorUtils {
 
 
         return error;
-    }*/
+    }
 
-    /*public static Boolean sessionExpired(Response<?> response) {
+    public static Boolean sessionExpired(Response<?> response) {
         return response.code() == Configuration.HTTP_CODE_FORBIDDEN;
-    }*/
+    }
 }

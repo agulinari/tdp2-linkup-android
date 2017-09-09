@@ -2,10 +2,12 @@ package com.tddp2.grupo2.linkup.service.factory;
 
 import com.tddp2.grupo2.linkup.controller.LoginController;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
+import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinkupService;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.api.ServiceType;
+import com.tddp2.grupo2.linkup.service.impl.ClientServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.LoginServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.ProfileServiceImpl;
 
@@ -37,9 +39,10 @@ public class ServiceFactory {
     }
 
     private static void buildRealServices(Database database) {
-        ProfileService profileService = new ProfileServiceImpl(database);
-        save(profileService);
+        ClientService clientService = new ClientServiceImpl();
+        ProfileService profileService = new ProfileServiceImpl(database, clientService);
         LoginService LoginService = new LoginServiceImpl(database);
+        save(profileService);
         save(LoginService);
     }
 
