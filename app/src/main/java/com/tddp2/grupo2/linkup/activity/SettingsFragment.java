@@ -107,6 +107,13 @@ public class SettingsFragment extends Fragment implements BaseView {
 
         initSettings();
 
+        registerListeners();
+
+
+        return mainView;
+    }
+
+    private void registerListeners() {
         seekBarDistance.setOnSeekbarChangeListener(new OnSeekbarChangeListener() {
             @Override
             public void valueChanged(Number minValue) {
@@ -167,9 +174,6 @@ public class SettingsFragment extends Fragment implements BaseView {
                 saveProfile(v);
             }
         });
-
-
-        return mainView;
     }
 
 

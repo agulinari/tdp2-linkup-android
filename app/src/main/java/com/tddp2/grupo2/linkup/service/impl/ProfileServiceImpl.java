@@ -54,7 +54,9 @@ public class ProfileServiceImpl extends ProfileService {
 
     @Override
     public void updateProfile(Profile profile) throws ServiceException {
-        LinkupClient linkupClient = clientService.getClient();
+
+        saveUser(profile);
+        /*LinkupClient linkupClient = clientService.getClient();
         Call<Profile> call = linkupClient.profiles.updateProfile(profile);
         try {
             Response<Profile> response = call.execute();
@@ -68,7 +70,7 @@ public class ProfileServiceImpl extends ProfileService {
             }
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
-        }
+        }*/
     }
 
     public void saveUser(Profile profile) {
