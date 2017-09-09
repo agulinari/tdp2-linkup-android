@@ -36,10 +36,10 @@ public class LoginServiceImpl extends LoginService {
 
     @Override
     public void loadUserData(LoadUserTaskResponse facebookData) {
-        if (this.database.getProfile() == null) {
+       // if (!this.database.getProfile().getFbid().isEmpty()) {
             facebookData.isNewUser = true;
             loadDataFromFacebook(facebookData);
-        } else {
+        /*} else {
             String loggedUserId = getLoggedUserId();
             String savedUserId = this.database.getProfile().getFbid();
             if (loggedUserId.equals(savedUserId)) {
@@ -48,7 +48,7 @@ public class LoginServiceImpl extends LoginService {
                 facebookData.isNewUser = true;
                 loadDataFromFacebook(facebookData);
             }
-        }
+        }*/
     }
 
     private String getLoggedUserId() {
@@ -117,7 +117,7 @@ public class LoginServiceImpl extends LoginService {
 
     private Bitmap loadProfilePicture(String fbid) {
         try {
-            URL url = new URL("https://graph.facebook.com/" + fbid + "/picture?width=9999");
+            URL url = new URL("https://graph.facebook.com/" + fbid + "/picture?width=999");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
