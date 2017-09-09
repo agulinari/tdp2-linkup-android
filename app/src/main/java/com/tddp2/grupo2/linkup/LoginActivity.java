@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +23,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +64,16 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     @Override
     public void showProgress() {
         findViewById(R.id.loadingLogin).setVisibility(View.VISIBLE);
+        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.fetching_facebook_info), true, false);
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
         findViewById(R.id.loadingLogin).setVisibility(View.GONE);
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
