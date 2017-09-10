@@ -22,7 +22,7 @@
             android:layout_height="285dp">
 
             <ImageView
-                android:id="@+id/candidateImage"
+                android:id="@+id/linkImage"
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:layout_alignParentBottom="true"
@@ -45,7 +45,7 @@
                 android:background="@android:drawable/screen_background_dark_transparent">
 
                 <TextView
-                    android:id="@+id/candidateName"
+                    android:id="@+id/linkName"
                     android:layout_width="fill_parent"
                     android:layout_height="32dp"
                     android:layout_alignParentStart="true"
@@ -58,10 +58,10 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/candidateAge"
+                    android:id="@+id/linkAge"
                     android:layout_width="fill_parent"
                     android:layout_height="16dp"
-                    android:layout_below="@+id/candidateName"
+                    android:layout_below="@+id/linkName"
                     android:drawableEnd="@null"
                     android:drawableStart="@null"
                     android:paddingEnd="8dp"
@@ -71,12 +71,12 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/candidateInterests"
+                    android:id="@+id/linkInterests"
                     android:layout_width="fill_parent"
                     android:layout_height="22dp"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/candidateAge"
+                    android:layout_below="@+id/linkAge"
                     android:drawableEnd="@null"
                     android:drawableStart="@null"
                     android:paddingEnd="8dp"
