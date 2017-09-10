@@ -1,8 +1,9 @@
 package com.tddp2.grupo2.linkup.service.api;
 
 import com.tddp2.grupo2.linkup.infrastructure.Database;
+import com.tddp2.grupo2.linkup.model.Profile;
 
-public class FacebookService implements LinkupService {
+public abstract class FacebookService implements LinkupService {
 
     protected Database database;
 
@@ -13,4 +14,6 @@ public class FacebookService implements LinkupService {
     public ServiceType getType() {
         return ServiceType.FACEBOOK;
     }
+
+    public abstract Profile loadNewUser();
 }
