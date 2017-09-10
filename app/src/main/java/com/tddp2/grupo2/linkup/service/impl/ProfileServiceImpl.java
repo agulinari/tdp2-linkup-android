@@ -1,28 +1,20 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
-import android.os.Bundle;
 import android.util.Log;
-
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
+import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Response;
+
+import java.io.IOException;
 
 public class ProfileServiceImpl extends ProfileService {
 
@@ -75,5 +67,12 @@ public class ProfileServiceImpl extends ProfileService {
 
     public void saveUser(Profile profile) {
            this.database.setProfile(profile);
+    }
+
+    @Override
+    public void updateFromFacebook(Profile profile) {
+        FacebookService facebookService = ServiceFactory.getFacebookService();
+        facebookService.updateUser(profile);
+        database.setProfile(profile);
     }
 }
