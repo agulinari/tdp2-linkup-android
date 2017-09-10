@@ -61,7 +61,7 @@
                         android:padding="12dp"
                         android:layout_gravity="center_horizontal|center"
                         android:onClick="onSettingsClick"
-                        android:text="@string/go_to_settings"/>
+                        android:text="@string/save_profile"/>
                 <android.support.v7.widget.AppCompatButton
                         android:id="@+id/reloadFromFacebookButton"
                         style="@style/Base.Widget.AppCompat.Button.Colored"
