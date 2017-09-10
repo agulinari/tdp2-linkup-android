@@ -3,7 +3,6 @@ package com.tddp2.grupo2.linkup.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,27 +12,12 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
-import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
-import com.facebook.login.LoginManager;
-import com.tddp2.grupo2.linkup.LoginActivity;
-import com.tddp2.grupo2.linkup.MainActivity;
-import com.tddp2.grupo2.linkup.ProfileView;
-import com.tddp2.grupo2.linkup.R;
-import com.tddp2.grupo2.linkup.SettingsActivity;
-import com.tddp2.grupo2.linkup.controller.ProfileController;
-import com.tddp2.grupo2.linkup.controller.SettingsController;
-import com.tddp2.grupo2.linkup.model.Settings;
-
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.tddp2.grupo2.linkup.ProfileView;
+import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.controller.ProfileController;
 
 /**
  * Created by agustin on 09/09/2017.
@@ -107,6 +91,16 @@ public class ProfileFragment extends Fragment implements ProfileView{
             public void onClick(View v)
             {
                 saveProfile(v);
+            }
+        });
+
+        buttonReload.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                savingProfile = false;
+                reloadDataFromFacebook(v);
             }
         });
 
@@ -204,6 +198,10 @@ public class ProfileFragment extends Fragment implements ProfileView{
     public void saveProfile(View view){
         String comment = textViewUserComment.getText().toString();
         controller.saveProfile(comment);
+    }
+
+    public void reloadDataFromFacebook(View view){
+        controller.reloadDataFromFacebook();
     }
 
 }

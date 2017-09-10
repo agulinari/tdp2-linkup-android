@@ -16,4 +16,5 @@ public abstract class FacebookService implements LinkupService {
     }
 
     public abstract Profile loadNewUser();
+    public abstract void updateUser(Profile profile);
 }

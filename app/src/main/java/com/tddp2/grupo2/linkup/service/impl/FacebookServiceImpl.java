@@ -67,6 +67,36 @@ public class FacebookServiceImpl extends FacebookService {
         return profile;
     }
 
+    public void updateUser(Profile profile) {
+        GraphRequest request = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/me"
+
+        );
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "first_name,last_name,gender,work,education,about,picture");
+        request.setParameters(parameters);
+        GraphResponse response = request.executeAndWait();
+        JSONObject jsonResponse = response.getJSONObject();
+
+        Log.i("FacebookData", jsonResponse.toString());
+
+        JSONObject profilePicture = getJsonParam(jsonResponse, "picture");
+        JSONObject profilePictureData = getJsonParam(profilePicture, "data");
+        boolean hasProfilePicture = !getBooleanParam(profilePictureData, "is_silhouette");
+
+        profile.setFirstName(getStringParam(jsonResponse, "first_name"));
+        profile.setLastName(getStringParam(jsonResponse, "last_name"));
+        profile.setGender(getStringParam(jsonResponse, "gender"));
+        profile.setComments(getStringParam(jsonResponse, "about"));
+        profile.setOccupation(getWork(jsonResponse));
+        profile.setEducation(getEducation(jsonResponse));
+
+        if (hasProfilePicture) {
+            getAndSaveProfilePicture(profile);
+        }
+    }
+
     private void getAndSaveProfilePicture(Profile profile) {
         Image image = new Image();
         Bitmap bitmap = loadProfilePicture(profile.getFbid());

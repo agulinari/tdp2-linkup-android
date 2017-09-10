@@ -4,13 +4,12 @@ import android.graphics.Bitmap;
 import com.tddp2.grupo2.linkup.ProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
+import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.task.UpdateSettingsTask;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
 public class ProfileController {
@@ -45,7 +44,7 @@ public class ProfileController {
         } else if (response.hasError()) {
             view.onError(response.getError());
         } else {
-            view.goToNext();
+            update();
         }
     }
 
@@ -83,4 +82,8 @@ public class ProfileController {
         return profileService;
     }
 
+    public void reloadDataFromFacebook() {
+        UpdateFromFacebookTask task = new UpdateFromFacebookTask(profileService, this);
+        task.execute();
+    }
 }
