@@ -65,20 +65,20 @@ public class LoginServiceImpl extends LoginService {
             }
         }else{
             try {
-                loadDataFromServer(facebookData);
-                facebookData.isNewUser = false;
-                Log.i("LOGIN", "no en la base lo traigo de server y da ok");
-            }catch (ServiceException e){
-                Log.e("LOGIN", e.getLocalizedMessage());
-                if (e.hasError()) {
+                boolean success = loadDataFromServer(facebookData);
+                if (success) {
+                    facebookData.isNewUser = false;
+                    Log.i("LOGIN", "no en la base lo traigo de server y da ok");
+                }else{
                     //El servidor responde con codigo diferente a 200
                     facebookData.isNewUser = true;
                     Log.i("LOGIN", "no en la base lo busco en el server y no devuelve success, voy a facebook");
                     loadDataFromFacebook(facebookData);
-                }else{
-                    Log.i("LOGIN", "no en la base lo traigo de server y da error, no hay conectividad");
-                    facebookData.setError("Falló la conexión con el servidor");
                 }
+            }catch (ServiceException e){
+                Log.e("LOGIN", e.getLocalizedMessage());
+                Log.i("LOGIN", "no en la base lo traigo de server y da error, no hay conectividad");
+                facebookData.setError("Falló la conexión con el servidor");
             }
         }
     }
@@ -149,7 +149,7 @@ public class LoginServiceImpl extends LoginService {
     }
 
     @Override
-    public void loadDataFromServer(LoadUserTaskResponse serverData) throws ServiceException {
+    public boolean loadDataFromServer(LoadUserTaskResponse serverData) throws ServiceException {
         String fbid = AccessToken.getCurrentAccessToken().getUserId();
         LinkupClient linkupClient = clientService.getClient();
         Call<Profile> call = linkupClient.profiles.getProfile(fbid);
@@ -162,12 +162,10 @@ public class LoginServiceImpl extends LoginService {
                 serverData.hasProfilePicture = true;
                 serverData.isAdult = true;
                 database.setProfile(profileResponse);
+                return true;
             } else {
-                APIError error = ErrorUtils.parseError(response);
-                throw new ServiceException(error);
+                return false;
             }
-        } catch (ServiceException e) {
-            throw e;
         } catch (Exception e){
             throw new ServiceException(e.getLocalizedMessage());
         }
@@ -177,15 +175,12 @@ public class LoginServiceImpl extends LoginService {
     public boolean isUserRegistered() {
         Profile profile = this.database.getProfile();
         if (profile == null){
-            Log.i("ASFASASF", "PERFIL NULO");
             return false;
         }
         String accountType = profile.getSettings().getAccountType();
         if (accountType == null || accountType.isEmpty()){
-            Log.i("ASFASASF", "ACCOUNT NULO");
             return false;
         }else{
-            Log.i("ASFASASF", "REGISTRADO");
             return true;
         }
     }

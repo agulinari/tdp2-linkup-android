@@ -16,7 +16,7 @@ public abstract class LoginService implements LinkupService {
 
     public abstract void loadDataFromFacebook(LoadUserTaskResponse facebookData);
 
-    public abstract void loadDataFromServer(LoadUserTaskResponse serverData) throws ServiceException;
+    public abstract boolean loadDataFromServer(LoadUserTaskResponse serverData) throws ServiceException;
 
     public ServiceType getType() {
         return ServiceType.LOGIN;
