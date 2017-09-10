@@ -70,7 +70,7 @@ public class ProfileServiceImpl extends ProfileService {
     }
 
     @Override
-    public void updateFromFacebook(Profile profile) {
+    public void updateFromFacebook(Profile profile) throws ServiceException {
         FacebookService facebookService = ServiceFactory.getFacebookService();
         facebookService.updateUser(profile);
         database.setProfile(profile);

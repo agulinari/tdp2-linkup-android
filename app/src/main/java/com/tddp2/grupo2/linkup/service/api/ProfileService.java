@@ -28,5 +28,5 @@ public abstract class ProfileService implements LinkupService{
         return database.getProfile();
     }
 
-    public abstract void updateFromFacebook(Profile profile);
+    public abstract void updateFromFacebook(Profile profile) throws ServiceException;
 }

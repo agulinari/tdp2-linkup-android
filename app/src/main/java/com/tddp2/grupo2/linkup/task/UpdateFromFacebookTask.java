@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 
@@ -23,9 +24,15 @@ public class UpdateFromFacebookTask extends AsyncTask<Object, Void, TaskResponse
 
     @Override
     protected TaskResponse doInBackground(Object... params) {
-        Profile localProfile = profileService.getLocalProfile();
-        profileService.updateFromFacebook(localProfile);
-        return new TaskResponse();
+        try {
+            Profile localProfile = profileService.getLocalProfile();
+            profileService.updateFromFacebook(localProfile);
+                return new TaskResponse();
+        } catch (ServiceException e) {
+            TaskResponse response = new TaskResponse(e.getMessage());
+            response.setSessionExpired(e.isSessionExpired());
+            return response;
+        }
     }
 
     @Override
