@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
 import com.tddp2.grupo2.linkup.activity.ProfileFragment;
 import com.tddp2.grupo2.linkup.activity.SettingsFragment;
@@ -109,6 +111,8 @@ public class LinksActivity extends AppCompatActivity {
                 fragment = new ProfileFragment();
                 currentFragment = getResources().getString(R.string.item_settings);
                 break;
+            case R.id.drawer_logout:
+                logout();
             default:
                 break;
         }
@@ -122,6 +126,13 @@ public class LinksActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    public void logout() {
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     @Override

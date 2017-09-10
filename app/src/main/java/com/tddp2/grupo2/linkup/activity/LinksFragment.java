@@ -19,14 +19,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.tddp2.grupo2.linkup.BaseView;
+import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.LoginActivity;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.controller.LinksController;
+import com.tddp2.grupo2.linkup.model.Links;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class LinksFragment extends Fragment{
+public class LinksFragment extends Fragment implements LinksView{
 
     private static final String TAG = "LinksFragment";
 
@@ -41,13 +46,13 @@ public class LinksFragment extends Fragment{
     private ImageButton buttonNo;
     private ImageButton reloadButton;
 
-    //private LinksController controller;
-
+    private LinksController controller;
+    private Links links;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         activity = getActivity();
-        //controller = new CandidatesControllerImpl(this);
+        controller = new LinksController(this);
         // Toolbar:
         setHasOptionsMenu(true);
 
@@ -62,7 +67,7 @@ public class LinksFragment extends Fragment{
 
         // ListView
         //emptyView = (TextView) mainView.findViewById(R.id.empty_view);
-        //candidates = controller.getCandidates();
+        controller.getLinks();
 
         return mainView;
     }
@@ -76,11 +81,39 @@ public class LinksFragment extends Fragment{
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void logout(View view) {
-        LoginManager.getInstance().logOut();
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void goToNext() {
+
+    }
+
+    @Override
+    public void sessionExpired() {
+
+    }
+
+    @Override
+    public void onError(String errorMsg) {
+
+    }
+
+    @Override
+    public void showLink(Profile profile) {
+
+    }
+
+    @Override
+    public void showEmptyLinks() {
+        //emptyView = (TextView) mainView.findViewById(R.id.empty_view);
     }
 
     /*@Override

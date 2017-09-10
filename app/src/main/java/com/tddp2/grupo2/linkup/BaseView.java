@@ -2,6 +2,8 @@ package com.tddp2.grupo2.linkup;
 
 import android.content.Context;
 
+import com.tddp2.grupo2.linkup.model.Profile;
+
 
 public interface BaseView {
 
@@ -16,5 +18,6 @@ public interface BaseView {
     Context getContext();
 
     void onError(String errorMsg);
+
 }
 

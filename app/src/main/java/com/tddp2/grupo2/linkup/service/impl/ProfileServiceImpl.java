@@ -62,6 +62,7 @@ public class ProfileServiceImpl extends ProfileService {
             if (response.isSuccessful()) {
                 //Save User
                 Profile profileResponse = response.body();
+                Log.i("ACCOUNT TYPE",profileResponse.getSettings().getAccountType());
                 saveUser(profileResponse);
             } else {
                 APIError error = ErrorUtils.parseError(response);

@@ -102,6 +102,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         startActivity(intent);
     }
 
+
+    public void goLinksScreen() {
+        Intent intent = new Intent(this, LinksActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     public void showProfilePictureRestrictionAndEnd() {
         showPopUpAndEnd(getResources().getString(R.string.missing_photo));
     }
