@@ -2,7 +2,6 @@ package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
 import com.tddp2.grupo2.linkup.controller.LoginController;
-import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 
 public class LoadUserTask extends AsyncTask<Object, Void, TaskResponse> {
@@ -23,11 +22,9 @@ public class LoadUserTask extends AsyncTask<Object, Void, TaskResponse> {
 
     @Override
     protected TaskResponse doInBackground(Object... params) {
-
-        LoadUserTaskResponse facebookData = new LoadUserTaskResponse();
-        loginService.loadUserData(facebookData);
-        return facebookData;
-
+        LoadUserTaskResponse userData = new LoadUserTaskResponse();
+        loginService.loadUserData(userData);
+        return userData;
     }
 
     @Override
