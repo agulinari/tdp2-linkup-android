@@ -8,6 +8,7 @@ import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.api.ServiceType;
 import com.tddp2.grupo2.linkup.service.impl.ClientServiceImpl;
+import com.tddp2.grupo2.linkup.service.impl.FacebookServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.LoginServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.ProfileServiceImpl;
 
@@ -42,8 +43,10 @@ public class ServiceFactory {
         ClientService clientService = new ClientServiceImpl();
         ProfileService profileService = new ProfileServiceImpl(database, clientService);
         LoginService LoginService = new LoginServiceImpl(database, clientService);
+        FacebookService facebookService = new FacebookServiceImpl(database, clientService);
         save(profileService);
         save(LoginService);
+        save(facebookService);
     }
 
     private static void buildMockServices() {
@@ -60,5 +63,9 @@ public class ServiceFactory {
 
     public static LoginService getLoginService() {
         return (LoginService) services.get(ServiceType.LOGIN);
+    }
+
+    public static FacebookService getFacebookService() {
+        return (FacebookService) services.get(ServiceType.FACEBOOK);
     }
 }
