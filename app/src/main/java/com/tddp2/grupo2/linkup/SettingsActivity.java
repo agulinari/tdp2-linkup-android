@@ -169,12 +169,12 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
         settings.setSearchMales(searchMales);
         settings.setNotifications(notifications);
         settings.setInvisible(invisible);
-        controller.saveProfile(settings);
+        controller.createProfile(settings);
     }
 
     @Override
     public void showProgress() {
-        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.saving_profile), true, false);
+        progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.registering), true, false);
         progressDialog.show();
     }
 

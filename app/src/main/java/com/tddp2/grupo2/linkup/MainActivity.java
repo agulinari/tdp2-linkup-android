@@ -7,14 +7,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+
+import static com.tddp2.grupo2.linkup.service.factory.ServiceFactory.getLoginService;
 
 public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (AccessToken.getCurrentAccessToken() == null){
-            goLoginScreen();
+        boolean isUserRegistered = ServiceFactory.getLoginService().isUserRegistered();
+        if (!isUserRegistered){
+            if (AccessToken.getCurrentAccessToken() == null){
+                goLoginScreen();
+            }else{
+                LoginManager.getInstance().logOut();
+                goLoginScreen();
+            }
         } else {
             goLinksScreen();
         }

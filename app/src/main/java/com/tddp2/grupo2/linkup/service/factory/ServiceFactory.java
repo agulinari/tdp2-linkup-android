@@ -41,7 +41,7 @@ public class ServiceFactory {
     private static void buildRealServices(Database database) {
         ClientService clientService = new ClientServiceImpl();
         ProfileService profileService = new ProfileServiceImpl(database, clientService);
-        LoginService LoginService = new LoginServiceImpl(database);
+        LoginService LoginService = new LoginServiceImpl(database, clientService);
         save(profileService);
         save(LoginService);
     }

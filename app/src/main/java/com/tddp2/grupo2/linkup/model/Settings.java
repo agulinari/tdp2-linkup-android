@@ -13,6 +13,7 @@ public class Settings implements Serializable {
     private boolean searchMales = false;
     private boolean notifications = false;
     private boolean invisible = false ;
+    private String accountType;
 
     public int getMaxDistance() {
         return maxDistance;
@@ -76,5 +77,13 @@ public class Settings implements Serializable {
 
     public void setInvisible(boolean invisible) {
         this.invisible = invisible;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }
