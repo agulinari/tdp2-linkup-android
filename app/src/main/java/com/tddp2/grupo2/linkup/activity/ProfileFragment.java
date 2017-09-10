@@ -71,7 +71,10 @@ public class ProfileFragment extends Fragment implements ProfileView{
     ImageView imageEditComment;
 
     @BindView(R.id.reloadFromFacebookButton)
-    Button buttonUpdate;
+    Button buttonReload;
+
+    @BindView(R.id.saveProfileButton)
+    Button buttonSave;
 
     private ProgressDialog progressDialog;
 
@@ -98,7 +101,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     private void registerListeners() {
 
-        buttonUpdate.setOnClickListener(new Button.OnClickListener()
+        buttonSave.setOnClickListener(new Button.OnClickListener()
         {
             @Override
             public void onClick(View v)
