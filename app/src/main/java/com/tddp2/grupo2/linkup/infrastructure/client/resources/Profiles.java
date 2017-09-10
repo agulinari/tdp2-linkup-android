@@ -2,6 +2,8 @@ package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
 import com.tddp2.grupo2.linkup.model.Profile;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -22,4 +24,6 @@ public interface Profiles {
     @GET("userProfileById/{id}")
     Call<Profile> getProfile(@Path("id") String fbid);
 
+    @GET("usersProfile")
+    Call<List<Profile>> getProfiles();
 }

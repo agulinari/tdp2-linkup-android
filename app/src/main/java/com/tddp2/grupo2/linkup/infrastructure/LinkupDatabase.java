@@ -7,7 +7,10 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.model.Image;
+import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
+
+import java.util.List;
 
 /**
  * Created by agustin on 07/09/2017.
@@ -18,10 +21,10 @@ public class LinkupDatabase implements Database
 
     private static final String DB = "DB";
     private static final String PROFILE = "PROFILE";
-
+    private static final String LINKS = "LINKS";
 
     private Profile profile;
-
+    private Links links;
 
     public LinkupDatabase() {
         profile = get(PROFILE, Profile.class);
@@ -36,6 +39,19 @@ public class LinkupDatabase implements Database
     public void setProfile(Profile profile) {
         this.profile = profile;
         save(PROFILE, profile);
+    }
+
+    @Override
+    public Links getLinks() {
+        if (links == null){
+            links = get(LINKS, Links.class);
+        }
+        return links;
+    }
+
+    @Override
+    public void setLinks(Links links) {
+
     }
 
     public void save(String key, Object value) {

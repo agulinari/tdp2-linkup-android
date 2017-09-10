@@ -20,5 +20,11 @@
             android:icon="@drawable/ic_build_black_24dp"
             android:title="@string/item_settings" />
 
+        <item
+            android:id="@+id/drawer_logout"
+            android:checked="false"
+            android:icon="@drawable/ic_build_black_24dp"
+            android:title="@string/item_logout" />
+
     </group>
 </menu>

@@ -32,7 +32,7 @@ public class LoginServiceImpl extends LoginService {
 
         Profile profile = this.database.getProfile();
         if (profile != null){
-            if (isUserRegistered()){
+            if (!isUserRegistered()){
                 Log.i("LOGIN", "existe en la base pero no fue registrado, voy a facebook");
                 facebookData.isNewUser = true;
                 loadDataFromFacebook(facebookData);
@@ -55,9 +55,7 @@ public class LoginServiceImpl extends LoginService {
                     loadDataFromFacebook(facebookData);
                 }else{
                     Log.i("LOGIN", "no en la base lo traigo de server y da error, no hay conectividad");
-                    facebookData.isNewUser = true;
-                    loadDataFromFacebook(facebookData);
-                   // facebookData.setError("Falló la conexión con el servidor");
+                    facebookData.setError("Falló la conexión con el servidor");
                 }
             }
         }
@@ -101,7 +99,9 @@ public class LoginServiceImpl extends LoginService {
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);
             }
-        } catch (Exception e) {
+        } catch (ServiceException e) {
+            throw e;
+        } catch (Exception e){
             throw new ServiceException(e.getLocalizedMessage());
         }
     }
@@ -110,12 +110,15 @@ public class LoginServiceImpl extends LoginService {
     public boolean isUserRegistered() {
         Profile profile = this.database.getProfile();
         if (profile == null){
+            Log.i("ASFASASF", "PERFIL NULO");
             return false;
         }
         String accountType = profile.getSettings().getAccountType();
         if (accountType == null || accountType.isEmpty()){
+            Log.i("ASFASASF", "ACCOUNT NULO");
             return false;
         }else{
+            Log.i("ASFASASF", "REGISTRADO");
             return true;
         }
     }

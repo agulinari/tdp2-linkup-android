@@ -19,6 +19,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         boolean isUserRegistered = ServiceFactory.getLoginService().isUserRegistered();
         if (!isUserRegistered){
+
             if (AccessToken.getCurrentAccessToken() == null){
                 goLoginScreen();
             }else{
@@ -26,7 +27,11 @@ public class MainActivity extends Activity {
                 goLoginScreen();
             }
         } else {
-            goLinksScreen();
+            if (AccessToken.getCurrentAccessToken() == null){
+                goLoginScreen();
+            }else {
+                goLinksScreen();
+            }
         }
     }
 
