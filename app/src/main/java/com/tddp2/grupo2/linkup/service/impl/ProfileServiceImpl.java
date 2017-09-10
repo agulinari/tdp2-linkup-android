@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
+import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
