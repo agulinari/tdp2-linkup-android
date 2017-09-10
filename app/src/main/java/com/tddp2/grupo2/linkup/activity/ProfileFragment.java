@@ -1,16 +1,21 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +30,7 @@ import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.SettingsActivity;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.controller.SettingsController;
+import com.tddp2.grupo2.linkup.model.Settings;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,8 +64,16 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @BindView(R.id.userProfilePicture)
     ImageView profilePicture;
 
+    @BindView(R.id.userCommentText)
+    TextView textViewUserComment;
+
+    @BindView(R.id.editCommentIcon)
+    ImageView imageEditComment;
+
     @BindView(R.id.reloadFromFacebookButton)
     Button buttonUpdate;
+
+    private ProgressDialog progressDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +103,14 @@ public class ProfileFragment extends Fragment implements ProfileView{
             @Override
             public void onClick(View v)
             {
-                //saveProfile(v);
+                saveProfile(v);
+            }
+        });
+
+        imageEditComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCommentEditorPopUp();
             }
         });
     }
@@ -113,7 +134,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void updateComment(String comment) {
-
+        textViewUserComment.setText(comment);
     }
 
     @Override
@@ -122,12 +143,16 @@ public class ProfileFragment extends Fragment implements ProfileView{
     }
 
     @Override
-    public void showProgress() { getActivity().findViewById(R.id.loadingUser).setVisibility(View.VISIBLE);
+    public void showProgress() {
+        progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.saving_profile), true, false);
+        progressDialog.show();
     }
 
     @Override
     public void hideProgress() {
-        getActivity().findViewById(R.id.loadingUser).setVisibility(View.GONE);
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
     @Override
@@ -146,6 +171,36 @@ public class ProfileFragment extends Fragment implements ProfileView{
     @Override
     public void onError(String errorMsg) {
         Toast.makeText(getActivity().getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void openCommentEditorPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setTitle(getResources().getString(R.string.comment_edit));
+
+        final EditText newCommentInput = new EditText(this.getActivity());
+        newCommentInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(newCommentInput);
+
+        builder.setPositiveButton(getResources().getString(R.string.comment_edit_save), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                controller.saveNewComment(newCommentInput.getText().toString());
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.comment_edit_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    /* On Click button saveProfile */
+    public void saveProfile(View view){
+        String comment = textViewUserComment.getText().toString();
+        controller.saveProfile(comment);
     }
 
 }

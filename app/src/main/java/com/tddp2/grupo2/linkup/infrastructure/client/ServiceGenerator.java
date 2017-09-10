@@ -9,6 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -19,6 +20,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ServiceGenerator {
 
     public static Retrofit defaultRetrofit() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.readTimeout(Configuration.READ_TIMEOUT_SECONDS, TimeUnit.SECONDS);
         httpClient.connectTimeout(Configuration.CONNECTION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
@@ -36,6 +40,9 @@ public class ServiceGenerator {
             }
         });
 
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
         return new Retrofit.Builder()
                 .baseUrl(Configuration.DEFAULT_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())

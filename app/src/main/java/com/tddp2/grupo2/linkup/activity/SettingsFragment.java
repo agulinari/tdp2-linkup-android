@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -95,7 +96,7 @@ public class SettingsFragment extends Fragment implements BaseView {
         activity = getActivity();
         // Toolbar:
         setHasOptionsMenu(true);
-
+        Log.i("SETTINGS", "ON CREATE");
         // View:
         View mainView = inflater.inflate(R.layout.fragment_settings, container, false);
         mainView.setTag(TAG);
@@ -226,7 +227,7 @@ public class SettingsFragment extends Fragment implements BaseView {
 
     @Override
     public void showProgress() {
-        progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.saving_profile), true, false);
+        progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.saving_settings), true, false);
         progressDialog.show();
     }
 

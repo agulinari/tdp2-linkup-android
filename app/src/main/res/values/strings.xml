@@ -16,6 +16,7 @@
     <string name="more_preferences">Más preferencias</string>
     <string name="update_profile">Actualizar</string>
     <string name="saving_profile">Guardando Información de Perfil</string>
+    <string name="saving_settings">Guardando Preferencias</string>
     <string name="no_connection_to_server">No hay conexión con el servidor</string>
     <string name="go_to_settings">Preferencias</string>
     <string name="reload_facebook">Actualizar información</string>
@@ -37,3 +38,4 @@
     <string name="closeDrawer">Cerrar Menú</string>
     <string name="item_search_links">Buscar Links</string>
 </resources>
+

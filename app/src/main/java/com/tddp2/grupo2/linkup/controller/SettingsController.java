@@ -1,14 +1,11 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.BaseView;
-import com.tddp2.grupo2.linkup.model.Interest;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
-import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
-
-import java.util.ArrayList;
+import com.tddp2.grupo2.linkup.task.UpdateSettingsTask;
 
 
 public class SettingsController {
@@ -23,7 +20,7 @@ public class SettingsController {
 
     public void saveProfile(Settings settings) {
 
-      UpdateProfileTask task = new UpdateProfileTask(profileService, this);
+      UpdateSettingsTask task = new UpdateSettingsTask(profileService, this);
         task.execute(settings);
 
     }
