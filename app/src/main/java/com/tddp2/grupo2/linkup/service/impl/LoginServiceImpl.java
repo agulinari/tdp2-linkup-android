@@ -85,20 +85,6 @@ public class LoginServiceImpl extends LoginService {
         }
     }
 
-    private String getLoggedUserId() {
-        GraphRequest request = new GraphRequest(
-                getCurrentAccessToken(),
-                "/me"
-        );
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id");
-        request.setParameters(parameters);
-        GraphResponse response = request.executeAndWait();
-        JSONObject jsonResponse = response.getJSONObject();
-        return getStringParam(jsonResponse, "id");
-    }
-
-
     @Override
     public void loadDataFromFacebook(LoadUserTaskResponse facebookData) {
         GraphRequest request = new GraphRequest(
