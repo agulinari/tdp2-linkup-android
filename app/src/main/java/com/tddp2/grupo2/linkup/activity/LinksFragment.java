@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.LoginActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -73,6 +74,13 @@ public class LinksFragment extends Fragment{
         menu.clear();
      //   inflater.inflate(R.menu.menu_home, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    public void logout(View view) {
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     /*@Override

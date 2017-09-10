@@ -14,10 +14,12 @@
     <string name="notifications">Notificaciones</string>
     <string name="invisible">Modo invisible</string>
     <string name="more_preferences">Más preferencias</string>
-    <string name="update_profile">Actualizar</string>
+    <string name="create_profile">Registrarse</string>
+    <string name="registering">Registrando usuario</string>
     <string name="saving_profile">Guardando Información de Perfil</string>
     <string name="saving_settings">Guardando Preferencias</string>
     <string name="no_connection_to_server">No hay conexión con el servidor</string>
+    <string name="continue_settings">Continuar</string>
     <string name="save_profile">Guardar</string>
     <string name="reload_facebook">Actualizar información</string>
     <string name="fetching_facebook_info">Recuperando información de Facebook</string>

@@ -21,4 +21,8 @@ public class ServiceException extends Exception{
         return Boolean.FALSE;
     }
 
+    public boolean hasError(){
+        return (error!=null);
+    }
+
 }

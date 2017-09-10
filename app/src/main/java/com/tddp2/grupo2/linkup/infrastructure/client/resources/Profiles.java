@@ -13,13 +13,13 @@ import retrofit2.http.Query;
 
 public interface Profiles {
 
-    @POST("profile")
+    @POST("userProfile")
     Call<Profile> createProfile(@Body Profile profile);
 
-    @PUT("profile")
+    @PUT("userProfile")
     Call<Profile> updateProfile(@Body Profile profile);
 
-    @GET("profile/{id}")
+    @GET("userProfileById/{id}")
     Call<Profile> getProfile(@Path("id") String fbid);
 
 }

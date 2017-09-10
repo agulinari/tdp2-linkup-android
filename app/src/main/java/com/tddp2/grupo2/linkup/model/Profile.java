@@ -15,7 +15,6 @@ public class Profile implements Serializable {
     private String occupation;
     private String education;
     private String comments;
-    private String accountType;
     private List<Interest> interests = new ArrayList<Interest>();
     private List<Image> images = new ArrayList<Image>();
     private Settings settings = new Settings();
@@ -82,14 +81,6 @@ public class Profile implements Serializable {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
-    }
-
-    public String getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(String accountType) {
-        this.accountType = accountType;
     }
 
     public String getGender() {

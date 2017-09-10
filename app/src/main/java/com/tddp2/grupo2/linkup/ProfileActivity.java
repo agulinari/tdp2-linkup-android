@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.model.Profile;
 
 public class ProfileActivity extends AppCompatActivity implements ProfileView {
     ProfileController controller;
@@ -69,13 +70,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         startActivity(intent);
     }
 
-    public void logout(View view) {
-        LoginManager.getInstance().logOut();
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
     @Override
     public void updateFirstNameAndAge(String firstName, int age) {
         textViewUserNameAndAge.setText(firstName + ", " + String.valueOf(age));
@@ -96,6 +90,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
     @Override
     public void updateComment(String comment) {
         textViewUserComment.setText(comment);
+        Profile localProfile = controller.getProfileService().getLocalProfile();
+        localProfile.setComments(comment);
     }
 
     @Override
@@ -115,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public void goToNext() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, SettingsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -144,7 +140,8 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView {
         builder.setPositiveButton(getResources().getString(R.string.comment_edit_save), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controller.saveNewComment(newCommentInput.getText().toString());
+                String comment = newCommentInput.getText().toString();
+                controller.saveNewComment(comment);
             }
         });
         builder.setNegativeButton(getResources().getString(R.string.comment_edit_cancel), new DialogInterface.OnClickListener() {

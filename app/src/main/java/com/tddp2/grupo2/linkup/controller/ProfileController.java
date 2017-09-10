@@ -78,4 +78,9 @@ public class ProfileController {
     public void saveNewComment(String newComment) {
         view.updateComment(newComment);
     }
+
+    public ProfileService getProfileService() {
+        return profileService;
+    }
+
 }
