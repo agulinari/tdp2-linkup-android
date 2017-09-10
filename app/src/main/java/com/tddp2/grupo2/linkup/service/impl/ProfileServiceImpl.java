@@ -71,5 +71,6 @@ public class ProfileServiceImpl extends ProfileService {
     public void updateFromFacebook(Profile profile) {
         FacebookService facebookService = ServiceFactory.getFacebookService();
         facebookService.updateUser(profile);
+        database.setProfile(profile);
     }
 }

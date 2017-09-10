@@ -20,11 +20,9 @@
                     layout="@layout/card_user" />
             <include
                     android:id="@+id/userOccupationCard"
-                    android:visibility="gone"
                     layout="@layout/card_user_occupation" />
             <include
                     android:id="@+id/userEducationCard"
-                    android:visibility="gone"
                     layout="@layout/card_user_education" />
             <include
                 android:id="@+id/userCommentCard"

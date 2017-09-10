@@ -124,9 +124,19 @@ public class ProfileFragment extends Fragment implements ProfileView{
     }
 
     @Override
+    public void hideOccupation() {
+        cardViewUserOccupation.setVisibility(View.GONE);
+    }
+
+    @Override
     public void updateEducation(String education) {
         cardViewUserEducation.setVisibility(View.VISIBLE);
         textViewUserStudies.setText(education);
+    }
+
+    @Override
+    public void hideEducation() {
+        cardViewUserEducation.setVisibility(View.GONE);
     }
 
     @Override

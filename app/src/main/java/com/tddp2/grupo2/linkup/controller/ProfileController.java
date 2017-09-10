@@ -58,12 +58,17 @@ public class ProfileController {
             e.printStackTrace();
         }
 
-        if (!profile.getOccupation().equals("")) {
+        if (profile.getOccupation().equals("")) {
+            view.hideOccupation();
+        } else {
             view.updateOccupation(profile.getOccupation());
         }
 
-        if (!profile.getEducation().equals("")) {
+        if (profile.getEducation().equals("")) {
+            view.hideEducation();
+        } else {
             view.updateEducation(profile.getEducation());
+
         }
 
         view.updateFirstNameAndAge(profile.getFirstName(), age);
