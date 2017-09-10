@@ -33,6 +33,6 @@ public class UpdateFromFacebookTask extends AsyncTask<Object, Void, TaskResponse
         if (controller != null)
             controller.finishTask();
 
-        controller.onResult(response);
+        controller.onUpdateDataResult(response);
     }
 }

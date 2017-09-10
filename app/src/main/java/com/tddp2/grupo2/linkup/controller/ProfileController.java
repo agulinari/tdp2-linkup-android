@@ -44,6 +44,17 @@ public class ProfileController {
         } else if (response.hasError()) {
             view.onError(response.getError());
         } else {
+            view.goToNext();
+        }
+    }
+
+    public void onUpdateDataResult(Object result) {
+        TaskResponse response = (TaskResponse) result;
+        if (response.sessionExpired()) {
+            view.sessionExpired();
+        } else if (response.hasError()) {
+            view.onError(response.getError());
+        } else {
             update();
         }
     }
