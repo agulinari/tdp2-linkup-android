@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
     Button buttonSave;
 
     private ProgressDialog progressDialog;
+    private boolean savingProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,6 +91,7 @@ public class ProfileFragment extends Fragment implements ProfileView{
             @Override
             public void onClick(View v)
             {
+                savingProfile = true;
                 saveProfile(v);
             }
         });
@@ -151,7 +153,8 @@ public class ProfileFragment extends Fragment implements ProfileView{
 
     @Override
     public void showProgress() {
-        progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.saving_profile), true, false);
+        String message = savingProfile ? getResources().getString(R.string.saving_profile) : getResources().getString(R.string.fetching_facebook_info);
+        progressDialog = ProgressDialog.show(getActivity(), "", message, true, false);
         progressDialog.show();
     }
 
