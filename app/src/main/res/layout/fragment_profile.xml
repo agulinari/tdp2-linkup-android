@@ -7,67 +7,71 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     tools:context="com.tddp2.grupo2.linkup.ProfileActivity">
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-        <include
-            android:id="@+id/userNameAndAgeCard"
-            layout="@layout/card_user" />
-        <include
-            android:id="@+id/userOccupationCard"
-            android:visibility="gone"
-            layout="@layout/card_user_occupation" />
-        <include
-            android:id="@+id/userEducationCard"
-            android:visibility="gone"
-            layout="@layout/card_user_education" />
-        <include
-            android:id="@+id/userCommentCard"
-            layout="@layout/card_comment" />
-        <RelativeLayout
-            android:id="@+id/loadingUser"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:gravity="center" >
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminateTint="@color/loadingPanel"
-                android:indeterminate="true"/>
-        </RelativeLayout>
-
+            android:layout_height="match_parent">
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dip"
-            android:layout_weight="1"
-            android:gravity="center|bottom"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical" >
+            <include
+                android:id="@+id/userNameAndAgeCard"
+                layout="@layout/card_user" />
+            <include
+                android:id="@+id/userOccupationCard"
+                android:visibility="gone"
+                layout="@layout/card_user_occupation" />
+            <include
+                android:id="@+id/userEducationCard"
+                android:visibility="gone"
+                layout="@layout/card_user_education" />
+            <include
+                android:id="@+id/userCommentCard"
+                layout="@layout/card_comment" />
+            <RelativeLayout
+                android:id="@+id/loadingUser"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:gravity="center" >
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/loadingPanel"
+                    android:indeterminate="true"/>
+            </RelativeLayout>
 
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/saveProfileButton"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_marginTop="5dp"
-                android:padding="12dp"
-                android:layout_gravity="center_horizontal|center"
-                android:text="@string/save_profile"/>
-            <android.support.v7.widget.AppCompatButton
-                android:id="@+id/reloadFromFacebookButton"
-                style="@style/Base.Widget.AppCompat.Button.Colored"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginRight="24dp"
-                android:layout_gravity="center_horizontal|center"
-                android:padding="12dp"
-                android:text="@string/reload_facebook" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:gravity="center|bottom"
+                android:orientation="vertical" >
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/saveProfileButton"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="12dp"
+                    android:layout_gravity="center_horizontal|center"
+                    android:text="@string/save_profile"/>
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/reloadFromFacebookButton"
+                    style="@style/Base.Widget.AppCompat.Button.Colored"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_gravity="center_horizontal|center"
+                    android:padding="12dp"
+                    android:text="@string/reload_facebook" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
