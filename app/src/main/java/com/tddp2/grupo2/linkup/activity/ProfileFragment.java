@@ -119,8 +119,8 @@ public class ProfileFragment extends Fragment implements ProfileView{
     }
 
     @Override
-    public void updateFirstNameAndAge(String firstName, int age) {
-        textViewUserNameAndAge.setText(firstName + ", " + String.valueOf(age));
+    public void updateFirstNameAndAge(String firstName, String age) {
+        textViewUserNameAndAge.setText(firstName + ", " + age);
     }
 
     @Override

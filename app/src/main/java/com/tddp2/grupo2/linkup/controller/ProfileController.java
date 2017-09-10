@@ -2,18 +2,16 @@ package com.tddp2.grupo2.linkup.controller;
 
 import android.graphics.Bitmap;
 import com.tddp2.grupo2.linkup.ProfileView;
+import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
+import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.task.UpdateSettingsTask;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
-import org.joda.time.LocalDate;
-import org.joda.time.Years;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 public class ProfileController {
 
@@ -54,10 +52,12 @@ public class ProfileController {
     public void update() {
         Profile profile = this.profileService.getLocalProfile();
 
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy");
-        LocalDate birthdayDate = formatter.parseLocalDate(profile.getBirthday());
-        LocalDate now = new LocalDate();
-        Years age = Years.yearsBetween(birthdayDate, now);
+        String age = "";
+        try {
+            age = String.valueOf(DateUtils.getAgeFromBirthday(profile.getBirthday()));
+        } catch (MissingAgeException e) {
+            e.printStackTrace();
+        }
 
         if (!profile.getOccupation().equals("")) {
             view.updateOccupation(profile.getOccupation());
@@ -67,7 +67,7 @@ public class ProfileController {
             view.updateEducation(profile.getEducation());
         }
 
-        view.updateFirstNameAndAge(profile.getFirstName(), age.getYears());
+        view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
 
         String image = profile.getImages().get(0).getImage();

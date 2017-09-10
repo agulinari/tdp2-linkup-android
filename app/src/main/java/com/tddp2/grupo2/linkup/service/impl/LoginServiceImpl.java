@@ -13,12 +13,8 @@ import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
+import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
-
-import org.joda.time.LocalDate;
-import org.joda.time.Years;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,7 +82,7 @@ public class LoginServiceImpl extends LoginService {
 
         String birthday = getStringParam(jsonResponse, "birthday");
         try {
-            int age = getAgeFromBirthday(birthday);
+            int age = DateUtils.getAgeFromBirthday(birthday);
             facebookData.hasBirthday = true;
             facebookData.isAdult = (age >= 18);
         } catch (MissingAgeException e) {
@@ -182,21 +178,6 @@ public class LoginServiceImpl extends LoginService {
         } catch (JSONException e) {
             Log.i("FacebookData", "Missing parameter education");
             return "";
-        }
-    }
-
-    private int getAgeFromBirthday(String birthday) throws MissingAgeException {
-        if (birthday.equals("")) {
-            throw new MissingAgeException();
-        }
-        try {
-            DateTimeFormatter formatter = DateTimeFormat.forPattern("MM/dd/yyyy");
-            LocalDate birthdayDate = formatter.parseLocalDate(birthday);
-            LocalDate now = new LocalDate();
-            Years age = Years.yearsBetween(birthdayDate, now);
-            return age.getYears();
-        } catch (IllegalArgumentException e) {
-            throw new MissingAgeException();
         }
     }
 }
