@@ -105,11 +105,11 @@ public class LinksActivity extends AppCompatActivity {
                 break;
             case R.id.drawer_settings:
                 fragment = new SettingsFragment();
-                currentFragment = getResources().getString(R.string.item_perfil);
+                currentFragment = getResources().getString(R.string.item_settings);
                 break;
             case R.id.drawer_profile:
                 fragment = new ProfileFragment();
-                currentFragment = getResources().getString(R.string.item_settings);
+                currentFragment = getResources().getString(R.string.item_perfil);
                 break;
             case R.id.drawer_logout:
                 logout();
