@@ -52,7 +52,7 @@ public class FacebookServiceImpl extends FacebookService {
         JSONObject profilePicture = getJsonParam(jsonResponse, "picture");
         JSONObject profilePictureData = getJsonParam(profilePicture, "data");
         if (profilePictureData.has("is_silhouette")) {
-            hasProfilePicture = getBooleanParam(profilePictureData, "is_silhouette");
+            hasProfilePicture = !getBooleanParam(profilePictureData, "is_silhouette");
         }
 
         Profile profile = new Profile();
@@ -91,7 +91,7 @@ public class FacebookServiceImpl extends FacebookService {
         JSONObject profilePicture = getJsonParam(jsonResponse, "picture");
         JSONObject profilePictureData = getJsonParam(profilePicture, "data");
         if (profilePictureData.has("is_silhouette")) {
-            hasProfilePicture = getBooleanParam(profilePictureData, "is_silhouette");
+            hasProfilePicture = !getBooleanParam(profilePictureData, "is_silhouette");
         }
 
         profile.setFirstName(getStringParam(jsonResponse, "first_name"));
