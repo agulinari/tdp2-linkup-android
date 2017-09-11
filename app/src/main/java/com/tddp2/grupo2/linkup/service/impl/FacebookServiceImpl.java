@@ -7,6 +7,7 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -67,7 +68,7 @@ public class FacebookServiceImpl extends FacebookService {
         return profile;
     }
 
-    public void updateUser(Profile profile) {
+    public void updateUser(Profile profile) throws ServiceException {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/me"
@@ -77,8 +78,10 @@ public class FacebookServiceImpl extends FacebookService {
         parameters.putString("fields", "first_name,last_name,gender,work,education,about,picture");
         request.setParameters(parameters);
         GraphResponse response = request.executeAndWait();
+        if (response.getError() != null) {
+            throw new ServiceException("Cannot connect to Facebook");
+        }
         JSONObject jsonResponse = response.getJSONObject();
-
         Log.i("FacebookData", jsonResponse.toString());
 
         JSONObject profilePicture = getJsonParam(jsonResponse, "picture");
