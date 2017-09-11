@@ -222,6 +222,7 @@ public class SettingsFragment extends Fragment implements BaseView {
         settings.setSearchMales(searchMales);
         settings.setNotifications(notifications);
         settings.setInvisible(invisible);
+        settings.setAccountType("Basic");
         controller.saveProfile(settings);
     }
 

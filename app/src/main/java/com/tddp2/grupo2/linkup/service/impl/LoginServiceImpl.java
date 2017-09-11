@@ -108,12 +108,15 @@ public class LoginServiceImpl extends LoginService {
     public boolean isUserRegistered() {
         Profile profile = this.database.getProfile();
         if (profile == null){
+            Log.i("LOGIN SERVICE","PROFILE NULL");
             return false;
         }
         String accountType = profile.getSettings().getAccountType();
         if (accountType == null || accountType.isEmpty()){
+            Log.i("LOGIN SERVICE","ACCOUNT NULL");
             return false;
         }else{
+            Log.i("LOGIN SERVICE","REGISTRADO");
             return true;
         }
     }
