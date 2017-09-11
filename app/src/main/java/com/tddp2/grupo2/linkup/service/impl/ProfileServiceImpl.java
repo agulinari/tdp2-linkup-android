@@ -36,8 +36,8 @@ public class ProfileServiceImpl extends ProfileService {
                 Profile profileResponse = response.body();
                 saveUser(profileResponse);
             } else {
-                APIError error = ErrorUtils.parseError(response);
-                throw new ServiceException(error);
+                //APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(response.message());
             }
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
@@ -57,8 +57,8 @@ public class ProfileServiceImpl extends ProfileService {
                 Log.i("ACCOUNT TYPE",profileResponse.getSettings().getAccountType());
                 saveUser(profileResponse);
             } else {
-                APIError error = ErrorUtils.parseError(response);
-                throw new ServiceException(error);
+                //APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(response.message());
             }
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());

@@ -36,7 +36,7 @@ public class LinksController {
     }
 
     public void previousLink(){
-        if (links.getLinks().isEmpty()){
+        if (links.getLinks()==null || links.getLinks().isEmpty()){
             return;
         }
         if (currentLink == 0){
@@ -49,7 +49,7 @@ public class LinksController {
     }
 
     public void nextLink(){
-        if (links.getLinks().isEmpty()){
+        if (links.getLinks()==null || links.getLinks().isEmpty()){
             return;
         }
         if (currentLink == (links.getLinks().size()-1)){

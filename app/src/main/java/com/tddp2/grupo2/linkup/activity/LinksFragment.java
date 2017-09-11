@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,6 +66,9 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.reloadButton)
     ImageButton reloadButton;
 
+    @BindView(R.id.progressImage)
+    ProgressBar progressImage;
+
     private Context activity;
     private LinksController controller;
     private Links links;
@@ -97,6 +101,7 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
+                progressImage.setVisibility(View.VISIBLE);
                 controller.nextLink();
             }
         });
@@ -106,6 +111,7 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
+                progressImage.setVisibility(View.VISIBLE);
                 controller.previousLink();
             }
         });
@@ -147,6 +153,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void showLink(Profile profile) {
+        progressImage.setVisibility(View.INVISIBLE);
         String image = profile.getImages().get(0).getImage();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         imageViewLinkImage.setImageBitmap(bitmap);
