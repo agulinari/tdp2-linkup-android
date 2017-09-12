@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
 import com.tddp2.grupo2.linkup.activity.ProfileFragment;
 import com.tddp2.grupo2.linkup.activity.SettingsFragment;
@@ -129,6 +130,7 @@ public class LinksActivity extends AppCompatActivity {
     }
 
     public void logout() {
+        FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
