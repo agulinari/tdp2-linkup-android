@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.tddp2.grupo2.linkup.BaseView;
+import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.LoginActivity;
 import com.tddp2.grupo2.linkup.R;
@@ -113,6 +114,17 @@ public class LinksFragment extends Fragment implements LinksView{
             {
                 progressImage.setVisibility(View.VISIBLE);
                 controller.previousLink();
+            }
+        });
+
+        reloadButton.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
