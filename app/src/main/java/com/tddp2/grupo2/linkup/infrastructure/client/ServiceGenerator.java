@@ -42,7 +42,7 @@ public class ServiceGenerator {
 
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
+       // httpClient.addInterceptor(logging);  // <-- this is the important line!
         return new Retrofit.Builder()
                 .baseUrl(Configuration.DEFAULT_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
