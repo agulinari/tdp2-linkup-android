@@ -57,4 +57,8 @@ public class LinksServiceImpl extends LinksService{
     public void saveLinks(Links links) {
         this.database.setLinks(links);
     }
+
+    public Database getDatabase(){
+        return this.database;
+    }
 }
