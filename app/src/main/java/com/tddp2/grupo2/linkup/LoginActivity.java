@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -59,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        loadUser();
+                        checkLocationEnabledAndLoadUser();
                         handleFacebookAccessToken(loginResult.getAccessToken());
                     }
 
@@ -234,5 +236,37 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 }
             }
         }
+    }
+
+
+    private void checkLocationEnabledAndLoadUser() {
+        LocationManager locationManager = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+                !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            this.enableLocationOrEnd();
+        } else {
+            loadUser();
+        }
+    }
+
+    public void enableLocationOrEnd() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.enable_location_title)
+                .setMessage(R.string.enable_location_description)
+                .setPositiveButton(R.string.enable_location_settings, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        LoginManager.getInstance().logOut();
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton(R.string.enable_location_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        showPopUpAndEnd(getResources().getString(R.string.location_restriction));
+                    }
+                });
+        dialog.show();
     }
 }
