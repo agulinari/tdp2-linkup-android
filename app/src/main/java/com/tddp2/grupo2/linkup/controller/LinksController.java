@@ -88,4 +88,18 @@ public class LinksController {
         }
     }
 
+    public String chat(){
+        Profile candidate = links.getLinks().get(currentLink);
+        Profile user = linksService.getDatabase().getProfile();
+        String fbidC = candidate.getFbid();
+        String fbidU = user.getFbid();
+        String chatId = "";
+        if (fbidU.compareTo(fbidC)<=0){
+            chatId = fbidU+":"+fbidC;
+        }else{
+            chatId = fbidC+":"+fbidU;
+        }
+        return chatId;
+    }
+
 }

@@ -122,7 +122,9 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
+                String chatId = controller.chat();
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("CHAT_ID", chatId);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

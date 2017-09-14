@@ -23,6 +23,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        final String chatId = getIntent().getStringExtra("CHAT_ID");
 
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
@@ -36,6 +37,8 @@ public class ChatActivity extends AppCompatActivity {
                 // of ChatMessage to the Firebase database
                 FirebaseDatabase.getInstance()
                         .getReference()
+                        .child("chats")
+                        .child(chatId)
                         .push()
                         .setValue(new ChatMessage(input.getText().toString(),
                                 FirebaseAuth.getInstance()
@@ -51,7 +54,7 @@ public class ChatActivity extends AppCompatActivity {
         ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference()) {
+                R.layout.message, FirebaseDatabase.getInstance().getReference().child("chats").child(chatId)) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
                 // Get references to the views of message.xml

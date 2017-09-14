@@ -24,4 +24,6 @@ public abstract class LinksService implements LinkupService{
         return ServiceType.LINKS;
     }
 
+    public abstract Database getDatabase();
+
 }
