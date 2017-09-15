@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import static com.tddp2.grupo2.linkup.service.factory.ServiceFactory.getLoginService;
@@ -17,19 +18,16 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean isUserRegistered = ServiceFactory.getLoginService().isUserRegistered();
-        if (!isUserRegistered){
 
-            if (AccessToken.getCurrentAccessToken() == null){
-                goLoginScreen();
-            }else{
+        if (AccessToken.getCurrentAccessToken() == null) {
+            goLoginScreen();
+        }else {
+            boolean isUserRegistered = ServiceFactory.getLoginService().isUserRegistered();
+            if (!isUserRegistered) {
+                FirebaseAuth.getInstance().signOut();
                 LoginManager.getInstance().logOut();
                 goLoginScreen();
-            }
-        } else {
-            if (AccessToken.getCurrentAccessToken() == null){
-                goLoginScreen();
-            }else {
+            } else {
                 goLinksScreen();
             }
         }

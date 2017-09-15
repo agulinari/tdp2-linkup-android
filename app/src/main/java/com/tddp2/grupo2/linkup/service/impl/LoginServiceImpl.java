@@ -18,6 +18,8 @@ import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
+import static android.R.attr.accountType;
+
 public class LoginServiceImpl extends LoginService {
 
     private ClientService clientService;
@@ -30,35 +32,29 @@ public class LoginServiceImpl extends LoginService {
     @Override
     public void loadUserData(LoadUserTaskResponse facebookData)  {
 
-        Profile profile = this.database.getProfile();
-        if (profile != null){
             if (!isUserRegistered()){
-                Log.i("LOGIN", "existe en la base pero no fue registrado, voy a facebook");
-                facebookData.isNewUser = true;
-                loadDataFromFacebook(facebookData);
+                Log.i("LOGIN", "no esta registrado en la base local,  pregunto si esta registrado en el server");
+                try {
+                    boolean success = loadDataFromServer(facebookData);
+                    if (success) {
+                        facebookData.isNewUser = false;
+                        Log.i("LOGIN", "no en la base lo traigo de server y da ok");
+                    }else{
+                        //El servidor responde con codigo diferente a 200
+                        facebookData.isNewUser = true;
+                        Log.i("LOGIN", "no en la base lo busco en el server y no devuelve success, voy a facebook");
+                        loadDataFromFacebook(facebookData);
+                    }
+                }catch (ServiceException e){
+                    Log.e("LOGIN", e.getLocalizedMessage());
+                    Log.i("LOGIN", "no en la base lo traigo de server y da error, no hay conectividad");
+                    facebookData.setError("Falló la conexión con el servidor");
+                }
             }else{
                 //TODO: Seria mas seguro verificar tambien si esta registrado en el server
                 Log.i("LOGIN", "existe en la base y fue registrado, lo devuelvo");
                 facebookData.isNewUser = false;
             }
-        }else{
-            try {
-                boolean success = loadDataFromServer(facebookData);
-                if (success) {
-                    facebookData.isNewUser = false;
-                    Log.i("LOGIN", "no en la base lo traigo de server y da ok");
-                }else{
-                    //El servidor responde con codigo diferente a 200
-                    facebookData.isNewUser = true;
-                    Log.i("LOGIN", "no en la base lo busco en el server y no devuelve success, voy a facebook");
-                    loadDataFromFacebook(facebookData);
-                }
-            }catch (ServiceException e){
-                Log.e("LOGIN", e.getLocalizedMessage());
-                Log.i("LOGIN", "no en la base lo traigo de server y da error, no hay conectividad");
-                facebookData.setError("Falló la conexión con el servidor");
-            }
-        }
     }
 
     @Override
@@ -106,9 +102,14 @@ public class LoginServiceImpl extends LoginService {
 
     @Override
     public boolean isUserRegistered() {
+        String userId = AccessToken.getCurrentAccessToken().getUserId();
         Profile profile = this.database.getProfile();
         if (profile == null){
             Log.i("LOGIN SERVICE","PROFILE NULL");
+            return false;
+        }
+        if (!profile.getFbid().equals(userId)){
+            Log.i("LOGIN SERVICE","OTRO USUARIO");
             return false;
         }
         String accountType = profile.getSettings().getAccountType();
