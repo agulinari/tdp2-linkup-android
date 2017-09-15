@@ -19,6 +19,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private FirebaseListAdapter<ChatMessage> adapter;
 
+    ListView listOfMessages;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        ListView listOfMessages = (ListView)findViewById(R.id.list_of_messages);
+        listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
                 R.layout.message, FirebaseDatabase.getInstance().getReference().child("chats").child(chatId)) {
@@ -74,4 +76,6 @@ public class ChatActivity extends AppCompatActivity {
 
         listOfMessages.setAdapter(adapter);
     }
+
+
 }
