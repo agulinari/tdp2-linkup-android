@@ -54,7 +54,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-        scrollMyListViewToBottom();
 
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
                 R.layout.message, FirebaseDatabase.getInstance().getReference().child("chats").child(chatId)) {
@@ -72,21 +71,11 @@ public class ChatActivity extends AppCompatActivity {
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                         model.getMessageTime()));
-                scrollMyListViewToBottom();
             }
         };
 
         listOfMessages.setAdapter(adapter);
     }
 
-    private void scrollMyListViewToBottom() {
-        listOfMessages.post(new Runnable() {
-            @Override
-            public void run() {
-                // Select the last row so it will scroll into view...
-                listOfMessages.setSelection(listOfMessages.getCount() - 1);
-            }
-        });
-    }
 
 }
