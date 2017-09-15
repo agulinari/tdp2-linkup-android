@@ -140,6 +140,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     private void showPopUpAndEnd(String message) {
+        FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
