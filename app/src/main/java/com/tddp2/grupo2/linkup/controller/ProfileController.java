@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import android.graphics.Bitmap;
+import android.location.Location;
 import com.tddp2.grupo2.linkup.ProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -101,5 +102,9 @@ public class ProfileController {
     public void reloadDataFromFacebook() {
         UpdateFromFacebookTask task = new UpdateFromFacebookTask(profileService, this);
         task.execute();
+    }
+
+    public void saveLocation(Location location) {
+        this.profileService.saveLocation(location);
     }
 }

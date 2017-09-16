@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.service.api;
 
+import android.location.Location;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -29,4 +30,6 @@ public abstract class ProfileService implements LinkupService{
     }
 
     public abstract void updateFromFacebook(Profile profile) throws ServiceException;
+
+    public abstract void saveLocation(Location location);
 }

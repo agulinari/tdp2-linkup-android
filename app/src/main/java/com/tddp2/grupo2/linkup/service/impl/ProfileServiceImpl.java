@@ -1,7 +1,7 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
+import android.location.Location;
 import android.util.Log;
-import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
@@ -10,7 +10,6 @@ import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -76,5 +75,15 @@ public class ProfileServiceImpl extends ProfileService {
         FacebookService facebookService = ServiceFactory.getFacebookService();
         facebookService.updateUser(profile);
         database.setProfile(profile);
+    }
+
+    @Override
+    public void saveLocation(Location location) {
+        Profile profile = this.getLocalProfile();
+        com.tddp2.grupo2.linkup.model.Location profileLocation = new com.tddp2.grupo2.linkup.model.Location();
+        profileLocation.setLatitude(location.getLatitude());
+        profileLocation.setLongitude(location.getLongitude());
+        profile.setLocation(profileLocation);
+        this.database.setProfile(profile);
     }
 }

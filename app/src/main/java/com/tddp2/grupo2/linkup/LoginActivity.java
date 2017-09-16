@@ -1,17 +1,11 @@
 package com.tddp2.grupo2.linkup;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,7 +28,6 @@ import java.util.Arrays;
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private static final String TAG = "Login Activity";
-    private static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;
@@ -61,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        checkLocationEnabledAndLoadUser();
+                        loadUser();
                         handleFacebookAccessToken(loginResult.getAccessToken());
                     }
 
@@ -78,8 +71,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
-
-        checkPermissionsNeeded();
     }
 
     @Override
@@ -211,63 +202,5 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                         // ...
                     }
                 });
-    }
-
-    private void checkPermissionsNeeded() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-
-            ActivityCompat.requestPermissions(this,
-                        new String[] {
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        },
-                        PERMISSION_REQUEST_ACCESS_LOCATION);
-            }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_ACCESS_LOCATION: {
-                if (grantResults.length < 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    showPopUpAndEnd(getResources().getString(R.string.location_restriction));
-                }
-            }
-        }
-    }
-
-
-    private void checkLocationEnabledAndLoadUser() {
-        LocationManager locationManager = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
-        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
-                !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            this.enableLocationOrEnd();
-        } else {
-            loadUser();
-        }
-    }
-
-    public void enableLocationOrEnd() {
-        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle(R.string.enable_location_title)
-                .setMessage(R.string.enable_location_description)
-                .setPositiveButton(R.string.enable_location_settings, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        LoginManager.getInstance().logOut();
-                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        startActivity(myIntent);
-                    }
-                })
-                .setNegativeButton(R.string.enable_location_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        showPopUpAndEnd(getResources().getString(R.string.location_restriction));
-                    }
-                });
-        dialog.show();
     }
 }
