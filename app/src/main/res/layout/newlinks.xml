@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textColor="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevos Links"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
+        android:text="@string/new_links"
+        android:padding="8dp"
+        android:background="@color/profileCard"
         android:id="@+id/header_newlinks"/>
 
     <android.support.v7.widget.RecyclerView

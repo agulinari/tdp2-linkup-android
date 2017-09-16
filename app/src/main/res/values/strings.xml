@@ -46,5 +46,7 @@
     <string name="closeDrawer">Cerrar Menú</string>
     <string name="item_search_links">Buscar Links</string>
     <string name="item_my_links">Mis Links</string>
+    <string name="my_chats">Mis Chats</string>
+    <string name="new_links">Nuevos Links</string>
 </resources>
 

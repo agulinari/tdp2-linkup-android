@@ -7,9 +7,7 @@ import com.tddp2.grupo2.linkup.model.MyLink;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by agustin on 16/09/2017.
- */
+
 
 public class MyLinksController {
     public MyLinksController(MyLinksFragment myLinksFragment) {
