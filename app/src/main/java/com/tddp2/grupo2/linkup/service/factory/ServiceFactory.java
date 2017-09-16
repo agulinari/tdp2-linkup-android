@@ -13,6 +13,7 @@ import com.tddp2.grupo2.linkup.service.api.ServiceType;
 import com.tddp2.grupo2.linkup.service.impl.ClientServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.LinksServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.LoginServiceImpl;
+import com.tddp2.grupo2.linkup.service.impl.MyLinksServiceImpl;
 import com.tddp2.grupo2.linkup.service.impl.ProfileServiceImpl;
 
 import java.util.HashMap;
@@ -48,10 +49,12 @@ public class ServiceFactory {
         LoginService LoginService = new LoginServiceImpl(database, clientService);
         FacebookService facebookService = new FacebookServiceImpl(database, clientService);
         LinksService linksService = new LinksServiceImpl(database, clientService);
+        MyLinksService myLinksService = new MyLinksServiceImpl(database, clientService);
         save(profileService);
         save(LoginService);
         save(facebookService);
         save(linksService);
+        save(myLinksService);
     }
 
     private static void buildMockServices() {
@@ -76,5 +79,9 @@ public class ServiceFactory {
 
     public static LinksService getLinksService() {
         return (LinksService) services.get(ServiceType.LINKS);
+    }
+
+    public static MyLinksService getMyLinksService() {
+        return (MyLinksService) services.get(ServiceType.MY_LINKS);
     }
 }

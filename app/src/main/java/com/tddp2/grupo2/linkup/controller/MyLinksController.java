@@ -1,8 +1,13 @@
 package com.tddp2.grupo2.linkup.controller;
 
+import android.util.Log;
+
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.MyLinksFragment;
+import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.service.api.MyLinksService;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,27 +15,20 @@ import java.util.List;
 
 
 public class MyLinksController {
+    private final MyLinksService myLinksService;
+
     public MyLinksController(MyLinksFragment myLinksFragment) {
+        this.myLinksService = ServiceFactory.getMyLinksService();
     }
 
     public List<MyLink> getMyLinks() {
-        List<MyLink> myLinks = new ArrayList<>();
-        myLinks.add(new MyLink("Emma Wilson", "23 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lavery Maiss", "25 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lillie Watts", "35 years old", R.drawable.user));
-        myLinks.add(new MyLink("Emma Wilson", "23 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lavery Maiss", "25 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lillie Watts", "35 years old", R.drawable.user));
-        myLinks.add(new MyLink("Emma Wilson", "23 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lavery Maiss", "25 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lillie Watts", "35 years old", R.drawable.user));
-        myLinks.add(new MyLink("Emma Wilson", "23 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lavery Maiss", "25 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lillie Watts", "35 years old", R.drawable.user));
-        myLinks.add(new MyLink("Emma Wilson", "23 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lavery Maiss", "25 years old", R.drawable.user));
-        myLinks.add(new MyLink("Lillie Watts", "35 years old", R.drawable.user));
-        return myLinks;
+
+        try {
+            return myLinksService.getMyLinks();
+        } catch (ServiceException e) {
+            Log.e("MyLinksController",e.getLocalizedMessage());
+            return new ArrayList<MyLink>();
+        }
     }
 
 }

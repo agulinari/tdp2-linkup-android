@@ -5,14 +5,24 @@ import java.io.Serializable;
 
 public class MyLink implements Serializable {
 
+    private String fbid;
     private String name;
     private String age;
     private int photoId;
 
-    public MyLink(String name, String age, int photoId) {
+    public MyLink(String fbid, String name, String age, int photoId) {
+        this.fbid = fbid;
         this.name = name;
         this.age = age;
         this.photoId = photoId;
+    }
+
+    public String getFbid() {
+        return fbid;
+    }
+
+    public void setFbid(String fbid) {
+        this.fbid = fbid;
     }
 
     public String getName() {

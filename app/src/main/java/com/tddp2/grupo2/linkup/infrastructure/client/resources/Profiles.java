@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
+import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface Profiles {
 
     @GET("usersProfile")
     Call<List<Profile>> getProfiles();
+
+    @GET("matches/{id}")
+    Call<List<MyLink>> getMyLinks(@Path("id") String fbid);
 }

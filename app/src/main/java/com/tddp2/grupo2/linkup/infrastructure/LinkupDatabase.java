@@ -51,7 +51,8 @@ public class LinkupDatabase implements Database
 
     @Override
     public void setLinks(Links links) {
-
+        this.links = links;
+        save(LINKS, links);
     }
 
     public void save(String key, Object value) {
