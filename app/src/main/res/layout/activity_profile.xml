@@ -25,6 +25,10 @@
                     android:id="@+id/userEducationCard"
                     layout="@layout/card_user_education" />
             <include
+                    android:id="@+id/userLocationCard"
+                    android:visibility="gone"
+                    layout="@layout/card_user_location" />
+            <include
                 android:id="@+id/userCommentCard"
                 layout="@layout/card_comment" />
             <RelativeLayout

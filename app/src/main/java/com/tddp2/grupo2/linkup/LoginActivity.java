@@ -1,17 +1,22 @@
 package com.tddp2.grupo2.linkup;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -21,20 +26,16 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.*;
 import com.tddp2.grupo2.linkup.controller.LoginController;
 
 import java.util.Arrays;
 
-import static android.R.attr.data;
-
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private static final String TAG = "Login Activity";
+    private static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
+
     private LoginButton loginButton;
     private CallbackManager callbackManager;
 
@@ -60,7 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        loadUser();
+                        checkLocationEnabledAndLoadUser();
                         handleFacebookAccessToken(loginResult.getAccessToken());
                     }
 
@@ -77,6 +78,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        checkPermissionsNeeded();
     }
 
     @Override
@@ -210,4 +213,61 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 });
     }
 
+    private void checkPermissionsNeeded() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                        new String[] {
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        },
+                        PERMISSION_REQUEST_ACCESS_LOCATION);
+            }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_ACCESS_LOCATION: {
+                if (grantResults.length < 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    showPopUpAndEnd(getResources().getString(R.string.location_restriction));
+                }
+            }
+        }
+    }
+
+
+    private void checkLocationEnabledAndLoadUser() {
+        LocationManager locationManager = (LocationManager) this.getContext().getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+                !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            this.enableLocationOrEnd();
+        } else {
+            loadUser();
+        }
+    }
+
+    public void enableLocationOrEnd() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.enable_location_title)
+                .setMessage(R.string.enable_location_description)
+                .setPositiveButton(R.string.enable_location_settings, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        LoginManager.getInstance().logOut();
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton(R.string.enable_location_cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        showPopUpAndEnd(getResources().getString(R.string.location_restriction));
+                    }
+                });
+        dialog.show();
+    }
 }
