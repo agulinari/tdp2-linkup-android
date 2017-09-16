@@ -40,5 +40,6 @@
     <string name="openDrawer">Abrir Menú</string>
     <string name="closeDrawer">Cerrar Menú</string>
     <string name="item_search_links">Buscar Links</string>
+    <string name="item_my_links">Mis Links</string>
 </resources>
 

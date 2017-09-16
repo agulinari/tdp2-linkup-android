@@ -9,6 +9,12 @@
             android:title="@string/item_search_links" />
 
         <item
+            android:id="@+id/drawer_my_links"
+            android:checked="false"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="@string/item_my_links" />
+
+        <item
             android:id="@+id/drawer_profile"
             android:checked="false"
             android:icon="@drawable/ic_profile"

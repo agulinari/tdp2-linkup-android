@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
+import com.tddp2.grupo2.linkup.activity.MyLinksFragment;
 import com.tddp2.grupo2.linkup.activity.ProfileFragment;
 import com.tddp2.grupo2.linkup.activity.SettingsFragment;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -103,6 +104,10 @@ public class LinksActivity extends AppCompatActivity {
             case R.id.drawer_search_links:
                 fragment = new LinksFragment();
                 currentFragment = getResources().getString(R.string.app_name);
+                break;
+            case R.id.drawer_my_links:
+                fragment = new MyLinksFragment();
+                currentFragment = getResources().getString(R.string.item_my_links);
                 break;
             case R.id.drawer_settings:
                 fragment = new SettingsFragment();
