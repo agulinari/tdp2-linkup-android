@@ -13,6 +13,7 @@ import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
+import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,7 +61,11 @@ public class FacebookServiceImpl extends FacebookService {
         profile.setFirstName(getStringParam(jsonResponse, "first_name"));
         profile.setLastName(getStringParam(jsonResponse, "last_name"));
         profile.setGender(getStringParam(jsonResponse, "gender"));
-        profile.setBirthday(getStringParam(jsonResponse, "birthday"));
+
+        String facebookBirthday = getStringParam(jsonResponse, "birthday");
+        String linkUpBirthday = DateUtils.facebookToLinkupFormat(facebookBirthday);
+        profile.setBirthday(linkUpBirthday);
+
         profile.setComments(getStringParam(jsonResponse, "about"));
         profile.setOccupation(getWork(jsonResponse));
         profile.setEducation(getEducation(jsonResponse));
