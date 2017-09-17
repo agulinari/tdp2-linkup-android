@@ -12,6 +12,6 @@ public interface LocationView extends BaseView {
     void onPermissionsDenied();
     void onLocationError();
     void onChangeSettingsDenied();
-    void onLocationFetched();
+    void onLocationFetched(Location location);
     Context getContext();
 }

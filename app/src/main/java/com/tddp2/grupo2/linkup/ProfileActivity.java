@@ -321,8 +321,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 Location location = locationResult.getLocations().get(0);
-                onLocationFetched();
-                saveLocation(location);
+                onLocationFetched(location);
             }
         };
         try {
@@ -342,9 +341,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
     }
 
     @Override
-    public void onLocationFetched() {
+    public void onLocationFetched(Location location) {
         progressDialog.hide();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        saveLocation(location);
     }
 
     @Override

@@ -265,7 +265,6 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
         }
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case PERMISSION_REQUEST_ACCESS_LOCATION: {
@@ -318,7 +317,6 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
         });
     }
 
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode == RESULT_OK) {
@@ -338,7 +336,7 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                Log.i("LOCATION", "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
+                                saveLocation(location);
                             } else {
                                 waitForLocation();
                             }
@@ -358,8 +356,7 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 Location location = locationResult.getLocations().get(0);
-                onLocationFetched();
-                saveLocation(location);
+                onLocationFetched(location);
             }
         };
         try {
@@ -373,9 +370,10 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     }
 
     @Override
-    public void onLocationFetched() {
+    public void onLocationFetched(Location location) {
         progressDialog.hide();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        saveLocation(location);
     }
 
     @Override

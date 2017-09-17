@@ -2,7 +2,7 @@ package com.tddp2.grupo2.linkup;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,19 +11,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
 import com.tddp2.grupo2.linkup.activity.MyLinksFragment;
 import com.tddp2.grupo2.linkup.activity.ProfileFragment;
 import com.tddp2.grupo2.linkup.activity.SettingsFragment;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class LinksActivity extends AppCompatActivity {
 
@@ -31,11 +27,14 @@ public class LinksActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private String currentFragment;
+    private Fragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragment = null;
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -97,7 +96,6 @@ public class LinksActivity extends AppCompatActivity {
     }*/
 
     private boolean selectFragment(MenuItem menuItem) {
-        Fragment fragment = null;
         FragmentTransaction fragmentTransaction;
 
         switch (menuItem.getItemId()) {
@@ -120,6 +118,7 @@ public class LinksActivity extends AppCompatActivity {
             case R.id.drawer_logout:
                 logout();
             default:
+                fragment = null;
                 break;
         }
 
@@ -165,5 +164,23 @@ public class LinksActivity extends AppCompatActivity {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (currentFragment.equals(getResources().getString(R.string.item_perfil))) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        if (currentFragment.equals(getResources().getString(R.string.item_perfil))) {
+            fragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 }
