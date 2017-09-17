@@ -59,7 +59,10 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     ImageView imageEditComment;
 
     @BindView(R.id.reloadFromFacebookButton)
-    Button buttonReload;
+    Button buttonReloadFacebook;
+
+    @BindView(R.id.reloadLocationButton)
+    Button buttonReloadLocation;
 
     @BindView(R.id.saveProfileButton)
     Button buttonSave;
@@ -91,7 +94,6 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
         controller = new ProfileController(this);
         controller.update();
         locationController = new LocationController(this, getActivity());
-        checkPermissionsAndLoadLocation();
         return mainView;
     }
 
@@ -107,13 +109,22 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
             }
         });
 
-        buttonReload.setOnClickListener(new Button.OnClickListener()
+        buttonReloadFacebook.setOnClickListener(new Button.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 savingProfile = false;
                 reloadDataFromFacebook(v);
+            }
+        });
+
+        buttonReloadLocation.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                checkPermissionsAndLoadLocation();
             }
         });
 
