@@ -1,10 +1,6 @@
 package com.tddp2.grupo2.linkup.infrastructure.client;
 
 import com.tddp2.grupo2.linkup.utils.Configuration;
-
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -12,6 +8,9 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by agustin on 08/09/2017.
@@ -42,7 +41,7 @@ public class ServiceGenerator {
 
         // add your other interceptors …
         // add logging as last interceptor
-       // httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
         return new Retrofit.Builder()
                 .baseUrl(Configuration.DEFAULT_API_URL)
                 .addConverterFactory(GsonConverterFactory.create())
