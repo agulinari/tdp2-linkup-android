@@ -337,6 +337,7 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
 
     @Override
     public void saveLocation(Location location) {
+        controller.saveLocation(location);
         Log.i("LOCATION", "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
     }
 

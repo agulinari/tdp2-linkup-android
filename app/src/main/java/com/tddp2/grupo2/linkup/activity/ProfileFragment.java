@@ -248,12 +248,6 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     }
 
     @Override
-    public void onLocationFetched() {
-        progressDialog.hide();
-        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-    }
-
-    @Override
     public void checkPermissionsAndLoadLocation() {
         if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED ||
@@ -376,6 +370,12 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
             Log.e("LOCATION", e.getMessage());
             onLocationError();
         }
+    }
+
+    @Override
+    public void onLocationFetched() {
+        progressDialog.hide();
+        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
     }
 
     @Override
