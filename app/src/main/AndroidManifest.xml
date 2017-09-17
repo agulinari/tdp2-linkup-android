@@ -61,6 +61,9 @@
             android:name=".LinksActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ChatActivity"></activity>
+        <service
+            android:name="com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService"
+            android:exported="false"/>
     </application>
 
 </manifest>
