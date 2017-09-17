@@ -196,9 +196,10 @@ public class LocationController {
                 if (resultCode == FetchAddressIntentService.SUCCESS_RESULT) {
                     String locationName = resultData.getString(FetchAddressIntentService.RESULT_DATA_KEY);
                     userLocation.setName(locationName);
-                    view.updateLocationView(locationName);
+                    saveLocation();
+                } else {
+                    onLocationError();
                 }
-                saveLocation();
             }
         }
 
@@ -228,6 +229,7 @@ public class LocationController {
     }
 
     public void onOperationFinished() {
+        view.updateLocationView(userLocation.getName());
         view.hideFetchingLocationMessage();
     }
 }
