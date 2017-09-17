@@ -50,6 +50,7 @@ public class LocationController {
     }
 
     public void checkPermissionsAndLoadLocation() {
+        view.showFetchingLocationMessage();
         if (ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(view.getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
@@ -70,7 +71,7 @@ public class LocationController {
         switch (requestCode) {
             case PERMISSION_REQUEST_ACCESS_LOCATION: {
                 if (grantResults.length < 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    view.onPermissionsDenied();
+                    onPermissionsDenied();
                 } else {
                     loadLocation();
                 }
@@ -84,7 +85,7 @@ public class LocationController {
                 getLastLocation();
             } else {
                 Log.i("LOCATION", "cancel");
-                view.onChangeSettingsDenied();
+                onChangeSettingsDenied();
             }
         }
     }
@@ -114,14 +115,14 @@ public class LocationController {
                             resolvable.startResolutionForResult(activity, LocationController.REQUEST_CHECK_SETTINGS);
                         } catch (IntentSender.SendIntentException sendEx) {
                             Log.i("LOCATION", "ignore");
-                            view.onLocationError();
+                            onLocationError();
                         }
                         break;
                     case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                         // Location settings are not satisfied. However, we have no way
                         // to fix the settings so we won't show the dialog.
                         Log.i("LOCATION", "error");
-                        view.onLocationError();
+                        onLocationError();
                         break;
                 }
             }
@@ -143,12 +144,11 @@ public class LocationController {
                     });
         } catch (SecurityException e) {
             Log.e("LOCATION", e.getMessage());
-            view.onLocationError();
+            onLocationError();
         }
     }
 
     private void waitForLocation() {
-        view.showFetchingLocationMessage();
         mLocationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -162,12 +162,11 @@ public class LocationController {
                     null /* Looper */);
         } catch (SecurityException e) {
             Log.e("LOCATION", e.getMessage());
-            view.onLocationError();
+            onLocationError();
         }
     }
 
     private void onLocationFetched(Location location) {
-        view.hideFetchingLocationMessage();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         saveLocation(location);
     }
@@ -192,11 +191,31 @@ public class LocationController {
                     String locationName = resultData.getString(FetchAddressIntentService.RESULT_DATA_KEY);
                     view.updateLocationView(locationName);
                 }
+                onOperationFinished();
             }
         }
 
         intent.putExtra(FetchAddressIntentService.RECEIVER, new AddressResultReceiver(new Handler()));
         intent.putExtra(FetchAddressIntentService.LOCATION_DATA_EXTRA, location);
         activity.startService(intent);
+    }
+
+    private void onPermissionsDenied() {
+        view.hideFetchingLocationMessage();
+        view.onPermissionsDenied();
+    }
+
+    private void onLocationError() {
+        view.hideFetchingLocationMessage();
+        view.onLocationError();
+    }
+
+    private void onChangeSettingsDenied() {
+        view.hideFetchingLocationMessage();
+        view.onChangeSettingsDenied();
+    }
+
+    private void onOperationFinished() {
+        view.hideFetchingLocationMessage();
     }
 }
