@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,14 +20,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.tddp2.grupo2.linkup.LocationView;
+import com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import static android.app.Activity.RESULT_OK;
 
 public class LocationController {
-    public static final int REQUEST_CHECK_SETTINGS = 0x1;
-    public static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
+    private static final int REQUEST_CHECK_SETTINGS = 0x1;
+    private static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
     private LocationView view;
     private Activity activity;
     private ProfileService profileService;
@@ -85,7 +89,7 @@ public class LocationController {
         }
     }
 
-    public void loadLocation() {
+    private void loadLocation() {
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(mLocationRequest);
 
@@ -124,7 +128,7 @@ public class LocationController {
         });
     }
 
-    public void getLastLocation() {
+    private void getLastLocation() {
         try {
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(activity, new OnSuccessListener<Location>() {
@@ -143,7 +147,7 @@ public class LocationController {
         }
     }
 
-    public void waitForLocation() {
+    private void waitForLocation() {
         view.showFetchingLocationMessage();
         mLocationCallback = new LocationCallback() {
             @Override
@@ -162,14 +166,37 @@ public class LocationController {
         }
     }
 
-    public void onLocationFetched(Location location) {
+    private void onLocationFetched(Location location) {
         view.hideFetchingLocationMessage();
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         saveLocation(location);
     }
 
-    public void saveLocation(Location location) {
+    private void saveLocation(Location location) {
         profileService.saveLocation(location);
         Log.i("LOCATION", "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
+        loadLocationName(location);
+    }
+
+    private void loadLocationName(Location location) {
+        Intent intent = new Intent(view.getContext(), FetchAddressIntentService.class);
+
+        class AddressResultReceiver extends ResultReceiver {
+            public AddressResultReceiver(Handler handler) {
+                super(handler);
+            }
+
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                if (resultCode == FetchAddressIntentService.SUCCESS_RESULT) {
+                    String locationName = resultData.getString(FetchAddressIntentService.RESULT_DATA_KEY);
+                    view.updateLocationView(locationName);
+                }
+            }
+        }
+
+        intent.putExtra(FetchAddressIntentService.RECEIVER, new AddressResultReceiver(new Handler()));
+        intent.putExtra(FetchAddressIntentService.LOCATION_DATA_EXTRA, location);
+        activity.startService(intent);
     }
 }

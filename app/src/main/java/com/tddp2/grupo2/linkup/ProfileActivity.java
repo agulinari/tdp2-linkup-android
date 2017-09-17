@@ -53,6 +53,12 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
     @BindView(R.id.editCommentIcon)
     ImageView imageEditComment;
 
+    @BindView(R.id.userLocationText)
+    TextView textViewUserLocation;
+
+    @BindView(R.id.userLocationCard)
+    CardView cardViewUserLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,12 +224,20 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
         showPopUpAndEnd(getResources().getString(R.string.location_restriction));
     }
 
+    @Override
     public void showFetchingLocationMessage() {
         progressDialog = ProgressDialog.show(this, "", getResources().getString(R.string.fetching_location), true, false);
         progressDialog.show();
     }
 
+    @Override
     public void hideFetchingLocationMessage() {
         progressDialog.hide();
+    }
+
+    @Override
+    public void updateLocationView(String locationName) {
+        cardViewUserLocation.setVisibility(View.VISIBLE);
+        textViewUserLocation.setText(locationName);
     }
 }

@@ -7,4 +7,5 @@ public interface LocationView extends BaseView {
     void onChangeSettingsDenied();
     void showFetchingLocationMessage();
     void hideFetchingLocationMessage();
+    void updateLocationView(String locationName);
 }

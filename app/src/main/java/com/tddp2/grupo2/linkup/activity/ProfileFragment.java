@@ -64,6 +64,12 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     @BindView(R.id.saveProfileButton)
     Button buttonSave;
 
+    @BindView(R.id.userLocationText)
+    TextView textViewUserLocation;
+
+    @BindView(R.id.userLocationCard)
+    CardView cardViewUserLocation;
+
     private ProgressDialog progressDialog;
     private boolean savingProfile;
 
@@ -244,12 +250,20 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     @Override
     public void onChangeSettingsDenied(){}
 
+    @Override
     public void showFetchingLocationMessage() {
         progressDialog = ProgressDialog.show(getActivity(), "", getResources().getString(R.string.fetching_location), true, false);
         progressDialog.show();
     }
 
+    @Override
     public void hideFetchingLocationMessage() {
         progressDialog.hide();
+    }
+
+    @Override
+    public void updateLocationView(String locationName) {
+        cardViewUserLocation.setVisibility(View.VISIBLE);
+        textViewUserLocation.setText(locationName);
     }
 }
