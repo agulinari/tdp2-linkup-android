@@ -28,7 +28,11 @@
     <string name="age_restriction">Lo sentimos, debes ser mayor de 18 años para utilizar esta aplicación.</string>
     <string name="location_restriction">Lo sentimos, necesitamos conocer tu ubicación para que puedas utilizar esta aplicación.</string>
     <string name="location_error">Lo sentimos, ha ocurrido un error intentando obtener su ubicación.</string>
+    <string name="location_profile_fragment_permission_denied">Lo sentimos, debes permitir que la aplicación acceda a tu ubicación para poder actualizarla.</string>
+    <string name="location_profile_fragment_settings_denied">Lo sentimos, debes permitir acceder a tu ubicación para poder actualizarla.</string>
+    <string name="location_profile_error">Lo sentimos, ha ocurrido un error intentando actualizar su ubicación.</string>
     <string name="fetching_location">Cargando ubicación</string>
+    <string name="location_popup_button">Entiendo</string>
     <string name="missing_age">Lo sentimos, es necesario conocer tu edad para que puedas usar esta aplicación. Por favor, agrega esa información en Facebook y vuelve a intentarlo.</string>
     <string name="comment_edit">Escriba algo sobre usted:</string>
     <string name="comment_edit_save">Guardar</string>

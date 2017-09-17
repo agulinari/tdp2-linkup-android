@@ -253,13 +253,19 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     }
 
     @Override
-    public void onPermissionsDenied(){}
+    public void onPermissionsDenied() {
+        showPopUp(getResources().getString(R.string.location_profile_fragment_permission_denied));
+    }
 
     @Override
-    public void onLocationError(){}
+    public void onLocationError() {
+        showPopUp(getResources().getString(R.string.location_profile_error));
+    }
 
     @Override
-    public void onChangeSettingsDenied(){}
+    public void onChangeSettingsDenied() {
+        showPopUp(getResources().getString(R.string.location_profile_fragment_settings_denied));
+    }
 
     @Override
     public void showFetchingLocationMessage() {
@@ -276,5 +282,18 @@ public class ProfileFragment extends Fragment implements ProfileView, LocationVi
     public void updateLocationView(String locationName) {
         cardViewUserLocation.setVisibility(View.VISIBLE);
         textViewUserLocation.setText(locationName);
+    }
+
+    private void showPopUp(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setNeutralButton(getResources().getString(R.string.location_popup_button), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
