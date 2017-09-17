@@ -18,7 +18,7 @@ public class Profile implements Serializable {
     private List<Interest> interests = new ArrayList<Interest>();
     private List<Image> images = new ArrayList<Image>();
     private Settings settings = new Settings();
-    private Location location;
+    private Location location = new Location();
 
     public String getFbid() {
         return fbid;

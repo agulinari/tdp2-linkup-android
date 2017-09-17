@@ -6,6 +6,11 @@ public class Location implements Serializable {
     private double latitude;
     private double longitude;
 
+    public Location() {
+        this.latitude = 0.0;
+        this.longitude = 0.0;
+    }
+
     public void setLatitude(double latitude) {this.latitude = latitude;}
 
     public double getLatitude() {return this.latitude;}
