@@ -23,6 +23,7 @@ import com.tddp2.grupo2.linkup.LocationView;
 import com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import com.tddp2.grupo2.linkup.task.SaveLocationDataTask;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -37,6 +38,8 @@ public class LocationController {
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
 
+    private com.tddp2.grupo2.linkup.model.Location userLocation;
+
     public LocationController(LocationView view, Activity activity) {
         this.view = view;
         this.activity = activity;
@@ -47,6 +50,8 @@ public class LocationController {
         mLocationRequest.setInterval(0);
         mLocationRequest.setFastestInterval(0);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        userLocation = new com.tddp2.grupo2.linkup.model.Location();
     }
 
     public void checkPermissionsAndLoadLocation() {
@@ -136,7 +141,7 @@ public class LocationController {
                         @Override
                         public void onSuccess(Location location) {
                             if (location != null) {
-                                saveLocation(location);
+                                afterLocationFetch(location);
                             } else {
                                 waitForLocation();
                             }
@@ -168,11 +173,12 @@ public class LocationController {
 
     private void onLocationFetched(Location location) {
         mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-        saveLocation(location);
+        afterLocationFetch(location);
     }
 
-    private void saveLocation(Location location) {
-        profileService.saveLocation(location);
+    private void afterLocationFetch(Location location) {
+        userLocation.setLongitude(location.getLongitude());
+        userLocation.setLatitude(location.getLatitude());
         Log.i("LOCATION", "Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
         loadLocationName(location);
     }
@@ -189,15 +195,21 @@ public class LocationController {
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 if (resultCode == FetchAddressIntentService.SUCCESS_RESULT) {
                     String locationName = resultData.getString(FetchAddressIntentService.RESULT_DATA_KEY);
+                    userLocation.setName(locationName);
                     view.updateLocationView(locationName);
                 }
-                onOperationFinished();
+                saveLocation();
             }
         }
 
         intent.putExtra(FetchAddressIntentService.RECEIVER, new AddressResultReceiver(new Handler()));
         intent.putExtra(FetchAddressIntentService.LOCATION_DATA_EXTRA, location);
         activity.startService(intent);
+    }
+
+    private void saveLocation() {
+        SaveLocationDataTask saveLocationDataTask = new SaveLocationDataTask(profileService, this);
+        saveLocationDataTask.execute(userLocation);
     }
 
     private void onPermissionsDenied() {
@@ -215,7 +227,7 @@ public class LocationController {
         view.onChangeSettingsDenied();
     }
 
-    private void onOperationFinished() {
+    public void onOperationFinished() {
         view.hideFetchingLocationMessage();
     }
 }

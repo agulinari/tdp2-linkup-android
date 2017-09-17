@@ -1,6 +1,5 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
-import android.location.Location;
 import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
@@ -78,12 +77,9 @@ public class ProfileServiceImpl extends ProfileService {
     }
 
     @Override
-    public void saveLocation(Location location) {
+    public void saveLocation(com.tddp2.grupo2.linkup.model.Location location) {
         Profile profile = this.getLocalProfile();
-        com.tddp2.grupo2.linkup.model.Location profileLocation = new com.tddp2.grupo2.linkup.model.Location();
-        profileLocation.setLatitude(location.getLatitude());
-        profileLocation.setLongitude(location.getLongitude());
-        profile.setLocation(profileLocation);
+        profile.setLocation(location);
         this.database.setProfile(profile);
     }
 }
