@@ -4,6 +4,7 @@ import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
@@ -30,17 +31,20 @@ public class LinksServiceImpl extends LinksService{
 
     @Override
     public Links getLinks() throws ServiceException {
+        Profile profile = this.database.getProfile();
+        String fbid = profile.getFbid();
+
         Links links = this.database.getLinks();
-        if (links !=null){
+        /*if (links !=null){
             return links;
-        }
+        }*/
         LinkupClient linkupClient = clientService.getClient();
-        Call<List<Profile>> call = linkupClient.profiles.getProfiles();
+        Call<CandidatesResponse> call = linkupClient.candidates.getCandidates(fbid);
         try {
-            Response<List<Profile>> response = call.execute();
+            Response<CandidatesResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save Links
-                List<Profile> profiles = response.body();
+                List<Profile> profiles = response.body().getCandidates();
                 links = new Links();
                 links.setLinks(profiles);
                 saveLinks(links);
