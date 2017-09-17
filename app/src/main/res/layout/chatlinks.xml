@@ -1,0 +1,26 @@
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/my_chats"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:background="@color/profileCard"
+        android:id="@+id/header_chats"/>
+
+     <android.support.v7.widget.RecyclerView
+         xmlns:android="http://schemas.android.com/apk/res/android"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/rv_chatlinks"
+    />
+
+</LinearLayout>
