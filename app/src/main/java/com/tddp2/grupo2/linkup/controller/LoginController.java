@@ -32,9 +32,7 @@ public class LoginController {
 
     public void onResult(Object result) {
         LoadUserTaskResponse response = (LoadUserTaskResponse) result;
-        if (response.sessionExpired()) {
-            view.sessionExpired();
-        } else if (response.hasError()) {
+        if (response.hasError()) {
             view.onError(response.getError());
         } else {
             if (response.isNewUser) {

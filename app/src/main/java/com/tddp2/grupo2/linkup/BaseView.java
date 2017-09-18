@@ -13,8 +13,6 @@ public interface BaseView {
 
     void goToNext();
 
-    void sessionExpired();
-
     Context getContext();
 
     void onError(String errorMsg);

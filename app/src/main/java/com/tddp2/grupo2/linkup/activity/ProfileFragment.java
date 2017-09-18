@@ -192,9 +192,6 @@ public class ProfileFragment extends Fragment implements ProfileLocationView {
     }
 
     @Override
-    public void sessionExpired() {}
-
-    @Override
     public Context getContext() {
         return this.getActivity();
     }

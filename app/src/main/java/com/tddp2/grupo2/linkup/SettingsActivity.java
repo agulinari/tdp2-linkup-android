@@ -193,11 +193,6 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
     }
 
     @Override
-    public void sessionExpired() {
-
-    }
-
-    @Override
     public Context getContext() {
         return this;
     }

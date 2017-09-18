@@ -29,18 +29,11 @@ public class ServiceFactory {
     }
 
     public static void init(Database database) {
-
-        //chatMapper = new MatchChatMapper();
         buildServices(database);
     }
 
     private static void buildServices(Database database) {
         buildRealServices(database);
-        /*if (type.equals(Services.REAL)) {
-            buildRealServices(database);
-        } else {
-            buildMockServices(database);
-        }*/
     }
 
     private static void buildRealServices(Database database) {

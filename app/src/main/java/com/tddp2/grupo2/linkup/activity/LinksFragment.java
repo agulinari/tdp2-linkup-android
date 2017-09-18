@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +47,9 @@ public class LinksFragment extends Fragment implements LinksView{
 
     private static final String TAG = "LinksFragment";
 
+    @BindView(R.id.linkCard)
+    CardView linkCard;
+
     @BindView(R.id.linkImage)
     ImageView imageViewLinkImage;
 
@@ -70,6 +74,12 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.progressImage)
     ProgressBar progressImage;
 
+    @BindView(R.id.empty_view)
+    TextView emptyView;
+
+    @BindView(R.id.linlaHeaderProgress)
+    LinearLayout progressView;
+
     private Context activity;
     private LinksController controller;
     private Links links;
@@ -88,8 +98,7 @@ public class LinksFragment extends Fragment implements LinksView{
         ButterKnife.bind(this, mainView);
 
         registerListeners();
-        // ListView
-        //emptyView = (TextView) mainView.findViewById(R.id.empty_view);
+
         controller.getLinks();
 
         return mainView;
@@ -112,8 +121,7 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
-                progressImage.setVisibility(View.VISIBLE);
-                controller.previousLink();
+                controller.rejectCurrentLink();
             }
         });
 
@@ -122,11 +130,7 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
-                String chatId = controller.chat();
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.putExtra("CHAT_ID", chatId);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                //TODO: SUPERLINKS
             }
         });
     }
@@ -142,13 +146,30 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void showProgress() {
-
+        this.linkCard.setVisibility(View.GONE);
+        this.emptyView.setVisibility(View.GONE);
+        this.disableActions();
+        this.progressView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-
+        this.progressView.setVisibility(View.GONE);
     }
+
+
+    @Override
+    public void disableActions() {
+        buttonYes.setEnabled(Boolean.FALSE);
+        buttonNo.setEnabled(Boolean.FALSE);
+    }
+
+    @Override
+    public void enableActions() {
+        buttonYes.setEnabled(Boolean.TRUE);
+        buttonNo.setEnabled(Boolean.TRUE);
+    }
+
 
     @Override
     public void goToNext() {
@@ -156,17 +177,14 @@ public class LinksFragment extends Fragment implements LinksView{
     }
 
     @Override
-    public void sessionExpired() {
-
-    }
-
-    @Override
     public void onError(String errorMsg) {
-
+        Toast.makeText(activity, errorMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLink(Profile profile) {
+        linkCard.setVisibility(View.VISIBLE);
+        this.enableActions();
         progressImage.setVisibility(View.INVISIBLE);
         String image = profile.getImages().get(0).getImage();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
@@ -183,23 +201,11 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void showEmptyLinks() {
-        //emptyView = (TextView) mainView.findViewById(R.id.empty_view);
+        linkCard.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
+        buttonYes.setEnabled(Boolean.FALSE);
+        buttonNo.setEnabled(Boolean.FALSE);
     }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_logout:
-                logout();
-                return true;
-            case R.id.action_chat:
-                goToChat();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }*/
 
 
 }

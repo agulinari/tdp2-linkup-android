@@ -9,4 +9,8 @@ public interface LinksView  extends BaseView{
 
     void showEmptyLinks();
 
+    void disableActions();
+
+    void enableActions();
+
 }

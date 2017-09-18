@@ -1,23 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:wheel="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.tddp2.grupo2.linkup.LinksActivity">
 
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/linkCard"
+                layout="@layout/card_link" />
+        </LinearLayout>
 
         <include
-            android:id="@+id/linkCard"
-            layout="@layout/card_link" />
+            android:id="@+id/linkButtons"
+            layout="@layout/link_buttons" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linlaHeaderProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:id="@+id/progress_wheel"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            wheel:matProg_barColor="@color/colorPrimary"
+            wheel:matProg_progressIndeterminate="true" />
     </LinearLayout>
 
-    <include
-        android:id="@+id/linkButtons"
-        layout="@layout/link_buttons" />
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_data_available"
+        android:visibility="gone" />
 
 </RelativeLayout>

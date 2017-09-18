@@ -3,22 +3,23 @@ package com.tddp2.grupo2.linkup.task;
 import android.os.AsyncTask;
 
 import com.tddp2.grupo2.linkup.controller.LinksController;
-import com.tddp2.grupo2.linkup.controller.LoginController;
+import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
-import com.tddp2.grupo2.linkup.service.api.LoginService;
+import com.tddp2.grupo2.linkup.service.api.ProfileService;
 
-import static com.tddp2.grupo2.linkup.R.drawable.user;
+/**
+ * Created by agustin on 17/09/2017.
+ */
 
-
-public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
+public class RejectLinkTask extends AsyncTask<Object, Void, TaskResponse> {
 
     private LinksService linksService;
     private LinksController controller;
 
-    public GetLinksTask(LinksService linksService, LinksController controller) {
+    public RejectLinkTask(LinksService linksService, LinksController controller) {
         this.linksService = linksService;
         this.controller = controller;
     }
@@ -26,19 +27,21 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
     @Override
     protected void onPreExecute() {
         if (controller != null)
-            controller.initGetLinksTask();
+            controller.initRejectTask();
     }
 
     @Override
     protected TaskResponse doInBackground(Object... params) {
         TaskResponse taskResponse = new TaskResponse();
         Links links;
+        String fbidCandidate = (String) params[0];
+
         try {
-            links = linksService.getLinks();
+            links = linksService.rejectLink(fbidCandidate);
         } catch (ServiceException e) {
-            taskResponse.setError(e.getMessage());
-            taskResponse.setSessionExpired(e.isSessionExpired());
-            return taskResponse;
+            TaskResponse response = new TaskResponse(e.getMessage());
+            response.setSessionExpired(e.isSessionExpired());
+            return response;
         }
         taskResponse.setResponse(links);
         return taskResponse;
@@ -47,8 +50,9 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
     @Override
     protected void onPostExecute(TaskResponse response) {
         if (controller != null)
-            controller.finishGetLinksTask();
+            controller.finishRejectTask();
 
-        controller.onGetLinksResult(response);
+        controller.onRejectResult(response);
     }
+
 }

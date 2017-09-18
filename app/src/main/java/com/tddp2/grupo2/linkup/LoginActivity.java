@@ -96,9 +96,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     @Override
-    public void sessionExpired() {}
-
-    @Override
     public Context getContext() {
         return this;
     }

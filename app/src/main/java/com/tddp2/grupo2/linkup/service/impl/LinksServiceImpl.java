@@ -4,9 +4,12 @@ import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.RejectionRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.Rejection;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
@@ -16,8 +19,6 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static com.tddp2.grupo2.linkup.R.drawable.profile;
 
 
 public class LinksServiceImpl extends LinksService{
@@ -60,6 +61,41 @@ public class LinksServiceImpl extends LinksService{
 
     public void saveLinks(Links links) {
         this.database.setLinks(links);
+    }
+
+    @Override
+    public Links rejectLink(String fbidCandidate) throws ServiceException {
+        Profile profile = this.database.getProfile();
+        String fbid = profile.getFbid();
+
+        LinkupClient linkupClient = clientService.getClient();
+        Rejection rej = new Rejection(fbid, fbidCandidate);
+        RejectionRequest request = new RejectionRequest(rej);
+        Call<RejectionResponse> call = linkupClient.candidates.reject(request);
+        try {
+            Response<RejectionResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                //Elimino el link localmente
+                return removeLink(fbidCandidate);
+            } else {
+                APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(error);
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
+    }
+
+    private Links removeLink(String fbidCandidate) {
+        Links links = database.getLinks();
+        for (Profile p : links.getLinks()){
+            if (p.getFbid().equals(fbidCandidate)){
+                links.getLinks().remove(p);
+                break;
+            }
+        }
+        database.setLinks(links);
+        return links;
     }
 
     public Database getDatabase(){

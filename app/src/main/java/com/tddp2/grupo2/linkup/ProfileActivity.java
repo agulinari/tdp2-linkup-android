@@ -141,9 +141,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileLocatio
     }
 
     @Override
-    public void sessionExpired() {}
-
-    @Override
     public Context getContext() {
         return this;
     }
