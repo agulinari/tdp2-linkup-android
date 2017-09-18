@@ -16,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.tddp2.grupo2.linkup.LocationView;
-import com.tddp2.grupo2.linkup.ProfileView;
+import com.tddp2.grupo2.linkup.ProfileLocationView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
@@ -26,7 +25,7 @@ import com.tddp2.grupo2.linkup.controller.ProfileController;
  * Created by agustin on 09/09/2017.
  */
 
-public class ProfileFragment extends Fragment implements ProfileView, LocationView {
+public class ProfileFragment extends Fragment implements ProfileLocationView {
 
     private static final String TAG = "ProfileFragment";
 

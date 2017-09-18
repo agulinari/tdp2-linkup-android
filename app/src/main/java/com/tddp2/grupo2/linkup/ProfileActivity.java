@@ -23,7 +23,7 @@ import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileView, LocationView {
+public class ProfileActivity extends AppCompatActivity implements ProfileLocationView {
     private ProgressDialog progressDialog;
 
     ProfileController controller;

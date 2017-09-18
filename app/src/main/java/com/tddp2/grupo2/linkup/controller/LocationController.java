@@ -19,7 +19,7 @@ import com.google.android.gms.location.*;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.tddp2.grupo2.linkup.LocationView;
+import com.tddp2.grupo2.linkup.ProfileLocationView;
 import com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -30,7 +30,7 @@ import static android.app.Activity.RESULT_OK;
 public class LocationController {
     private static final int REQUEST_CHECK_SETTINGS = 0x1;
     private static final int PERMISSION_REQUEST_ACCESS_LOCATION = 1;
-    private LocationView view;
+    private ProfileLocationView view;
     private Activity activity;
     private ProfileService profileService;
 
@@ -40,7 +40,7 @@ public class LocationController {
 
     private com.tddp2.grupo2.linkup.model.Location userLocation;
 
-    public LocationController(LocationView view, Activity activity) {
+    public LocationController(ProfileLocationView view, Activity activity) {
         this.view = view;
         this.activity = activity;
         this.profileService = ServiceFactory.getProfileService();

@@ -1,6 +1,6 @@
 package com.tddp2.grupo2.linkup;
 
-public interface LocationView extends ProfileView {
+public interface ProfileLocationView extends ProfileView {
     void checkPermissionsAndLoadLocation();
     void onPermissionsDenied();
     void onLocationError();
