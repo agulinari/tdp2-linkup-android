@@ -141,9 +141,6 @@ public class ProfileActivity extends AppCompatActivity implements ProfileView, L
     }
 
     @Override
-    public void sessionExpired() {}
-
-    @Override
     public Context getContext() {
         return this;
     }

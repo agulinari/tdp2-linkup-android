@@ -247,11 +247,6 @@ public class SettingsFragment extends Fragment implements BaseView {
     }
 
     @Override
-    public void sessionExpired() {
-
-    }
-
-    @Override
     public Context getContext() {
         return getActivity();
     }

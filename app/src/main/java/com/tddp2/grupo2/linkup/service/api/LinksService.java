@@ -20,6 +20,8 @@ public abstract class LinksService implements LinkupService{
 
     public abstract void saveLinks(Links links);
 
+    public abstract Links rejectLink(String fbidCandidate) throws ServiceException;
+
     public ServiceType getType() {
         return ServiceType.LINKS;
     }

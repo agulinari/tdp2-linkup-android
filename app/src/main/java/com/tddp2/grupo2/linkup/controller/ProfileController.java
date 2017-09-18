@@ -39,9 +39,7 @@ public class ProfileController {
 
     public void onResult(Object result) {
         TaskResponse response = (TaskResponse) result;
-        if (response.sessionExpired()) {
-            view.sessionExpired();
-        } else if (response.hasError()) {
+        if (response.hasError()) {
             view.onError(response.getError());
         } else {
             view.goToNext();
@@ -50,9 +48,7 @@ public class ProfileController {
 
     public void onUpdateDataResult(Object result) {
         TaskResponse response = (TaskResponse) result;
-        if (response.sessionExpired()) {
-            view.sessionExpired();
-        } else if (response.hasError()) {
+        if (response.hasError()) {
             view.onError(response.getError());
         } else {
             update();

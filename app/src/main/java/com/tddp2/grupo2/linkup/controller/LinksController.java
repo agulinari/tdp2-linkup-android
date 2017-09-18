@@ -10,6 +10,7 @@ import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.CreateProfileTask;
 import com.tddp2.grupo2.linkup.task.GetLinksTask;
+import com.tddp2.grupo2.linkup.task.RejectLinkTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateSettingsTask;
 
@@ -33,6 +34,12 @@ public class LinksController {
         GetLinksTask task = new GetLinksTask(linksService, this);
         task.execute();
 
+    }
+
+    public void rejectCurrentLink(){
+        RejectLinkTask task = new RejectLinkTask(linksService, this);
+        Profile p = links.getLinks().get(currentLink);
+        task.execute(p.getFbid());
     }
 
     public void previousLink(){
@@ -61,19 +68,25 @@ public class LinksController {
         view.showLink(profile);
     }
 
-    public void initTask() {
+    public void initGetLinksTask() {
         view.showProgress();
     }
 
-    public void finishTask() {
+    public void finishGetLinksTask() {
         view.hideProgress();
     }
 
-    public void onResult(Object result) {
+    public void initRejectTask() {
+        view.disableActions();
+    }
+
+    public void finishRejectTask() {
+        view.enableActions();
+    }
+
+    public void onGetLinksResult(Object result) {
         TaskResponse response = (TaskResponse) result;
-        if (response.sessionExpired()) {
-            view.sessionExpired();
-        } else if (response.hasError()) {
+        if (response.hasError()) {
             view.onError(response.getError());
         } else {
             //view.goToNext();
@@ -88,18 +101,27 @@ public class LinksController {
         }
     }
 
-    public String chat(){
-        Profile candidate = links.getLinks().get(currentLink);
-        Profile user = linksService.getDatabase().getProfile();
-        String fbidC = candidate.getFbid();
-        String fbidU = user.getFbid();
-        String chatId = "";
-        if (fbidU.compareTo(fbidC)<=0){
-            chatId = fbidU+":"+fbidC;
-        }else{
-            chatId = fbidC+":"+fbidU;
+    public void onRejectResult(Object result) {
+        TaskResponse response = (TaskResponse) result;
+        if (response.hasError()) {
+            view.onError(response.getError());
+        } else {
+            links = (Links) response.getResponse();
+            if (links.getLinks().isEmpty()){
+                //si no hay mas candidatos
+                view.showEmptyLinks();
+            }
+            else if (links.getLinks().size()<=currentLink){
+                //si el current era el ultimo
+                Profile profile = links.getLinks().get(links.getLinks().size()-1);
+                this.currentLink = links.getLinks().size()-1;
+                view.showLink(profile);
+            }else{
+                //si el current no era el ultimo
+                Profile profile = links.getLinks().get(currentLink);
+                view.showLink(profile);
+            }
         }
-        return chatId;
     }
 
 }
