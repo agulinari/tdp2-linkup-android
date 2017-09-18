@@ -75,7 +75,10 @@ public class ProfileController {
             view.hideEducation();
         } else {
             view.updateEducation(profile.getEducation());
+        }
 
+        if (!profile.getLocation().getName().equals("")) {
+            view.updateLocationView(profile.getLocation().getName());
         }
 
         view.updateFirstNameAndAge(profile.getFirstName(), age);

@@ -11,5 +11,6 @@ public interface ProfileView extends BaseView {
     void hideEducation();
     void updateComment(String comment);
     void updateProfilePicture(Bitmap picture);
+    void updateLocationView(String locationName);
 }
 
