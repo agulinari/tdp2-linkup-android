@@ -7,10 +7,12 @@ import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
+import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,17 +32,26 @@ public class MyLinksServiceImpl extends MyLinksService {
     }
 
     @Override
-    public List<MyLink> getMyLinks() throws ServiceException {
+    public MyLinks getMyLinks() throws ServiceException {
+        Profile profile = this.database.getProfile();
+        String fbid = profile.getFbid();
         Links links = this.database.getLinks();
-        if (links == null) return new ArrayList<MyLink>();
+        MyLinks myLinks = new MyLinks();
+        if (links == null) return myLinks;
 
-        List<MyLink> l = new ArrayList<MyLink>();
-        List<Profile> mylinks = links.getLinks();
-        for (Profile p : mylinks){
-            l.add(new MyLink(p.getFbid(),p.getFirstName(), p.getBirthday(), R.drawable.user));
+        List<MyLink> newlinks = new ArrayList<MyLink>();
+        List<MyLink> chats = new ArrayList<MyLink>();
+        List<Profile> profiles = links.getLinks();
+        for (Profile p : profiles){
+            chats.add(new MyLink(p.getFbid(), p.getFirstName(), p.getBirthday(), R.drawable.user));
+            newlinks.add(new MyLink(p.getFbid(), p.getFirstName(), p.getBirthday(), R.drawable.user));
         }
-        return l;
+        myLinks.setChats(chats);
+        myLinks.setNewlinks(newlinks);
+        return myLinks;
     }
+
+
 
     /*@Override
     public List<MyLink> getMyLinks() throws ServiceException {
@@ -66,7 +77,7 @@ public class MyLinksServiceImpl extends MyLinksService {
         }
     }
 */
-    public void saveMyLinks(List<MyLink> mylinks) {
+    public void saveMyLinks(MyLinks mylinks) {
 
         //this.database.setMyLinks(mylinks);
     }

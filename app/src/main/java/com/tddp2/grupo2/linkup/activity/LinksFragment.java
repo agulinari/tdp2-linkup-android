@@ -111,8 +111,7 @@ public class LinksFragment extends Fragment implements LinksView{
             @Override
             public void onClick(View v)
             {
-                progressImage.setVisibility(View.VISIBLE);
-                controller.nextLink();
+                controller.acceptCurrentLink();
             }
         });
 
@@ -131,6 +130,8 @@ public class LinksFragment extends Fragment implements LinksView{
             public void onClick(View v)
             {
                 //TODO: SUPERLINKS
+                progressImage.setVisibility(View.VISIBLE);
+                controller.nextLink();
             }
         });
     }

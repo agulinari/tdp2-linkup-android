@@ -4,9 +4,12 @@ import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.AcceptanceRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.RejectionRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
+import com.tddp2.grupo2.linkup.model.Acceptance;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Rejection;
@@ -74,6 +77,29 @@ public class LinksServiceImpl extends LinksService{
         Call<RejectionResponse> call = linkupClient.candidates.reject(request);
         try {
             Response<RejectionResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                //Elimino el link localmente
+                return removeLink(fbidCandidate);
+            } else {
+                APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(error);
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public Links acceptLink(String fbidCandidate) throws ServiceException {
+        Profile profile = this.database.getProfile();
+        String fbid = profile.getFbid();
+
+        LinkupClient linkupClient = clientService.getClient();
+        Acceptance acceptance = new Acceptance(fbid, fbidCandidate);
+        AcceptanceRequest request = new AcceptanceRequest(acceptance);
+        Call<AcceptanceResponse> call = linkupClient.candidates.accept(request);
+        try {
+            Response<AcceptanceResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Elimino el link localmente
                 return removeLink(fbidCandidate);

@@ -37,7 +37,6 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
             links = linksService.getLinks();
         } catch (ServiceException e) {
             taskResponse.setError(e.getMessage());
-            taskResponse.setSessionExpired(e.isSessionExpired());
             return taskResponse;
         }
         taskResponse.setResponse(links);

@@ -22,10 +22,13 @@ public abstract class LinksService implements LinkupService{
 
     public abstract Links rejectLink(String fbidCandidate) throws ServiceException;
 
+    public abstract Links acceptLink(String fbidCandidate) throws ServiceException;
+
     public ServiceType getType() {
         return ServiceType.LINKS;
     }
 
     public abstract Database getDatabase();
+
 
 }

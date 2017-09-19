@@ -30,7 +30,6 @@ public class UpdateFromFacebookTask extends AsyncTask<Object, Void, TaskResponse
                 return new TaskResponse();
         } catch (ServiceException e) {
             TaskResponse response = new TaskResponse(e.getMessage());
-            response.setSessionExpired(e.isSessionExpired());
             return response;
         }
     }

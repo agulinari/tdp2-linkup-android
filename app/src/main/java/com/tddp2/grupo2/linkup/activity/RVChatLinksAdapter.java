@@ -16,8 +16,11 @@ import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import java.util.List;
+
+import static com.tddp2.grupo2.linkup.utils.LinkupUtils.getChatId;
 
 
 public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.PersonViewHolder>{
@@ -68,7 +71,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
                 @Override public void onClick(View v) {
                     MyLinksService service = ServiceFactory.getMyLinksService();
                     String fbidU = service.getDatabase().getProfile().getFbid();
-                    String chatId = getChatId(fbidU,fbid.getText().toString());
+                    String chatId = LinkupUtils.getChatId(fbidU,fbid.getText().toString());
                     Intent intent = new Intent(context, ChatActivity.class);
                     intent.putExtra("CHAT_ID", chatId);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -77,16 +80,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
             });
         }
 
-        public String getChatId(String fbidU, String fbidL){
 
-            String chatId = "";
-            if (fbidU.compareTo(fbidL)<=0){
-                chatId = fbidU+":"+fbidL;
-            }else{
-                chatId = fbidL+":"+fbidU;
-            }
-            return chatId;
-        }
     }
 
     @Override
