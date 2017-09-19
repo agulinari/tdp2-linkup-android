@@ -68,7 +68,10 @@ public class FetchAddressIntentService extends IntentService {
             String addressName = "";
             addressName = appendLocationName(addressName, address.getCountryName());
             addressName = appendLocationName(addressName, address.getAdminArea());
-            addressName = appendLocationName(addressName, address.getSubAdminArea());
+            String locality = address.getLocality();
+            String subLocality = address.getSubLocality();
+            String subAdmin = (subLocality == null) ? locality : subLocality;
+            addressName = appendLocationName(addressName, subAdmin);
             deliverResultToReceiver(SUCCESS_RESULT, addressName);
         }
     }
