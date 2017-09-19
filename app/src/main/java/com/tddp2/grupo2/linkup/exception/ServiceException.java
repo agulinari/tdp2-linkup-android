@@ -14,13 +14,6 @@ public class ServiceException extends Exception{
         this.error = error;
     }
 
-    public boolean isSessionExpired() {
-        if (error != null) {
-            return error.isSessionExpired();
-        }
-        return Boolean.FALSE;
-    }
-
     public boolean hasError(){
         return (error!=null);
     }

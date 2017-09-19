@@ -12,9 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by agustin on 08/09/2017.
- */
 
 public class ServiceGenerator {
 

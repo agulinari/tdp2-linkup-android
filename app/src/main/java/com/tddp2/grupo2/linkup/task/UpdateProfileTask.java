@@ -36,7 +36,6 @@ public class UpdateProfileTask extends AsyncTask<Object, Void, TaskResponse> {
             profileService.updateProfile(localProfile);
         } catch (ServiceException e) {
             TaskResponse response = new TaskResponse(e.getMessage());
-            response.setSessionExpired(e.isSessionExpired());
             return response;
         }
 

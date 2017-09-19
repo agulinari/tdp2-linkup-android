@@ -1,6 +1,8 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
+import com.tddp2.grupo2.linkup.infrastructure.client.request.AcceptanceRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.RejectionRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -21,5 +23,8 @@ public interface Candidates {
 
     @POST("rejection")
     Call<RejectionResponse> reject(@Body RejectionRequest rejectionRequest);
+
+    @POST("link")
+    Call<AcceptanceResponse> accept(@Body AcceptanceRequest acceptanceRequest);
 
 }

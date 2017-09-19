@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.MyLinksController;
 import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.model.MyLinks;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class MyLinksFragment extends Fragment {
     @BindView(R.id.rv_chatlinks)
     RecyclerView rvChatLinks;
 
-    private List<MyLink> myLinks;
+    private MyLinks myLinks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,21 +51,21 @@ public class MyLinksFragment extends Fragment {
         ButterKnife.bind(this, mainView);
 
         registerListeners();
-        List<MyLink> myLinks = controller.getMyLinks();
+        MyLinks myLinks = controller.getMyLinks();
 
 
         //lista de nuevos links
         rvNewLinks.setHasFixedSize(true);
         LinearLayoutManager llmNL = new LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false);
         rvNewLinks.setLayoutManager(llmNL);
-        RVNewLinksAdapter adapterNewLinks = new RVNewLinksAdapter(myLinks);
+        RVNewLinksAdapter adapterNewLinks = new RVNewLinksAdapter(myLinks.getNewlinks());
         rvNewLinks.setAdapter(adapterNewLinks);
 
         //lista de chats
         rvChatLinks.setHasFixedSize(true);
         LinearLayoutManager llmCL = new LinearLayoutManager(activity);
         rvChatLinks.setLayoutManager(llmCL);
-        RVChatLinksAdapter adapterChats = new RVChatLinksAdapter(myLinks);
+        RVChatLinksAdapter adapterChats = new RVChatLinksAdapter(myLinks.getChats());
         rvChatLinks.setAdapter(adapterChats);
 
         return mainView;

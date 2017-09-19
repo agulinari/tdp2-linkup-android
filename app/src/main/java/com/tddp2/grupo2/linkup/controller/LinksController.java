@@ -8,6 +8,7 @@ import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import com.tddp2.grupo2.linkup.task.AcceptLinkTask;
 import com.tddp2.grupo2.linkup.task.CreateProfileTask;
 import com.tddp2.grupo2.linkup.task.GetLinksTask;
 import com.tddp2.grupo2.linkup.task.RejectLinkTask;
@@ -34,6 +35,13 @@ public class LinksController {
         GetLinksTask task = new GetLinksTask(linksService, this);
         task.execute();
 
+    }
+
+
+    public void acceptCurrentLink() {
+        AcceptLinkTask task = new AcceptLinkTask(linksService, this);
+        Profile p = links.getLinks().get(currentLink);
+        task.execute(p.getFbid());
     }
 
     public void rejectCurrentLink(){
@@ -84,8 +92,16 @@ public class LinksController {
         view.enableActions();
     }
 
-    public void onGetLinksResult(Object result) {
-        TaskResponse response = (TaskResponse) result;
+    public void initAcceptTask() {
+        view.disableActions();
+    }
+
+    public void finishAcceptTask() {
+        view.enableActions();
+    }
+
+    public void onGetLinksResult(TaskResponse response) {
+
         if (response.hasError()) {
             view.onError(response.getError());
         } else {
@@ -101,8 +117,8 @@ public class LinksController {
         }
     }
 
-    public void onRejectResult(Object result) {
-        TaskResponse response = (TaskResponse) result;
+    public void onRejectResult(TaskResponse response) {
+
         if (response.hasError()) {
             view.onError(response.getError());
         } else {
@@ -123,5 +139,29 @@ public class LinksController {
             }
         }
     }
+
+    public void onAcceptResult(TaskResponse response) {
+
+        if (response.hasError()) {
+            view.onError(response.getError());
+        } else {
+            links = (Links) response.getResponse();
+            if (links.getLinks().isEmpty()){
+                //si no hay mas candidatos
+                view.showEmptyLinks();
+            }
+            else if (links.getLinks().size()<=currentLink){
+                //si el current era el ultimo
+                Profile profile = links.getLinks().get(links.getLinks().size()-1);
+                this.currentLink = links.getLinks().size()-1;
+                view.showLink(profile);
+            }else{
+                //si el current no era el ultimo
+                Profile profile = links.getLinks().get(currentLink);
+                view.showLink(profile);
+            }
+        }
+    }
+
 
 }
