@@ -58,6 +58,12 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.reloadButton)
     ImageButton reloadButton;
 
+    @BindView(R.id.linkArrowRight)
+    ImageButton buttonNextCandidate;
+
+    @BindView(R.id.linkArrowLeft)
+    ImageButton buttonPreviousCandidate;
+
     @BindView(R.id.progressImage)
     ProgressBar progressImage;
 
@@ -108,6 +114,24 @@ public class LinksFragment extends Fragment implements LinksView{
             public void onClick(View v)
             {
                 controller.rejectCurrentLink();
+            }
+        });
+
+        buttonNextCandidate.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.nextLink();
+            }
+        });
+
+        buttonPreviousCandidate.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.previousLink();
             }
         });
 
@@ -187,6 +211,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
         String comment = profile.getComments();
         if (!comment.equals("")) {
+            cardViewCommentCard.setVisibility(View.VISIBLE);
             textViewLinkComment.setText(comment);
         } else {
             cardViewCommentCard.setVisibility(View.GONE);
@@ -194,6 +219,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
         String occupation = profile.getOccupation();
         if (!occupation.equals("")) {
+            cardViewOccupationCard.setVisibility(View.VISIBLE);
             textViewLinkWork.setText(occupation);
         } else {
             cardViewOccupationCard.setVisibility(View.GONE);
@@ -201,6 +227,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
         String studies = profile.getEducation();
         if (!studies.equals("")) {
+            cardViewEducationCard.setVisibility(View.VISIBLE);
             textViewLinkStudies.setText(studies);
         } else {
             cardViewEducationCard.setVisibility(View.GONE);
