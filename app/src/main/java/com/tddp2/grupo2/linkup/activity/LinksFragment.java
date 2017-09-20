@@ -1,47 +1,22 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.login.LoginManager;
-import com.tddp2.grupo2.linkup.BaseView;
-import com.tddp2.grupo2.linkup.ChatActivity;
+import android.view.*;
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.tddp2.grupo2.linkup.LinksView;
-import com.tddp2.grupo2.linkup.LoginActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LinksFragment extends Fragment implements LinksView{
 
@@ -56,11 +31,23 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.linkName)
     TextView textViewLinkName;
 
-    @BindView(R.id.linkAge)
-    TextView textViewLinkAge;
+    @BindView(R.id.linkCommentCard)
+    CardView cardViewCommentCard;
 
-    @BindView(R.id.linkInterests)
-    TextView textViewLinkInterests;
+    @BindView(R.id.linkCommentText)
+    TextView textViewLinkComment;
+
+    @BindView(R.id.linkOccupationCard)
+    CardView cardViewOccupationCard;
+
+    @BindView(R.id.linkWorkText)
+    TextView textViewLinkWork;
+
+    @BindView(R.id.linkEducationCard)
+    CardView cardViewEducationCard;
+
+    @BindView(R.id.linkStudiesText)
+    TextView textViewLinkStudies;
 
     @BindView(R.id.yesButton)
     ImageButton buttonYes;
@@ -70,6 +57,12 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @BindView(R.id.reloadButton)
     ImageButton reloadButton;
+
+    @BindView(R.id.linkArrowRight)
+    ImageButton buttonNextCandidate;
+
+    @BindView(R.id.linkArrowLeft)
+    ImageButton buttonPreviousCandidate;
 
     @BindView(R.id.progressImage)
     ProgressBar progressImage;
@@ -121,6 +114,24 @@ public class LinksFragment extends Fragment implements LinksView{
             public void onClick(View v)
             {
                 controller.rejectCurrentLink();
+            }
+        });
+
+        buttonNextCandidate.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.nextLink();
+            }
+        });
+
+        buttonPreviousCandidate.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.previousLink();
             }
         });
 
@@ -190,14 +201,37 @@ public class LinksFragment extends Fragment implements LinksView{
         String image = profile.getImages().get(0).getImage();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         imageViewLinkImage.setImageBitmap(bitmap);
-        textViewLinkName.setText(profile.getFirstName());
+        String name = profile.getFirstName();
         String age = "";
         try {
             age = String.valueOf(DateUtils.getAgeFromBirthday(profile.getBirthday()));
         } catch (MissingAgeException e) {
         }
-        textViewLinkAge.setText(age);
-        textViewLinkInterests.setText(profile.getComments());
+        textViewLinkName.setText(name + ", " + age);
+
+        String comment = profile.getComments();
+        if (!comment.equals("")) {
+            cardViewCommentCard.setVisibility(View.VISIBLE);
+            textViewLinkComment.setText(comment);
+        } else {
+            cardViewCommentCard.setVisibility(View.GONE);
+        }
+
+        String occupation = profile.getOccupation();
+        if (!occupation.equals("")) {
+            cardViewOccupationCard.setVisibility(View.VISIBLE);
+            textViewLinkWork.setText(occupation);
+        } else {
+            cardViewOccupationCard.setVisibility(View.GONE);
+        }
+
+        String studies = profile.getEducation();
+        if (!studies.equals("")) {
+            cardViewEducationCard.setVisibility(View.VISIBLE);
+            textViewLinkStudies.setText(studies);
+        } else {
+            cardViewEducationCard.setVisibility(View.GONE);
+        }
     }
 
     @Override
