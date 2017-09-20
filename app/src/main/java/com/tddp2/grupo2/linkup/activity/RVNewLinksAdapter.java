@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
@@ -37,6 +38,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
     @Override
     public void onBindViewHolder(NewLinkViewHolder holder, int i) {
         holder.fbid.setText(myNewLinks.get(i).getFbid());
+        holder.gender.setText(myNewLinks.get(i).getGender());
         holder.personName.setText(myNewLinks.get(i).getName());
         holder.personPhoto.setImageResource(myNewLinks.get(i).getPhotoId());
     }
@@ -48,6 +50,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
 
     public static class NewLinkViewHolder extends RecyclerView.ViewHolder {
         TextView fbid;
+        TextView gender;
         TextView personName;
         CircleImageView personPhoto;
         private final Context context;
@@ -56,18 +59,24 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
             super(itemView);
             context = itemView.getContext();
             fbid = (TextView) itemView.findViewById(R.id.newlink_fbid);
+            gender = (TextView) itemView.findViewById(R.id.newlink_gender);
             personName = (TextView)itemView.findViewById(R.id.newlink_name);
             personPhoto = (CircleImageView)itemView.findViewById(R.id.newlink_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    MyLinksService service = ServiceFactory.getMyLinksService();
-                    String fbidU = service.getDatabase().getProfile().getFbid();
+                    Profile myProfile = ServiceFactory.getMyLinksService().getDatabase().getProfile();
+                    String fbidU = myProfile.getFbid();
+                    String genderU = myProfile.getGender();
                     String fbidL = fbid.getText().toString();
-                    Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra("USER_ID", fbidU);
-                    intent.putExtra("LINK_ID", fbidL);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    String genderL = gender.getText().toString();
+
+                    if (!(genderL.equals("female") && genderU.equals("male"))) {
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.putExtra("USER_ID", fbidU);
+                        intent.putExtra("LINK_ID", fbidL);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }

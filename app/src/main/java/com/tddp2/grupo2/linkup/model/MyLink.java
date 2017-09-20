@@ -10,14 +10,16 @@ public class MyLink implements Serializable, Comparable<MyLink> {
     private String fbid;
     private String name;
     private String age;
+    private String gender;
     private int photoId;
     private ChatMessage lastMessage;
 
-    public MyLink(String fbid, String name, String age, int photoId) {
+    public MyLink(String fbid, String name, String age, String gender, int photoId) {
         this.fbid = fbid;
         this.name = name;
         this.age = age;
         this.photoId = photoId;
+        this.gender = gender;
         this.lastMessage = null;
     }
 
@@ -59,6 +61,14 @@ public class MyLink implements Serializable, Comparable<MyLink> {
 
     public void setLastMessage(ChatMessage lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     @Override

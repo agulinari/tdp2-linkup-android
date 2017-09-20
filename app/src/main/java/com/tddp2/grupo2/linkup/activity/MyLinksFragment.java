@@ -108,7 +108,7 @@ public class MyLinksFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                     String fbid = child.getKey();
                     ChatMessage lastMessage = child.getValue(ChatMessage.class);
-                    MyLink myLink = new MyLink(fbid, "", "", 0);
+                    MyLink myLink = new MyLink(fbid, "", "", "", 0);
                     myLink.setLastMessage(lastMessage);
                     myChatsUpdate.add(myLink);
                 }
