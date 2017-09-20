@@ -49,11 +49,13 @@ public class MyLinksFragment extends Fragment {
     @BindView(R.id.rv_chatlinks)
     RecyclerView rvChatLinks;
 
+    private List<MyLink> myLinks;
     private List<MyLink> newLinks;
     private List<MyLink> chats;
     private DatabaseReference mDatabase;
     private String userId;
     private RVChatLinksAdapter adapterChats;
+    private RVNewLinksAdapter adapterNewLinks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -74,15 +76,16 @@ public class MyLinksFragment extends Fragment {
         ButterKnife.bind(this, mainView);
 
         registerListeners();
-        MyLinks myLinks = controller.getMyLinks();
-        newLinks = myLinks.getLinks();
+        myLinks = controller.getMyLinks().getLinks();
+
+        newLinks = new ArrayList<MyLink>();
         chats = new ArrayList<MyLink>();
 
         //lista de nuevos links
         rvNewLinks.setHasFixedSize(true);
         LinearLayoutManager llmNL = new LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false);
         rvNewLinks.setLayoutManager(llmNL);
-        RVNewLinksAdapter adapterNewLinks = new RVNewLinksAdapter(newLinks);
+        adapterNewLinks = new RVNewLinksAdapter(newLinks);
         rvNewLinks.setAdapter(adapterNewLinks);
 
         //lista de chats
@@ -125,17 +128,13 @@ public class MyLinksFragment extends Fragment {
 
     private synchronized void updateMyChats(List<MyLink> myChatsUpdate) {
 
-        List<MyLink> filteredChats = filterChats(myChatsUpdate);
-        Collections.sort(filteredChats);
-        adapterChats.swap(filteredChats);
-
-    }
-
-    private List<MyLink> filterChats(List<MyLink> myChatsUpdate) {
+        List<MyLink> filteredNewLinks = new ArrayList<MyLink>();
         List<MyLink> filteredChats = new ArrayList<MyLink>();
+
         boolean exists = false;
-        for (MyLink myChat : myChatsUpdate){
-            for (MyLink myLink : newLinks){
+        for (MyLink myLink : myLinks){
+            for (MyLink myChat : myChatsUpdate){
+
                 if (myChat.getFbid().equals(myLink.getFbid())){
                     exists = true;
                     ChatMessage lastMessage = myChat.getLastMessage();
@@ -144,11 +143,16 @@ public class MyLinksFragment extends Fragment {
                     break;
                 }
             }
+            if (!exists){
+                filteredNewLinks.add(myLink);
+            }
             exists = false;
         }
-        return filteredChats;
-    }
 
+        Collections.sort(filteredChats);
+        adapterChats.swap(filteredChats);
+        adapterNewLinks.swap(filteredNewLinks);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

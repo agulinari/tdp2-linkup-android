@@ -2,12 +2,10 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tddp2.grupo2.linkup.ChatActivity;
@@ -23,10 +21,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.NewLinkViewHolder>{
 
-    List<MyLink> myChats;
+    List<MyLink> myNewLinks;
 
     RVNewLinksAdapter(List<MyLink> myChats){
-        this.myChats = myChats;
+        this.myNewLinks = myChats;
     }
 
     @Override
@@ -38,14 +36,14 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
 
     @Override
     public void onBindViewHolder(NewLinkViewHolder holder, int i) {
-        holder.fbid.setText(myChats.get(i).getFbid());
-        holder.personName.setText(myChats.get(i).getName());
-        holder.personPhoto.setImageResource(myChats.get(i).getPhotoId());
+        holder.fbid.setText(myNewLinks.get(i).getFbid());
+        holder.personName.setText(myNewLinks.get(i).getName());
+        holder.personPhoto.setImageResource(myNewLinks.get(i).getPhotoId());
     }
 
     @Override
     public int getItemCount() {
-        return myChats.size();
+        return myNewLinks.size();
     }
 
     public static class NewLinkViewHolder extends RecyclerView.ViewHolder {
@@ -80,5 +78,15 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    public void swap(List<MyLink> datas)
+    {
+        if(datas == null || datas.size()==0)
+            return;
+        if (myNewLinks != null && myNewLinks.size()>0)
+            myNewLinks.clear();
+        myNewLinks.addAll(datas);
+        notifyDataSetChanged();
+
+    }
 
 }
