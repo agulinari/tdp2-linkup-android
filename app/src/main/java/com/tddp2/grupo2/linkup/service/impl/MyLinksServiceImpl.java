@@ -42,7 +42,7 @@ public class MyLinksServiceImpl extends MyLinksService {
         List<MyLink> mylinks = new ArrayList<MyLink>();
         List<Profile> profiles = links.getLinks();
         for (Profile p : profiles){
-            mylinks.add(new MyLink(p.getFbid(), p.getFirstName(), p.getBirthday(), R.drawable.user));
+            mylinks.add(new MyLink(p.getFbid(), p.getFirstName(), p.getBirthday(), p.getGender(), R.drawable.user));
         }
         myLinks.setLinks(mylinks);
 

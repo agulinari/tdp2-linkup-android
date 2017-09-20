@@ -2,17 +2,16 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
@@ -23,10 +22,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.NewLinkViewHolder>{
 
-    List<MyLink> myChats;
+    List<MyLink> myNewLinks;
 
     RVNewLinksAdapter(List<MyLink> myChats){
-        this.myChats = myChats;
+        this.myNewLinks = myChats;
     }
 
     @Override
@@ -38,18 +37,20 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
 
     @Override
     public void onBindViewHolder(NewLinkViewHolder holder, int i) {
-        holder.fbid.setText(myChats.get(i).getFbid());
-        holder.personName.setText(myChats.get(i).getName());
-        holder.personPhoto.setImageResource(myChats.get(i).getPhotoId());
+        holder.fbid.setText(myNewLinks.get(i).getFbid());
+        holder.gender.setText(myNewLinks.get(i).getGender());
+        holder.personName.setText(myNewLinks.get(i).getName());
+        holder.personPhoto.setImageResource(myNewLinks.get(i).getPhotoId());
     }
 
     @Override
     public int getItemCount() {
-        return myChats.size();
+        return myNewLinks.size();
     }
 
     public static class NewLinkViewHolder extends RecyclerView.ViewHolder {
         TextView fbid;
+        TextView gender;
         TextView personName;
         CircleImageView personPhoto;
         private final Context context;
@@ -58,18 +59,24 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
             super(itemView);
             context = itemView.getContext();
             fbid = (TextView) itemView.findViewById(R.id.newlink_fbid);
+            gender = (TextView) itemView.findViewById(R.id.newlink_gender);
             personName = (TextView)itemView.findViewById(R.id.newlink_name);
             personPhoto = (CircleImageView)itemView.findViewById(R.id.newlink_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    MyLinksService service = ServiceFactory.getMyLinksService();
-                    String fbidU = service.getDatabase().getProfile().getFbid();
+                    Profile myProfile = ServiceFactory.getMyLinksService().getDatabase().getProfile();
+                    String fbidU = myProfile.getFbid();
+                    String genderU = myProfile.getGender();
                     String fbidL = fbid.getText().toString();
-                    Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra("USER_ID", fbidU);
-                    intent.putExtra("LINK_ID", fbidL);
-                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    String genderL = gender.getText().toString();
+
+                    if (!(genderL.equals("female") && genderU.equals("male"))) {
+                        Intent intent = new Intent(context, ChatActivity.class);
+                        intent.putExtra("USER_ID", fbidU);
+                        intent.putExtra("LINK_ID", fbidL);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(intent);
+                    }
                 }
             });
         }
@@ -80,5 +87,15 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    public void swap(List<MyLink> datas)
+    {
+        if(datas == null || datas.size()==0)
+            return;
+        if (myNewLinks != null && myNewLinks.size()>0)
+            myNewLinks.clear();
+        myNewLinks.addAll(datas);
+        notifyDataSetChanged();
+
+    }
 
 }
