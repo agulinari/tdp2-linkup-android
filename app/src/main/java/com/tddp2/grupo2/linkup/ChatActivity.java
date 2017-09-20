@@ -4,6 +4,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -11,21 +12,35 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
+import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 public class ChatActivity extends AppCompatActivity {
 
-
+    private static final String TAG = "ChatActivity";
     private FirebaseListAdapter<ChatMessage> adapter;
 
     ListView listOfMessages;
+    private String userId;
+    private String linkId;
+    private String chatId;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        final String chatId = getIntent().getStringExtra("CHAT_ID");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        userId = getIntent().getStringExtra("USER_ID");
+        linkId = getIntent().getStringExtra("LINK_ID");
+        chatId = LinkupUtils.getChatId(userId, linkId);
 
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
@@ -35,18 +50,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 EditText input = (EditText)findViewById(R.id.input);
 
-                // Read the input field and push a new instance
-                // of ChatMessage to the Firebase database
-                FirebaseDatabase.getInstance()
-                        .getReference()
-                        .child("chats")
-                        .child(chatId)
-                        .push()
-                        .setValue(new ChatMessage(input.getText().toString(),
-                                FirebaseAuth.getInstance()
-                                        .getCurrentUser()
-                                        .getDisplayName())
-                        );
+                postMessage(input.getText().toString(), chatId);
 
                 // Clear the input
                 input.setText("");
@@ -56,7 +60,7 @@ public class ChatActivity extends AppCompatActivity {
         listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference().child("chats").child(chatId)) {
+                R.layout.message, mDatabase.child("chats").child(chatId)) {
             @Override
             protected void populateView(View v, ChatMessage model, int position) {
                 // Get references to the views of message.xml
@@ -75,6 +79,35 @@ public class ChatActivity extends AppCompatActivity {
         };
 
         listOfMessages.setAdapter(adapter);
+    }
+
+    private void postMessage(String message, final String chatId) {
+        // Read the input field and push a new instance
+        // of ChatMessage to the Firebase database
+        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+
+        mDatabase.child("chats")
+                .child(chatId)
+                .push()
+                .setValue(chatMessage);
+
+
+        mDatabase.child("lastMessages").runTransaction(new Transaction.Handler() {
+            @Override
+            public Transaction.Result doTransaction(MutableData mutableData) {
+                mutableData.child(userId).child(linkId).setValue(chatMessage);
+                mutableData.child(linkId).child(userId).setValue(chatMessage);
+                return Transaction.success(mutableData);
+            }
+
+            @Override
+            public void onComplete(DatabaseError databaseError, boolean b,
+                                   DataSnapshot dataSnapshot) {
+                // Transaction completed
+                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
+            }
+        });
+
     }
 
 

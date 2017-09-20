@@ -18,8 +18,10 @@ import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.data;
 import static com.tddp2.grupo2.linkup.utils.LinkupUtils.getChatId;
 
 
@@ -71,9 +73,10 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
                 @Override public void onClick(View v) {
                     MyLinksService service = ServiceFactory.getMyLinksService();
                     String fbidU = service.getDatabase().getProfile().getFbid();
-                    String chatId = LinkupUtils.getChatId(fbidU,fbid.getText().toString());
+                    String fbidL = fbid.getText().toString();
                     Intent intent = new Intent(context, ChatActivity.class);
-                    intent.putExtra("CHAT_ID", chatId);
+                    intent.putExtra("USER_ID", fbidU);
+                    intent.putExtra("LINK_ID", fbidL);
                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }
@@ -86,6 +89,17 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void swap(List<MyLink> datas)
+    {
+        if(datas == null || datas.size()==0)
+            return;
+        if (myChats != null && myChats.size()>0)
+            myChats.clear();
+        myChats.addAll(datas);
+        notifyDataSetChanged();
+
     }
 
 }

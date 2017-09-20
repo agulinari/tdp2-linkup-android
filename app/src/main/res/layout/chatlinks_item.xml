@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/chatlink_fbid"
                 android:layout_toRightOf="@+id/chatlink_image"
-                android:visibility="invisible"
+                android:visibility="gone"
                 />
 
             <TextView
