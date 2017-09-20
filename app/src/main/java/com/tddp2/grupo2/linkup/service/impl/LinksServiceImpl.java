@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.service.impl;
 
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
+import com.tddp2.grupo2.linkup.exception.UsersMatchException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.AcceptanceRequest;
@@ -16,12 +17,11 @@ import com.tddp2.grupo2.linkup.model.Rejection;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 
 public class LinksServiceImpl extends LinksService{
@@ -90,7 +90,7 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public Links acceptLink(String fbidCandidate) throws ServiceException {
+    public Links acceptLink(String fbidCandidate) throws ServiceException, UsersMatchException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
 
@@ -102,7 +102,13 @@ public class LinksServiceImpl extends LinksService{
             Response<AcceptanceResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Elimino el link localmente
-                return removeLink(fbidCandidate);
+                Links filteredLinks = removeLink(fbidCandidate);
+
+                if (response.body().getMatch()) {
+                    throw new UsersMatchException();
+                }
+
+                return filteredLinks;
             } else {
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);

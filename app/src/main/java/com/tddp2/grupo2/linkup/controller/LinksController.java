@@ -1,21 +1,12 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import com.tddp2.grupo2.linkup.BaseView;
+import android.util.Log;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
-import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.AcceptLinkTask;
-import com.tddp2.grupo2.linkup.task.CreateProfileTask;
-import com.tddp2.grupo2.linkup.task.GetLinksTask;
-import com.tddp2.grupo2.linkup.task.RejectLinkTask;
-import com.tddp2.grupo2.linkup.task.TaskResponse;
-import com.tddp2.grupo2.linkup.task.UpdateSettingsTask;
-
-import static com.tddp2.grupo2.linkup.R.drawable.profile;
+import com.tddp2.grupo2.linkup.task.*;
 
 public class LinksController {
 
@@ -41,7 +32,7 @@ public class LinksController {
     public void acceptCurrentLink() {
         AcceptLinkTask task = new AcceptLinkTask(linksService, this);
         Profile p = links.getLinks().get(currentLink);
-        task.execute(p.getFbid());
+        task.execute(p.getFbid(), p.getFirstName());
     }
 
     public void rejectCurrentLink(){
@@ -141,25 +132,31 @@ public class LinksController {
     }
 
     public void onAcceptResult(TaskResponse response) {
+        AcceptLinkTaskResponse acceptLinkTaskResponse = (AcceptLinkTaskResponse) response;
 
         if (response.hasError()) {
             view.onError(response.getError());
         } else {
-            links = (Links) response.getResponse();
-            if (links.getLinks().isEmpty()){
-                //si no hay mas candidatos
-                view.showEmptyLinks();
+            if (acceptLinkTaskResponse.isAMatch()) {
+                view.showMatch(acceptLinkTaskResponse.getMatchName());
+            } else {
+                links = acceptLinkTaskResponse.getLinks();
+                if (links.getLinks().isEmpty()){
+                    //si no hay mas candidatos
+                    view.showEmptyLinks();
+                }
+                else if (links.getLinks().size()<=currentLink){
+                    //si el current era el ultimo
+                    Profile profile = links.getLinks().get(links.getLinks().size()-1);
+                    this.currentLink = links.getLinks().size()-1;
+                    view.showLink(profile);
+                }else{
+                    //si el current no era el ultimo
+                    Profile profile = links.getLinks().get(currentLink);
+                    view.showLink(profile);
+                }
             }
-            else if (links.getLinks().size()<=currentLink){
-                //si el current era el ultimo
-                Profile profile = links.getLinks().get(links.getLinks().size()-1);
-                this.currentLink = links.getLinks().size()-1;
-                view.showLink(profile);
-            }else{
-                //si el current no era el ultimo
-                Profile profile = links.getLinks().get(currentLink);
-                view.showLink(profile);
-            }
+
         }
     }
 

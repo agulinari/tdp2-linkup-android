@@ -13,4 +13,5 @@ public interface LinksView  extends BaseView{
 
     void enableActions();
 
+    void showMatch(String matchName);
 }

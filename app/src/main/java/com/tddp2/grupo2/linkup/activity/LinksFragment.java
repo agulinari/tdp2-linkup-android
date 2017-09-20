@@ -1,14 +1,18 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.view.*;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.tddp2.grupo2.linkup.LinksActivity;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
@@ -242,5 +246,21 @@ public class LinksFragment extends Fragment implements LinksView{
         buttonNo.setEnabled(Boolean.FALSE);
     }
 
-
+    public void showMatch(String matchName) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.candidate_match_title);
+        builder.setMessage(getString(R.string.candidate_match_message, matchName));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.candidate_match_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                //ir a mis links
+                Intent intent = new Intent(activity, LinksActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

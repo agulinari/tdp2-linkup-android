@@ -1,22 +1,26 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.response;
 
 
-import com.tddp2.grupo2.linkup.model.Acceptance;
-
 public class AcceptanceResponse {
 
-    private Acceptance acceptance;
+    private int remainingSuperlinks;
+    private boolean match;
 
-    public AcceptanceResponse(Acceptance acceptance) {
-        this.acceptance = acceptance;
+    public AcceptanceResponse() {}
+
+    public int getRemainingSuperlinks() {
+        return remainingSuperlinks;
     }
 
-    public Acceptance getAcceptance() {
-        return acceptance;
+    public void setRemainingSuperlinks(int remainingSuperlinks) {
+        this.remainingSuperlinks = remainingSuperlinks;
     }
 
-    public void setAcceptance(Acceptance acceptance) {
-        this.acceptance = acceptance;
+    public boolean getMatch() {
+        return match;
     }
 
+    public void setMatch(boolean match) {
+        this.match = match;
+    }
 }
