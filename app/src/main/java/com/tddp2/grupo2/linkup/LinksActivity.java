@@ -96,9 +96,13 @@ public class LinksActivity extends AppCompatActivity {
     }*/
 
     private boolean selectFragment(MenuItem menuItem) {
+        return changeFragment(menuItem.getItemId());
+    }
+
+    public boolean changeFragment(int fragmentId) {
         FragmentTransaction fragmentTransaction;
 
-        switch (menuItem.getItemId()) {
+        switch (fragmentId) {
             case R.id.drawer_search_links:
                 fragment = new LinksFragment();
                 currentFragment = getResources().getString(R.string.app_name);

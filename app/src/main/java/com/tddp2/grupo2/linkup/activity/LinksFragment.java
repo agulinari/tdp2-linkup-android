@@ -2,7 +2,6 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -254,10 +253,7 @@ public class LinksFragment extends Fragment implements LinksView{
         builder.setPositiveButton(getString(R.string.candidate_match_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                //ir a mis links
-                Intent intent = new Intent(activity, LinksActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                ((LinksActivity)getActivity()).changeFragment(R.id.drawer_my_links);
             }
         });
         AlertDialog alert = builder.create();
