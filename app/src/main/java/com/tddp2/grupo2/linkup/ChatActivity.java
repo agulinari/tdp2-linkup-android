@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup;
 
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -22,6 +23,7 @@ import com.google.firebase.database.Transaction;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
+import static com.tddp2.grupo2.linkup.LinkupApplication.getContext;
 import static com.tddp2.grupo2.linkup.R.id.imageView;
 
 public class ChatActivity extends AppCompatActivity {
@@ -78,7 +80,7 @@ public class ChatActivity extends AppCompatActivity {
                 messageUser.setText(model.getMessageUser());
 
                 // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
+                messageTime.setText(DateFormat.format("HH:mm",
                         model.getMessageTime()));
 
                 if (model.getFbid()!=null && model.getFbid().equals(userId)){
@@ -95,6 +97,10 @@ public class ChatActivity extends AppCompatActivity {
                     params2.addRule(RelativeLayout.BELOW, R.id.message_user);
                     params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
+
+
+                    messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 }else{
                     RelativeLayout.LayoutParams params1 =
                             new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -109,6 +115,10 @@ public class ChatActivity extends AppCompatActivity {
                     params2.addRule(RelativeLayout.BELOW, R.id.message_user);
                     params2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
+
+
+                    messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
+                    messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
                 }
 
 

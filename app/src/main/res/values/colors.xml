@@ -8,4 +8,6 @@
     <color name="profileCard">#EFF2F7</color>
     <color name="white">#FFF</color>
     <color name="button_disable">#F8BBD0</color>
+    <color name="chatMessage">#B1BCBE</color>
+    <color name="colorSecondary">#119dc2</color>
 </resources>
