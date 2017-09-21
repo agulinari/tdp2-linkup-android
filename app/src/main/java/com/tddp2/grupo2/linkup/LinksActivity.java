@@ -51,7 +51,6 @@ public class LinksActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
-                menuItem.setChecked(true);
                 drawerLayout.closeDrawers();
                 return selectFragment(menuItem);
             }
@@ -96,9 +95,13 @@ public class LinksActivity extends AppCompatActivity {
     }*/
 
     private boolean selectFragment(MenuItem menuItem) {
+        return changeFragment(menuItem.getItemId());
+    }
+
+    public boolean changeFragment(int fragmentId) {
         FragmentTransaction fragmentTransaction;
 
-        switch (menuItem.getItemId()) {
+        switch (fragmentId) {
             case R.id.drawer_search_links:
                 fragment = new LinksFragment();
                 currentFragment = getResources().getString(R.string.app_name);
@@ -128,6 +131,7 @@ public class LinksActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.frame, fragment);
             fragmentTransaction.commit();
             getSupportActionBar().setTitle(currentFragment);
+            navigationView.setCheckedItem(fragmentId);
             return true;
         }
         return false;
