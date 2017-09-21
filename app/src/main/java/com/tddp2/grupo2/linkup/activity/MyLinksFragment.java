@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,6 +50,12 @@ public class MyLinksFragment extends Fragment {
     @BindView(R.id.rv_chatlinks)
     RecyclerView rvChatLinks;
 
+    @BindView(R.id.newlinks_progress)
+    LinearLayout newLinksProgressView;
+
+    @BindView(R.id.chats_progress)
+    LinearLayout chatsProgressView;
+
     private List<MyLink> myLinks;
     private List<MyLink> newLinks;
     private List<MyLink> chats;
@@ -74,6 +81,9 @@ public class MyLinksFragment extends Fragment {
         mainView.setTag(TAG);
 
         ButterKnife.bind(this, mainView);
+
+        this.newLinksProgressView.setVisibility(View.VISIBLE);
+        this.chatsProgressView.setVisibility(View.VISIBLE);
 
         registerListeners();
         myLinks = controller.getMyLinks().getLinks();
@@ -152,6 +162,8 @@ public class MyLinksFragment extends Fragment {
         Collections.sort(filteredChats);
         adapterChats.swap(filteredChats);
         adapterNewLinks.swap(filteredNewLinks);
+        this.newLinksProgressView.setVisibility(View.GONE);
+        this.chatsProgressView.setVisibility(View.GONE);
     }
 
     @Override
