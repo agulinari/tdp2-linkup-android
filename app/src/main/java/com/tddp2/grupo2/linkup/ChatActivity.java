@@ -95,6 +95,20 @@ public class ChatActivity extends AppCompatActivity {
                     params2.addRule(RelativeLayout.BELOW, R.id.message_user);
                     params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
+                }else{
+                    RelativeLayout.LayoutParams params1 =
+                            new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params1.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+
+                    messageUser.setLayoutParams(params1);
+
+                    RelativeLayout.LayoutParams params2 =
+                            new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
+                    params2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                    messageGlobe.setLayoutParams(params2);
                 }
 
 
