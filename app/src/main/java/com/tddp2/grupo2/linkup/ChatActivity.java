@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseListAdapter;
@@ -20,6 +21,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
+
+import static com.tddp2.grupo2.linkup.R.id.imageView;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -68,6 +71,8 @@ public class ChatActivity extends AppCompatActivity {
                 TextView messageUser = (TextView)v.findViewById(R.id.message_user);
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
+                RelativeLayout messageGlobe = (RelativeLayout)v.findViewById(R.id.message_globe);
+
                 // Set their text
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
@@ -75,6 +80,24 @@ public class ChatActivity extends AppCompatActivity {
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
                         model.getMessageTime()));
+
+                if (model.getFbid()!=null && model.getFbid().equals(userId)){
+                    RelativeLayout.LayoutParams params1 =
+                            new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+
+                    messageUser.setLayoutParams(params1);
+
+                    RelativeLayout.LayoutParams params2 =
+                            new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
+                    params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
+                    messageGlobe.setLayoutParams(params2);
+                }
+
+
             }
         };
 
@@ -84,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
     private void postMessage(String message, final String chatId) {
         // Read the input field and push a new instance
         // of ChatMessage to the Firebase database
-        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), userId);
 
         mDatabase.child("chats")
                 .child(chatId)
