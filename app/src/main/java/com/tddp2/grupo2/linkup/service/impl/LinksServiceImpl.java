@@ -2,7 +2,6 @@ package com.tddp2.grupo2.linkup.service.impl;
 
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.exception.UsersMatchException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.AcceptanceRequest;
@@ -16,6 +15,7 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Rejection;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
+import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -90,7 +90,7 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public Links acceptLink(String fbidCandidate) throws ServiceException, UsersMatchException {
+    public AcceptLinkTaskResponse acceptLink(String fbidCandidate) throws ServiceException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
 
@@ -103,12 +103,11 @@ public class LinksServiceImpl extends LinksService{
             if (response.isSuccessful()) {
                 //Elimino el link localmente
                 Links filteredLinks = removeLink(fbidCandidate);
-
-                if (response.body().getMatch()) {
-                    throw new UsersMatchException();
-                }
-
-                return filteredLinks;
+                Boolean isAMatch = response.body().getMatch();
+                AcceptLinkTaskResponse acceptLinkTaskResponse = new AcceptLinkTaskResponse();
+                acceptLinkTaskResponse.setIsAMatch(isAMatch);
+                acceptLinkTaskResponse.setLinks(filteredLinks);
+                return acceptLinkTaskResponse;
             } else {
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);

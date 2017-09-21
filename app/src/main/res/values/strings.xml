@@ -39,8 +39,8 @@
     <string name="comment_edit_cancel">Cancelar</string>
     <string name="item_logout">Cerrar Sesión</string>
     <string name="candidate_match_title">¡Has linkeado!</string>
-    <string name="candidate_match_message">%1$s también quiere conocerte.</string>
-    <string name="candidate_match_ok">Ir a Mis Links</string>
+    <string name="candidate_match_message">%1$s también quiere conocerte. Puedes ver todos tus links en la sección "Mis Links"</string>
+    <string name="candidate_match_ok">Aceptar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
