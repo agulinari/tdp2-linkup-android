@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.data;
+import static android.media.CamcorderProfile.get;
 import static com.tddp2.grupo2.linkup.utils.LinkupUtils.getChatId;
 
 
@@ -44,7 +46,10 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
     public void onBindViewHolder(PersonViewHolder holder, int i) {
         holder.fbid.setText(myChats.get(i).getFbid());
         holder.personName.setText(myChats.get(i).getName());
-        holder.personAge.setText(myChats.get(i).getAge());
+        ChatMessage lastMessage = myChats.get(i).getLastMessage();
+        if (lastMessage != null) {
+            holder.personLastMessage.setText(lastMessage.getMessageText());
+        }
         holder.personPhoto.setImageResource(myChats.get(i).getPhotoId());
     }
 
@@ -57,7 +62,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
         CardView cv;
         TextView fbid;
         TextView personName;
-        TextView personAge;
+        TextView personLastMessage;
         ImageView personPhoto;
         private final Context context;
 
@@ -67,7 +72,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
             cv = (CardView)itemView.findViewById(R.id.card_chatlink);
             fbid = (TextView) itemView.findViewById(R.id.chatlink_fbid);
             personName = (TextView)itemView.findViewById(R.id.chatlink_name);
-            personAge = (TextView)itemView.findViewById(R.id.chatlink_age);
+            personLastMessage = (TextView)itemView.findViewById(R.id.chatlink_lastmessage);
             personPhoto = (ImageView)itemView.findViewById(R.id.chatlink_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
