@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 
@@ -27,5 +28,8 @@ public interface Profiles {
 
     @GET("usersProfile")
     Call<List<Profile>> getProfiles();
+
+    @GET("image/{id}")
+    Call<Image> getImage(@Path("id") String fbid);
 
 }

@@ -15,6 +15,7 @@ import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
@@ -29,6 +30,9 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @BindView(R.id.linkImage)
     ImageView imageViewLinkImage;
+
+    @BindView(R.id.linkImageProgress)
+    ProgressBar progressBarImage;
 
     @BindView(R.id.linkName)
     TextView textViewLinkName;
@@ -200,9 +204,10 @@ public class LinksFragment extends Fragment implements LinksView{
         linkCard.setVisibility(View.VISIBLE);
         this.enableActions();
         progressImage.setVisibility(View.INVISIBLE);
-        String image = profile.getImages().get(0).getImage();
+        /*String image = profile.getImages().get(0).getImage();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
-        imageViewLinkImage.setImageBitmap(bitmap);
+        imageViewLinkImage.setImageBitmap(bitmap);*/
+        controller.loadImage();
         String name = profile.getFirstName();
         String age = "";
         try {
@@ -257,5 +262,23 @@ public class LinksFragment extends Fragment implements LinksView{
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void showImage(Image image) {
+        Bitmap bitmap = ImageUtils.base64ToBitmap(image.getImage());
+        imageViewLinkImage.setImageBitmap(bitmap);
+        imageViewLinkImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingImage() {
+        progressBarImage.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoadingImage() {
+        imageViewLinkImage.setVisibility(View.GONE);
+        progressBarImage.setVisibility(View.VISIBLE);
     }
 }

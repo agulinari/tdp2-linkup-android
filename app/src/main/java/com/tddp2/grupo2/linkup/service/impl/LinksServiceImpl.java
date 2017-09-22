@@ -10,6 +10,7 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.model.Acceptance;
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Rejection;
@@ -131,5 +132,24 @@ public class LinksServiceImpl extends LinksService{
 
     public Database getDatabase(){
         return this.database;
+    }
+
+    @Override
+    public Image loadImage(String fbidCandidate) throws ServiceException {
+
+        LinkupClient linkupClient = clientService.getClient();
+
+        Call<Image> call = linkupClient.profiles.getImage(fbidCandidate);
+        try {
+            Response<Image> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(error);
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
     }
 }

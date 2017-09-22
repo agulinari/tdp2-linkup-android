@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.LinksView;
+import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
@@ -27,6 +28,11 @@ public class LinksController {
 
     }
 
+    public void loadImage(){
+        LoadImageTask task = new LoadImageTask(linksService, this);
+        Profile p = links.getLinks().get(currentLink);
+        task.execute(p.getFbid());
+    }
 
     public void acceptCurrentLink() {
         AcceptLinkTask task = new AcceptLinkTask(linksService, this);
@@ -161,4 +167,25 @@ public class LinksController {
             view.showLink(profile);
         }
     }
+
+    public void initLoadImageTask() {
+        view.showLoadingImage();
+    }
+
+    public void finishLoadImageTask() {
+        view.hideLoadingImage();
+    }
+
+    public void onLoadImageResult(TaskResponse response) {
+
+        if (response.hasError()) {
+            Profile profile = links.getLinks().get(currentLink);
+            view.showImage(profile.getImages().get(0));
+        } else {
+            Image image = (Image)response.getResponse();
+            view.showImage(image);
+        }
+    }
+
+
 }
