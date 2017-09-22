@@ -1,6 +1,5 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import android.util.Log;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -141,24 +140,25 @@ public class LinksController {
                 view.showMatch(acceptLinkTaskResponse.getMatchName());
             } else {
                 links = acceptLinkTaskResponse.getLinks();
-                if (links.getLinks().isEmpty()){
-                    //si no hay mas candidatos
-                    view.showEmptyLinks();
-                }
-                else if (links.getLinks().size()<=currentLink){
-                    //si el current era el ultimo
-                    Profile profile = links.getLinks().get(links.getLinks().size()-1);
-                    this.currentLink = links.getLinks().size()-1;
-                    view.showLink(profile);
-                }else{
-                    //si el current no era el ultimo
-                    Profile profile = links.getLinks().get(currentLink);
-                    view.showLink(profile);
-                }
+                gotoNextLink();
             }
-
         }
     }
 
-
+    public void gotoNextLink() {
+        if (links.getLinks().isEmpty()){
+            //si no hay mas candidatos
+            view.showEmptyLinks();
+        }
+        else if (links.getLinks().size()<=currentLink){
+            //si el current era el ultimo
+            Profile profile = links.getLinks().get(links.getLinks().size()-1);
+            this.currentLink = links.getLinks().size()-1;
+            view.showLink(profile);
+        }else{
+            //si el current no era el ultimo
+            Profile profile = links.getLinks().get(currentLink);
+            view.showLink(profile);
+        }
+    }
 }

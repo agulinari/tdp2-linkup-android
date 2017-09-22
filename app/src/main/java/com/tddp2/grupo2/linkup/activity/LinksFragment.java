@@ -11,7 +11,6 @@ import android.view.*;
 import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.tddp2.grupo2.linkup.LinksActivity;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
@@ -253,7 +252,7 @@ public class LinksFragment extends Fragment implements LinksView{
         builder.setPositiveButton(getString(R.string.candidate_match_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                ((LinksActivity)getActivity()).changeFragment(R.id.drawer_my_links);
+                controller.gotoNextLink();
             }
         });
         AlertDialog alert = builder.create();
