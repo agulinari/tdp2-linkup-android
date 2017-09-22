@@ -8,13 +8,11 @@ import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Links;
+import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.util.List;
 
-/**
- * Created by agustin on 07/09/2017.
- */
 
 public class LinkupDatabase implements Database
 {
@@ -22,9 +20,11 @@ public class LinkupDatabase implements Database
     private static final String DB = "DB";
     private static final String PROFILE = "PROFILE";
     private static final String LINKS = "LINKS";
+    private static final String MY_LINKS = "MY_LINKS";
 
     private Profile profile;
     private Links links;
+    private MyLinks myLinks;
 
     public LinkupDatabase() {
         profile = get(PROFILE, Profile.class);
@@ -53,6 +53,20 @@ public class LinkupDatabase implements Database
     public void setLinks(Links links) {
         this.links = links;
         save(LINKS, links);
+    }
+
+    @Override
+    public MyLinks getMyLinks() {
+        if (myLinks == null){
+            myLinks = get(MY_LINKS, MyLinks.class);
+        }
+        return myLinks;
+    }
+
+    @Override
+    public void setMyLinks(MyLinks myLinks) {
+        this.myLinks = myLinks;
+        save(MY_LINKS, myLinks);
     }
 
     public void save(String key, Object value) {

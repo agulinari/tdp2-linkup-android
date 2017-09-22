@@ -50,19 +50,19 @@ public class MyLinksServiceImpl extends MyLinksService {
     }
 
 
-
-    /*@Override
-    public List<MyLink> getMyLinks() throws ServiceException {
+    /*
+    @Override
+    public MyLinks getMyLinks() throws ServiceException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
 
         LinkupClient linkupClient = clientService.getClient();
-        Call<List<MyLink>> call = linkupClient.profiles.getMyLinks(fbid);
+        Call<MyLinks> call = linkupClient.matches.getMatches(fbid);
         try {
-            Response<List<MyLink>> response = call.execute();
+            Response<MyLinks> response = call.execute();
             if (response.isSuccessful()) {
                 //Save Links
-                List<MyLink> mylinks = response.body();
+                MyLinks mylinks = response.body();
 
                 saveMyLinks(mylinks);
                 return mylinks;
@@ -73,11 +73,11 @@ public class MyLinksServiceImpl extends MyLinksService {
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
         }
-    }
-*/
+    }*/
+
     public void saveMyLinks(MyLinks mylinks) {
 
-        //this.database.setMyLinks(mylinks);
+        this.database.setMyLinks(mylinks);
     }
 
     public Database getDatabase(){

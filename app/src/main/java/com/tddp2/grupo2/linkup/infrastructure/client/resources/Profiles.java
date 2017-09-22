@@ -28,6 +28,4 @@ public interface Profiles {
     @GET("usersProfile")
     Call<List<Profile>> getProfiles();
 
-    @GET("matches/{id}")
-    Call<List<MyLink>> getMyLinks(@Path("id") String fbid);
 }
