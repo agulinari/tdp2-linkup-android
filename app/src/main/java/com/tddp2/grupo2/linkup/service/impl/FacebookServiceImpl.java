@@ -82,6 +82,8 @@ public class FacebookServiceImpl extends FacebookService {
                 "/me"
 
         );
+        Log.i("FACEBOOK_API_VERSION", com.facebook.internal.ServerProtocol.getDefaultAPIVersion());
+        Log.i("FACEBOOK_BASE_GRAPH_URL", com.facebook.internal.ServerProtocol.getGraphUrlBase());
         Bundle parameters = new Bundle();
         parameters.putString("fields", "first_name,last_name,gender,work,education,about,picture");
         request.setParameters(parameters);

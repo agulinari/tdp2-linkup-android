@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:backgroundTint="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp">
+    android:layout_height="458dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp">
     <ProgressBar
             android:id="@+id/progressImage"
             style="?android:attr/progressBarStyleLarge"
@@ -17,11 +18,14 @@
             android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
         <include
                 android:id="@+id/linkImageNameAge"
                 layout="@layout/card_link_photo_name_age" />
+        <include
+                android:id="@+id/cardSeparator"
+                layout="@layout/card_separator" />
         <include
                 android:id="@+id/linkOccupationCard"
                 layout="@layout/card_link_occupation" />
