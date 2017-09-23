@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/reloadButton"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_toLeftOf="@+id/reloadButton"
             android:background="@drawable/button_no" />
 
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/reloadButton"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_toRightOf="@+id/reloadButton"
             android:background="@drawable/button_yes" />
     </RelativeLayout>

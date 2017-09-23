@@ -6,19 +6,35 @@
     android:layout_height="match_parent"
     tools:context="com.tddp2.grupo2.linkup.LinksActivity">
 
+    <RelativeLayout
+            android:id="@+id/candidateNameAndAgeTextContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+                android:id="@+id/linkInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
             <include
-                android:id="@+id/linkCard"
-                layout="@layout/card_link" />
+                    android:id="@+id/linkCard"
+                    layout="@layout/card_link" />
+        </LinearLayout>
+        <LinearLayout
+                android:layout_below="@+id/linkInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <include
+                    android:id="@+id/linkButtons"
+                    layout="@layout/link_buttons" />
         </LinearLayout>
 
-        <include
-            android:id="@+id/linkButtons"
-            layout="@layout/link_buttons" />
+    </RelativeLayout>
+
 
 </RelativeLayout>
