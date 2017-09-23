@@ -29,8 +29,14 @@
                 android:id="@+id/linkEducationCard"
                 layout="@layout/card_link_education" />
         <include
+                android:id="@+id/cardSeparator"
+                layout="@layout/card_separator" />
+        <include
                 android:id="@+id/linkCommentCard"
                 layout="@layout/card_link_comment" />
+        <include
+                android:id="@+id/cardSeparator"
+                layout="@layout/card_separator" />
     </LinearLayout>
     </ScrollView>
 </android.support.v7.widget.CardView>

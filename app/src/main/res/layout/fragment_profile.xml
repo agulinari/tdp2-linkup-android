@@ -28,8 +28,14 @@
                 android:visibility="gone"
                 layout="@layout/card_user_location" />
             <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
+            <include
                 android:id="@+id/userCommentCard"
-                layout="@layout/card_comment" />
+                layout="@layout/card_user_comment" />
+            <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
             <RelativeLayout
                 android:id="@+id/loadingUser"
                 android:layout_width="match_parent"
