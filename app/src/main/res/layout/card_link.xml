@@ -23,6 +23,9 @@
                 android:id="@+id/linkImageNameAge"
                 layout="@layout/card_link_photo_name_age" />
         <include
+                android:id="@+id/cardSeparator"
+                layout="@layout/card_separator" />
+        <include
                 android:id="@+id/linkOccupationCard"
                 layout="@layout/card_link_occupation" />
         <include
