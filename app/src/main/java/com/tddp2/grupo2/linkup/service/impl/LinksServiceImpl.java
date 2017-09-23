@@ -8,6 +8,7 @@ import com.tddp2.grupo2.linkup.infrastructure.client.request.AcceptanceRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.RejectionRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.model.Acceptance;
 import com.tddp2.grupo2.linkup.model.Image;
@@ -18,11 +19,12 @@ import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class LinksServiceImpl extends LinksService{
@@ -139,11 +141,16 @@ public class LinksServiceImpl extends LinksService{
 
         LinkupClient linkupClient = clientService.getClient();
 
-        Call<Image> call = linkupClient.profiles.getImage(fbidCandidate);
+        Call<ImageResponse> call = linkupClient.profiles.getImage(fbidCandidate);
         try {
-            Response<Image> response = call.execute();
+            Response<ImageResponse> response = call.execute();
             if (response.isSuccessful()) {
-                return response.body();
+                ImageResponse imageResponse = response.body();
+                if (imageResponse.getImages().isEmpty()){
+                    throw new ServiceException("no hay imagenes");
+                }else{
+                    return imageResponse.getImages().get(0);
+                }
             } else {
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);

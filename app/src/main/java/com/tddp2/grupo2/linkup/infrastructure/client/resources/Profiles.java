@@ -1,7 +1,6 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
-import com.tddp2.grupo2.linkup.model.Image;
-import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.util.List;
@@ -12,7 +11,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 
 public interface Profiles {
@@ -30,6 +28,6 @@ public interface Profiles {
     Call<List<Profile>> getProfiles();
 
     @GET("image/{id}")
-    Call<Image> getImage(@Path("id") String fbid);
+    Call<ImageResponse> getImage(@Path("id") String fbid);
 
 }
