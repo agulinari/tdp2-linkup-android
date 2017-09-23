@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
     android:backgroundTint="@color/profileCard"
     android:orientation="horizontal"
     card_view:cardElevation="4dp">
@@ -14,29 +14,28 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="5dp">
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="0dp">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="285dp">
+            android:layout_height="350dp">
 
             <ImageView
                 android:id="@+id/userProfilePicture"
                 android:layout_width="match_parent"
-                android:layout_height="190dp"
+                android:layout_height="fill_parent"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentTop="true"
                 android:scaleType="centerCrop" />
-
-        </RelativeLayout>
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="32dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true">
+                android:layout_alignParentEnd="true"
+                android:background="@android:drawable/screen_background_dark_transparent">
 
             <TextView
                     android:id="@+id/userNameAndAge"
@@ -47,9 +46,11 @@
                     android:paddingEnd="8dp"
                     android:paddingStart="8dp"
                     android:text="Nombre"
-                    android:textColor="@android:color/black"
+                    android:textColor="@android:color/white"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+
+        </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
