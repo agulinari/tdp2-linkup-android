@@ -1,18 +1,22 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
+
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ProfileServiceImpl extends ProfileService {
 
@@ -26,14 +30,14 @@ public class ProfileServiceImpl extends ProfileService {
     @Override
     public void createProfile(Profile profile) throws ServiceException {
         LinkupClient linkupClient = clientService.getClient();
-        Call<Profile> call = linkupClient.profiles.createProfile(profile);
+        PostUserRequest request = new PostUserRequest(profile);
+        Call<UserResponse> call = linkupClient.profiles.createProfile(request);
         try {
-            Response<Profile> response = call.execute();
+            Response<UserResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save User
-                Profile profileResponse = response.body();
-                Log.i("PROFILE SERVICE",profileResponse.getSettings().getAccountType());
-                saveUser(profileResponse);
+                Profile profileResponse = response.body().getProfile();
+                saveUser(profile);
             } else {
                 //APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(response.message());

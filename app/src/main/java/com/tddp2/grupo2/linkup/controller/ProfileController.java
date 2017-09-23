@@ -84,7 +84,7 @@ public class ProfileController {
         view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
 
-        String image = profile.getImages().get(0).getData();
+        String image = profile.getImages().get(0).getImage().getData();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         view.updateProfilePicture(bitmap);
     }
