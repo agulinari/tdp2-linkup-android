@@ -4,8 +4,8 @@
     android:id="@+id/activity_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp"
     tools:context="com.tddp2.grupo2.linkup.ProfileActivity">
     <ScrollView
             android:layout_width="match_parent"
@@ -17,6 +17,9 @@
             <include
                 android:id="@+id/userNameAndAgeCard"
                 layout="@layout/card_user" />
+            <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
             <include
                 android:id="@+id/userOccupationCard"
                 layout="@layout/card_user_occupation" />
