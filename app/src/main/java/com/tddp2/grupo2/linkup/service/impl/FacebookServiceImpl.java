@@ -4,17 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Image;
+import com.tddp2.grupo2.linkup.model.ImageWrapper;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -115,15 +118,19 @@ public class FacebookServiceImpl extends FacebookService {
 
     private void getAndSaveProfilePicture(Profile profile) {
         Image image = new Image();
+        Image avatarImage  = new Image();
         Bitmap bitmap = loadProfilePicture(profile.getFbid(), "500");
         Bitmap minibitmap = loadProfilePicture(profile.getFbid(), "80");
         String profileImage = ImageUtils.bitmapToBase64(bitmap);
-        String avatarImage = ImageUtils.bitmapToBase64(minibitmap);
-        image.setImage(profileImage);
-        List<Image> images = new ArrayList<>();
-        images.add(image);
+        String avatar = ImageUtils.bitmapToBase64(minibitmap);
+        image.setData(profileImage);
+        image.setIdImage("1");
+        avatarImage.setIdImage("0");
+        avatarImage.setData(avatar);
+        List<ImageWrapper> images = new ArrayList<ImageWrapper>();
+        images.add(new ImageWrapper(image));
         profile.setImages(images);
-        profile.setAvatar(avatarImage);
+        profile.setAvatar(new ImageWrapper(avatarImage));
     }
 
     private Bitmap loadProfilePicture(String fbid, String size) {

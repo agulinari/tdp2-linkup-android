@@ -1,12 +1,13 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
+
 import com.facebook.AccessToken;
-import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
@@ -14,11 +15,9 @@ import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.utils.ErrorUtils;
+
 import retrofit2.Call;
 import retrofit2.Response;
-
-import static android.R.attr.accountType;
 
 public class LoginServiceImpl extends LoginService {
 
@@ -81,12 +80,12 @@ public class LoginServiceImpl extends LoginService {
     public boolean loadDataFromServer(LoadUserTaskResponse serverData) throws ServiceException {
         String fbid = AccessToken.getCurrentAccessToken().getUserId();
         LinkupClient linkupClient = clientService.getClient();
-        Call<Profile> call = linkupClient.profiles.getProfile(fbid);
+        Call<UserResponse> call = linkupClient.profiles.getProfile(fbid);
         try {
-            Response<Profile> response = call.execute();
+            Response<UserResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save User
-                Profile profileResponse = response.body();
+                Profile profileResponse = response.body().getProfile();
                 serverData.hasBirthday = true;
                 serverData.hasProfilePicture = true;
                 serverData.isAdult = true;

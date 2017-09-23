@@ -16,8 +16,8 @@ public class Profile implements Serializable {
     private String education;
     private String comments;
     private List<Interest> interests = new ArrayList<Interest>();
-    private List<Image> images = new ArrayList<Image>();
-    private String avatar;
+    private List<ImageWrapper> images = new ArrayList<ImageWrapper>();
+    private ImageWrapper avatar;
     private Settings settings = new Settings();
     private Location location = new Location();
 
@@ -101,11 +101,11 @@ public class Profile implements Serializable {
         this.interests = interests;
     }
 
-    public List<Image> getImages() {
+    public List<ImageWrapper> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(List<ImageWrapper> images) {
         this.images = images;
     }
 
@@ -117,11 +117,11 @@ public class Profile implements Serializable {
         this.location = location;
     }
 
-    public String getAvatar() {
+    public ImageWrapper getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(ImageWrapper avatar) {
         this.avatar = avatar;
     }
 }

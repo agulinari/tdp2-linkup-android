@@ -180,7 +180,7 @@ public class LinksController {
 
         if (response.hasError()) {
             Profile profile = links.getLinks().get(currentLink);
-            view.showImage(profile.getImages().get(0));
+            view.showImage(profile.getImages().get(0).getImage());
         } else {
             Image image = (Image)response.getResponse();
             view.showImage(image);
