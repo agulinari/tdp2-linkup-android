@@ -113,11 +113,13 @@ public class FacebookServiceImpl extends FacebookService {
 
     private void getAndSaveProfilePicture(Profile profile) {
         Image image = new Image();
+        Image avatarImage  = new Image();
         Bitmap bitmap = loadProfilePicture(profile.getFbid(), "500");
         Bitmap minibitmap = loadProfilePicture(profile.getFbid(), "80");
         String profileImage = ImageUtils.bitmapToBase64(bitmap);
-        String avatarImage = ImageUtils.bitmapToBase64(minibitmap);
-        image.setImage(profileImage);
+        String avatar = ImageUtils.bitmapToBase64(minibitmap);
+        image.setData(profileImage);
+        avatarImage.setData(avatar);
         List<Image> images = new ArrayList<>();
         images.add(image);
         profile.setImages(images);

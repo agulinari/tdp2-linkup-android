@@ -1,37 +1,26 @@
 package com.tddp2.grupo2.linkup.model;
 
-import android.graphics.Bitmap;
-
 import java.io.Serializable;
 
 
 public class Image implements Serializable{
 
-    private String fbid;
-    private String image; //base64
-    private int order;
+    private String idImage;
+    private String data; //base64
 
-    public String getFbid() {
-        return fbid;
+    public String getIdImage() {
+        return idImage;
     }
 
-    public void setFbid(String fbid) {
-        this.fbid = fbid;
+    public void setIdImage(String idImage) {
+        this.idImage = idImage;
     }
 
-    public String getImage() {
-        return image;
+    public String getData() {
+        return data;
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public int getOrder() {
-        return order;
-    }
-
-    public void setOrder(int order) {
-        this.order = order;
+    public void setData(String data) {
+        this.data = data;
     }
 }

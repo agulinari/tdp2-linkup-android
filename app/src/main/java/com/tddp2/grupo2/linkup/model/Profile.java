@@ -17,7 +17,7 @@ public class Profile implements Serializable {
     private String comments;
     private List<Interest> interests = new ArrayList<Interest>();
     private List<Image> images = new ArrayList<Image>();
-    private String avatar;
+    private Image avatar;
     private Settings settings = new Settings();
     private Location location = new Location();
 
@@ -117,11 +117,11 @@ public class Profile implements Serializable {
         this.location = location;
     }
 
-    public String getAvatar() {
+    public Image getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
+    public void setAvatar(Image avatar) {
         this.avatar = avatar;
     }
 }
