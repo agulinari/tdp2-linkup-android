@@ -289,8 +289,12 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void showImage(Image image) {
-        Bitmap bitmap = ImageUtils.base64ToBitmap(image.getData());
-        imageViewLinkImage.setImageBitmap(bitmap);
+        if (image != null && image.getData() != null) {
+            Bitmap bitmap = ImageUtils.base64ToBitmap(image.getData());
+            imageViewLinkImage.setImageBitmap(bitmap);
+        }else{
+            imageViewLinkImage.setImageBitmap(null);
+        }
         imageViewLinkImage.setVisibility(View.VISIBLE);
     }
 
