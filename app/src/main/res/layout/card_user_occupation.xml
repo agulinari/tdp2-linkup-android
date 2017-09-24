@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_marginLeft="@dimen/profile_card_side_margin"
+    android:layout_marginRight="@dimen/profile_card_side_margin"
     android:backgroundTint="@color/profileCard"
     card_view:cardElevation="4dp">
 
