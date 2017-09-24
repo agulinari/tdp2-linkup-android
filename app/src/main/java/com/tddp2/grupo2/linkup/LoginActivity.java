@@ -156,11 +156,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser!=null) {
-            Toast.makeText(LoginActivity.this, currentUser.getDisplayName(),
-                    Toast.LENGTH_SHORT).show();
+            Log.i(TAG, currentUser.getDisplayName());
+
         }else{
-            Toast.makeText(LoginActivity.this, "No currentUser",
-                    Toast.LENGTH_SHORT).show();
+            Log.i(TAG, "No currentUser");
         }
     }
 
