@@ -95,7 +95,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
 
     public void swap(List<MyLink> datas)
     {
-        if(datas == null || datas.size()==0)
+        if(datas == null)
             return;
         if (myChats != null && myChats.size()>0)
             myChats.clear();

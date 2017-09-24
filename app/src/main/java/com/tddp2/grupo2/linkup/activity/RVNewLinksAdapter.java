@@ -92,11 +92,13 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
 
     public void swap(List<MyLink> datas)
     {
-        if(datas == null || datas.size()==0)
+
+        if(datas == null)
             return;
         if (myNewLinks != null && myNewLinks.size()>0)
             myNewLinks.clear();
         myNewLinks.addAll(datas);
+
         notifyDataSetChanged();
 
     }
