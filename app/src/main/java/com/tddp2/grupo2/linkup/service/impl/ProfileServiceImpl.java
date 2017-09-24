@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
+
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
@@ -11,10 +12,11 @@ import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ProfileServiceImpl extends ProfileService {
 
@@ -35,6 +37,8 @@ public class ProfileServiceImpl extends ProfileService {
             if (response.isSuccessful()) {
                 //Save User
                 Profile profileResponse = response.body().getUser();
+                String accountType = profileResponse.getSettings().getAccountType();
+                profile.getSettings().setAccountType(accountType);
                 saveUser(profile);
             } else {
                 //APIError error = ErrorUtils.parseError(response);
