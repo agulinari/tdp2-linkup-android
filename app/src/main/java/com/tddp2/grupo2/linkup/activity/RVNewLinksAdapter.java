@@ -41,7 +41,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
         holder.fbid.setText(myNewLinks.get(i).getFbid());
         holder.gender.setText(myNewLinks.get(i).getGender());
         holder.personName.setText(myNewLinks.get(i).getName());
-        String image = myNewLinks.get(0).getPhoto();
+        String image = myNewLinks.get(i).getPhoto();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         holder.personPhoto.setImageBitmap(bitmap);
     }
