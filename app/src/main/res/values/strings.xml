@@ -41,6 +41,9 @@
     <string name="candidate_match_title">¡Has linkeado!</string>
     <string name="candidate_match_message">%1$s también quiere conocerte. Puedes ver todos tus links en la sección "Mis Links"</string>
     <string name="candidate_match_ok">Aceptar</string>
+    <string name="settings_wrong_search_parameters_title">Configuración inválida</string>
+    <string name="settings_wrong_search_parameters_description">Debes seleccionar buscar al menos amigos, hombres o mujeres. De otra forma, no podrás continuar.</string>
+    <string name="settings_wrong_search_parameters_ok">Entiendo</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -2,32 +2,26 @@ package com.tddp2.grupo2.linkup;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.tddp2.grupo2.linkup.controller.SettingsController;
-import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class SettingsActivity extends AppCompatActivity implements BaseView {
 
@@ -160,16 +154,34 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
 
     /* On Click button saveProfile */
     public void saveProfile(View view){
-        Settings settings = new Settings();
-        settings.setMaxDistance(maxDistance);
-        settings.setMinAge(minAge);
-        settings.setMaxAge(maxAge);
-        settings.setOnlyFriends(onlyFriends);
-        settings.setSearchFemales(searchFemales);
-        settings.setSearchMales(searchMales);
-        settings.setNotifications(notifications);
-        settings.setInvisible(invisible);
-        controller.createProfile(settings);
+        if (!searchFemales && !searchMales && !onlyFriends) {
+            showInvalidSearchParametersDialog();
+        } else {
+            Settings settings = new Settings();
+            settings.setMaxDistance(maxDistance);
+            settings.setMinAge(minAge);
+            settings.setMaxAge(maxAge);
+            settings.setOnlyFriends(onlyFriends);
+            settings.setSearchFemales(searchFemales);
+            settings.setSearchMales(searchMales);
+            settings.setNotifications(notifications);
+            settings.setInvisible(invisible);
+            controller.createProfile(settings);
+        }
+    }
+
+    private void showInvalidSearchParametersDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.settings_wrong_search_parameters_title);
+        builder.setMessage(getString(R.string.settings_wrong_search_parameters_description));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.settings_wrong_search_parameters_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

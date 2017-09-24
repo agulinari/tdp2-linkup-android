@@ -2,43 +2,25 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.*;
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.tddp2.grupo2.linkup.BaseView;
-import com.tddp2.grupo2.linkup.LinksActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.SettingsController;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static com.tddp2.grupo2.linkup.R.string.invisible;
-import static com.tddp2.grupo2.linkup.R.string.notifications;
 
 
 public class SettingsFragment extends Fragment implements BaseView {
@@ -213,17 +195,35 @@ public class SettingsFragment extends Fragment implements BaseView {
 
     /* On Click button saveProfile */
     public void saveProfile(View view){
-        Settings settings = new Settings();
-        settings.setMaxDistance(maxDistance);
-        settings.setMinAge(minAge);
-        settings.setMaxAge(maxAge);
-        settings.setOnlyFriends(onlyFriends);
-        settings.setSearchFemales(searchFemales);
-        settings.setSearchMales(searchMales);
-        settings.setNotifications(notifications);
-        settings.setInvisible(invisible);
-        settings.setAccountType("Basic");
-        controller.saveProfile(settings);
+        if (!searchFemales && !searchMales && !onlyFriends) {
+            showInvalidSearchParametersDialog();
+        } else {
+            Settings settings = new Settings();
+            settings.setMaxDistance(maxDistance);
+            settings.setMinAge(minAge);
+            settings.setMaxAge(maxAge);
+            settings.setOnlyFriends(onlyFriends);
+            settings.setSearchFemales(searchFemales);
+            settings.setSearchMales(searchMales);
+            settings.setNotifications(notifications);
+            settings.setInvisible(invisible);
+            settings.setAccountType("Basic");
+            controller.saveProfile(settings);
+        }
+    }
+
+    private void showInvalidSearchParametersDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.settings_wrong_search_parameters_title);
+        builder.setMessage(getString(R.string.settings_wrong_search_parameters_description));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.settings_wrong_search_parameters_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
