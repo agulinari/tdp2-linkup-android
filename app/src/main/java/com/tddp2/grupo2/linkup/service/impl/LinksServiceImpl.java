@@ -149,7 +149,7 @@ public class LinksServiceImpl extends LinksService{
                 if (imageResponse.getImages().isEmpty()){
                     throw new ServiceException("no hay imagenes");
                 }else{
-                    return imageResponse.getImages().get(0);
+                    return imageResponse.getImages().get(1);
                 }
             } else {
                 APIError error = ErrorUtils.parseError(response);
