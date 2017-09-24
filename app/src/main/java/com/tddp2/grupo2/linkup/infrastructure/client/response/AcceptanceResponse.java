@@ -4,7 +4,7 @@ package com.tddp2.grupo2.linkup.infrastructure.client.response;
 public class AcceptanceResponse {
 
     private int remainingSuperlinks;
-    private boolean Match;
+    private boolean match;
 
     public AcceptanceResponse() {}
 
@@ -17,10 +17,10 @@ public class AcceptanceResponse {
     }
 
     public boolean getMatch() {
-        return Match;
+        return match;
     }
 
-    public void setMatch(boolean Match) {
-        this.Match = Match;
+    public void setMatch(boolean match) {
+        this.match = match;
     }
 }
