@@ -21,4 +21,8 @@ public interface LinksView  extends BaseView{
     void hideLoadingImage();
 
     void showLoadingImage();
+
+    void registerArrowButtonsListeners();
+
+    void blockArrowButtons();
 }

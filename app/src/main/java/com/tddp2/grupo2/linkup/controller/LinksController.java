@@ -169,10 +169,12 @@ public class LinksController {
     }
 
     public void initLoadImageTask() {
+        view.blockArrowButtons();
         view.showLoadingImage();
     }
 
     public void finishLoadImageTask() {
+        view.registerArrowButtonsListeners();
         view.hideLoadingImage();
     }
 

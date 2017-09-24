@@ -135,6 +135,22 @@ public class LinksFragment extends Fragment implements LinksView{
             }
         });
 
+        reloadButton.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //TODO: SUPERLINKS
+                progressImage.setVisibility(View.VISIBLE);
+                controller.nextLink();
+            }
+        });
+
+        registerArrowButtonsListeners();
+    }
+
+    @Override
+    public void registerArrowButtonsListeners() {
         buttonNextCandidate.setOnClickListener(new Button.OnClickListener()
         {
             @Override
@@ -152,19 +168,14 @@ public class LinksFragment extends Fragment implements LinksView{
                 controller.previousLink();
             }
         });
-
-        reloadButton.setOnClickListener(new Button.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //TODO: SUPERLINKS
-                progressImage.setVisibility(View.VISIBLE);
-                controller.nextLink();
-            }
-        });
     }
 
+    @Override
+    public void blockArrowButtons() {
+        buttonNextCandidate.setOnClickListener(null);
+
+        buttonPreviousCandidate.setOnClickListener(null);
+    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
