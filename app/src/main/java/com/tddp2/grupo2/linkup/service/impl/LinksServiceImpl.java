@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
+import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
@@ -10,21 +11,16 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
-import com.tddp2.grupo2.linkup.model.Acceptance;
-import com.tddp2.grupo2.linkup.model.Image;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Rejection;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 
 public class LinksServiceImpl extends LinksService{
@@ -107,6 +103,7 @@ public class LinksServiceImpl extends LinksService{
                 //Elimino el link localmente
                 Links filteredLinks = removeLink(fbidCandidate);
                 Boolean isAMatch = response.body().getMatch();
+                Log.i("MATCH", "Resultado de match: " + String.valueOf(isAMatch));
                 AcceptLinkTaskResponse acceptLinkTaskResponse = new AcceptLinkTaskResponse();
                 acceptLinkTaskResponse.setIsAMatch(isAMatch);
                 acceptLinkTaskResponse.setLinks(filteredLinks);
