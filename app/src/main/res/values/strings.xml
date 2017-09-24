@@ -44,6 +44,12 @@
     <string name="settings_wrong_search_parameters_title">Configuración inválida</string>
     <string name="settings_wrong_search_parameters_description">Debes seleccionar buscar al menos amigos, hombres o mujeres. De otra forma, no podrás continuar.</string>
     <string name="settings_wrong_search_parameters_ok">Entiendo</string>
+    <string name="save_profile_title">Perfil guardado</string>
+    <string name="save_profile_text">La información de perfil se guardó exitosamente</string>
+    <string name="save_profile_ok">Aceptar</string>
+    <string name="save_settings_title">Preferencias guardadas</string>
+    <string name="save_settings_text">La información de preferencias se guardó exitosamente</string>
+    <string name="save_settings_ok">Aceptar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

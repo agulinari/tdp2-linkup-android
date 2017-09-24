@@ -236,7 +236,22 @@ public class SettingsFragment extends Fragment implements BaseView {
     public void hideProgress() {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
+            showProfileSavedSuccessfullyDialog();
         }
+    }
+
+    private void showProfileSavedSuccessfullyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.save_settings_title);
+        builder.setMessage(getString(R.string.save_settings_text));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.save_settings_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override

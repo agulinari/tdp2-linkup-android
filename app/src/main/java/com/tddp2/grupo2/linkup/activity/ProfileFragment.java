@@ -183,7 +183,24 @@ public class ProfileFragment extends Fragment implements ProfileLocationView {
     public void hideProgress() {
         if (progressDialog.isShowing()) {
             progressDialog.dismiss();
+            if (savingProfile) {
+                showProfileSavedSuccessfullyDialog();
+            }
         }
+    }
+
+    private void showProfileSavedSuccessfullyDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.save_profile_title);
+        builder.setMessage(getString(R.string.save_profile_text));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.save_profile_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     @Override
