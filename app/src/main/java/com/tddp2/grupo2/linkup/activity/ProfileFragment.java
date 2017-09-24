@@ -186,9 +186,27 @@ public class ProfileFragment extends Fragment implements ProfileLocationView {
         }
     }
 
+    private void showAfterProfileSaveDialog(boolean success) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        int title = success ? R.string.save_profile_title_ok : R.string.save_profile_title_error;
+        builder.setTitle(title);
+        int text = success ? R.string.save_profile_text_ok : R.string.save_profile_text_error;
+        builder.setMessage(getString(text));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.save_settings_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     @Override
     public void goToNext() {
-
+        if (savingProfile) {
+            showAfterProfileSaveDialog(true);
+        }
     }
 
     @Override
@@ -198,6 +216,9 @@ public class ProfileFragment extends Fragment implements ProfileLocationView {
 
     @Override
     public void onError(String errorMsg) {
+        if (savingProfile) {
+            showAfterProfileSaveDialog(false);
+        }
         Toast.makeText(getActivity().getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 

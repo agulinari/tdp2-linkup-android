@@ -239,8 +239,25 @@ public class SettingsFragment extends Fragment implements BaseView {
         }
     }
 
+    private void showAfterSettingsSaveDialog(boolean success) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        int title = success ? R.string.save_settings_title_ok : R.string.save_settings_title_error;
+        builder.setTitle(title);
+        int text = success ? R.string.save_settings_text_ok : R.string.save_settings_text_error;
+        builder.setMessage(getString(text));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.save_settings_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
     @Override
     public void goToNext() {
+        showAfterSettingsSaveDialog(true);
         //Intent intent = new Intent(this, LinksActivity.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         //startActivity(intent);
@@ -253,6 +270,7 @@ public class SettingsFragment extends Fragment implements BaseView {
 
     @Override
     public void onError(String errorMsg) {
+        showAfterSettingsSaveDialog(false);
         Toast.makeText(getActivity().getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
     }
 }
