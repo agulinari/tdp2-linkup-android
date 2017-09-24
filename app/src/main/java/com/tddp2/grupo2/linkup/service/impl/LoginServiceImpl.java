@@ -85,7 +85,7 @@ public class LoginServiceImpl extends LoginService {
             Response<UserResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save User
-                Profile profileResponse = response.body().getProfile();
+                Profile profileResponse = response.body().getUser();
                 serverData.hasBirthday = true;
                 serverData.hasProfilePicture = true;
                 serverData.isAdult = true;
