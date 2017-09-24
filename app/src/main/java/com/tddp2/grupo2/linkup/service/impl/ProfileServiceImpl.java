@@ -6,6 +6,7 @@ import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
@@ -53,13 +54,14 @@ public class ProfileServiceImpl extends ProfileService {
     public void updateProfile(Profile profile) throws ServiceException {
 
         LinkupClient linkupClient = clientService.getClient();
-        Call<Profile> call = linkupClient.profiles.updateProfile(profile);
+        PutUserRequest request = new PutUserRequest(profile);
+        Call<UserResponse> call = linkupClient.profiles.updateProfile(request);
         try {
-            Response<Profile> response = call.execute();
+            Response<UserResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save User
-                Profile profileResponse = response.body();
-                Log.i("ACCOUNT TYPE",profileResponse.getSettings().getAccountType());
+                Profile profileResponse = response.body().getUser();
+                Log.i("ACCOUNT TYPE", profileResponse.getSettings().getAccountType());
 
                 saveUser(profileResponse);
             } else {

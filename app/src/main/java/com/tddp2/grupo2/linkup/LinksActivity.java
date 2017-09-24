@@ -40,7 +40,7 @@ public class LinksActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = new ProfileFragment();
+        Fragment fragment = new LinksFragment();
         tx.replace(R.id.frame, fragment);
         tx.commit();
 
