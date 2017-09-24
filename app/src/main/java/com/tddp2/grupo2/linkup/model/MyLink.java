@@ -9,17 +9,21 @@ public class MyLink implements Serializable, Comparable<MyLink> {
 
     private String fbid;
     private String name;
+    private String lastName;
     private String age;
     private String gender;
-    private int photoId;
-    private ChatMessage lastMessage;
+    private String photo;
+    private String time;
+    private transient ChatMessage lastMessage;
 
-    public MyLink(String fbid, String name, String age, String gender, int photoId) {
+    public MyLink(String fbid, String name, String lastName, String age, String gender, String photo, String time) {
         this.fbid = fbid;
         this.name = name;
+        this.lastName = lastName;
         this.age = age;
-        this.photoId = photoId;
+        this.photo = photo;
         this.gender = gender;
+        this.time = time;
         this.lastMessage = null;
     }
 
@@ -27,7 +31,7 @@ public class MyLink implements Serializable, Comparable<MyLink> {
         return fbid;
     }
 
-    public void setFbid(String fbid) {
+    public void setFbidUser(String fbid) {
         this.fbid = fbid;
     }
 
@@ -47,12 +51,12 @@ public class MyLink implements Serializable, Comparable<MyLink> {
         this.age = age;
     }
 
-    public int getPhotoId() {
-        return photoId;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotoId(int photoId) {
-        this.photoId = photoId;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public ChatMessage getLastMessage() {
@@ -69,6 +73,22 @@ public class MyLink implements Serializable, Comparable<MyLink> {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     @Override

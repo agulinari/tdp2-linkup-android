@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,17 +15,11 @@ import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.MyLink;
-import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.utils.LinkupUtils;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.data;
-import static android.media.CamcorderProfile.get;
-import static com.tddp2.grupo2.linkup.utils.LinkupUtils.getChatId;
 
 
 public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.PersonViewHolder>{
@@ -50,7 +45,9 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
         if (lastMessage != null) {
             holder.personLastMessage.setText(lastMessage.getMessageText());
         }
-        holder.personPhoto.setImageResource(myChats.get(i).getPhotoId());
+        String image = myChats.get(i).getPhoto();
+        Bitmap bitmap = ImageUtils.base64ToBitmap(image);
+        holder.personPhoto.setImageBitmap(bitmap);
     }
 
     @Override

@@ -12,12 +12,14 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tddp2.grupo2.linkup.MyLinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.MyLinksController;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
@@ -28,16 +30,13 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.R.id.list;
 
 
-
-public class MyLinksFragment extends Fragment {
+public class MyLinksFragment extends Fragment implements MyLinksView{
 
     private static final String TAG = "MyLinksFragment";
     private Context activity;
@@ -85,8 +84,9 @@ public class MyLinksFragment extends Fragment {
         this.newLinksProgressView.setVisibility(View.VISIBLE);
         this.chatsProgressView.setVisibility(View.VISIBLE);
 
-        registerListeners();
-        myLinks = controller.getMyLinks().getLinks();
+        controller.getMyLinks();
+
+        myLinks = new ArrayList<MyLink>();
 
         newLinks = new ArrayList<MyLink>();
         chats = new ArrayList<MyLink>();
@@ -118,7 +118,7 @@ public class MyLinksFragment extends Fragment {
                 for (DataSnapshot child : dataSnapshot.getChildren()){
                     String fbid = child.getKey();
                     ChatMessage lastMessage = child.getValue(ChatMessage.class);
-                    MyLink myLink = new MyLink(fbid, "", "", "", 0);
+                    MyLink myLink = new MyLink(fbid, "", "", "", "", "", "");
                     myLink.setLastMessage(lastMessage);
                     myChatsUpdate.add(myLink);
                 }
@@ -175,5 +175,15 @@ public class MyLinksFragment extends Fragment {
     }
 
 
+    @Override
+    public void showMyLinks(MyLinks links) {
+        this.myLinks = links.getLinks();
+        registerListeners();
+    }
 
+    @Override
+    public void onError(String errorMsg) {
+        Toast.makeText(activity, errorMsg, Toast.LENGTH_SHORT).show();
+
+    }
 }

@@ -1,35 +1,43 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import android.util.Log;
-
-import com.tddp2.grupo2.linkup.R;
-import com.tddp2.grupo2.linkup.activity.MyLinksFragment;
-import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.MyLinksView;
 import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.tddp2.grupo2.linkup.task.GetMyLinksTask;
+import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 
 public class MyLinksController {
     private final MyLinksService myLinksService;
+    private MyLinksView view;
+    private MyLinks links;
 
-    public MyLinksController(MyLinksFragment myLinksFragment) {
+    public MyLinksController(MyLinksView view) {
         this.myLinksService = ServiceFactory.getMyLinksService();
+        this.view = view;
     }
 
-    public MyLinks getMyLinks() {
+    public void getMyLinks() {
 
-        try {
-            return myLinksService.getMyLinks();
-        } catch (ServiceException e) {
-            Log.e("MyLinksController",e.getLocalizedMessage());
-            return new MyLinks();
+        GetMyLinksTask task = new GetMyLinksTask(myLinksService, this);
+        task.execute();
+    }
+
+    public void onGetMyLinksResult(TaskResponse response) {
+        if (response.hasError()) {
+            view.onError(response.getError());
+        } else {
+            //view.goToNext();
+            links = (MyLinks) response.getResponse();
+            view.showMyLinks(links);
         }
+
     }
 
+    public void finishGetMyLinksTask() {
+    }
+
+    public void initGetMyLinksTask() {
+    }
 }

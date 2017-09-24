@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,8 @@ import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
 import java.util.List;
 
@@ -40,7 +41,9 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
         holder.fbid.setText(myNewLinks.get(i).getFbid());
         holder.gender.setText(myNewLinks.get(i).getGender());
         holder.personName.setText(myNewLinks.get(i).getName());
-        holder.personPhoto.setImageResource(myNewLinks.get(i).getPhotoId());
+        String image = myNewLinks.get(0).getPhoto();
+        Bitmap bitmap = ImageUtils.base64ToBitmap(image);
+        holder.personPhoto.setImageBitmap(bitmap);
     }
 
     @Override

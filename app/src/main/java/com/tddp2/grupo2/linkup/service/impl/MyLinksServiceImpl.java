@@ -1,22 +1,16 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
-import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
-import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -31,7 +25,7 @@ public class MyLinksServiceImpl extends MyLinksService {
         this.clientService = clientService;
     }
 
-    @Override
+    /*@Override
     public MyLinks getMyLinks() throws ServiceException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
@@ -47,10 +41,10 @@ public class MyLinksServiceImpl extends MyLinksService {
         myLinks.setLinks(mylinks);
 
         return myLinks;
-    }
+    }*/
 
 
-    /*
+
     @Override
     public MyLinks getMyLinks() throws ServiceException {
         Profile profile = this.database.getProfile();
@@ -73,7 +67,7 @@ public class MyLinksServiceImpl extends MyLinksService {
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
         }
-    }*/
+    }
 
     public void saveMyLinks(MyLinks mylinks) {
 

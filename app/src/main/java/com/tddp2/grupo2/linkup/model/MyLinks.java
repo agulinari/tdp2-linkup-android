@@ -7,18 +7,18 @@ import java.util.List;
 
 public class MyLinks implements Serializable{
 
-    private List<MyLink> links;
+    private List<MyLink> matches;
 
     public MyLinks() {
-        this.links = new ArrayList<MyLink>();
+        this.matches = new ArrayList<MyLink>();
     }
 
     public List<MyLink> getLinks() {
-        return links;
+        return matches;
     }
 
     public void setLinks(List<MyLink> links) {
-        this.links = links;
+        this.matches = matches;
     }
 
 }
