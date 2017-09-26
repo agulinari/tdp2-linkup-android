@@ -60,10 +60,24 @@
         <activity
             android:name=".LinksActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ChatActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name="com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService"
             android:exported="false"/>
+
+        <service android:name=".infrastructure.messaging.LinkupMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".infrastructure.messaging.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
