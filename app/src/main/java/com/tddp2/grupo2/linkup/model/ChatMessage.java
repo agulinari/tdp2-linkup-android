@@ -8,11 +8,13 @@ public class ChatMessage {
     private String messageUser;
     private long messageTime;
     private String fbid;
+    private String fbidTo;
 
-    public ChatMessage(String messageText, String messageUser, String fbid) {
+    public ChatMessage(String messageText, String messageUser, String fbid, String fbidTo) {
         this.messageText = messageText;
         this.messageUser = messageUser;
         this.fbid = fbid;
+        this.fbidTo = fbidTo;
         // Initialize to current time
         messageTime = new Date().getTime();
     }
@@ -51,5 +53,13 @@ public class ChatMessage {
 
     public void setFbid(String fbid) {
         this.fbid = fbid;
+    }
+
+    public String getFbidTo() {
+        return fbidTo;
+    }
+
+    public void setFbidTo(String fbidTo) {
+        this.fbidTo = fbidTo;
     }
 }

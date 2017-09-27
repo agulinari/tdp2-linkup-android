@@ -1,9 +1,9 @@
 package com.tddp2.grupo2.linkup;
 
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getContext;
-import static com.tddp2.grupo2.linkup.R.id.imageView;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -131,7 +130,7 @@ public class ChatActivity extends AppCompatActivity {
     private void postMessage(String message, final String chatId) {
         // Read the input field and push a new instance
         // of ChatMessage to the Firebase database
-        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), userId);
+        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), userId, linkId);
 
         mDatabase.child("chats")
                 .child(chatId)
@@ -154,6 +153,10 @@ public class ChatActivity extends AppCompatActivity {
                 Log.d(TAG, "postTransaction:onComplete:" + databaseError);
             }
         });
+
+        mDatabase.child("notifications")
+                .push()
+                .setValue(chatMessage);
 
     }
 

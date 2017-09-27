@@ -14,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.tddp2.grupo2.linkup.activity.LinksFragment;
 import com.tddp2.grupo2.linkup.activity.MyLinksFragment;
 import com.tddp2.grupo2.linkup.activity.ProfileFragment;
@@ -35,6 +37,7 @@ public class LinksActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragment = null;
+        FirebaseMessaging.getInstance().subscribeToTopic("chats");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
