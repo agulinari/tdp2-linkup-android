@@ -68,5 +68,6 @@
     <string name="my_chats">Mis Chats</string>
     <string name="new_links">Nuevos Links</string>
     <string name="no_data_available">No hay candidatos para mostrar</string>
+    <string name="like_it">Me gusta</string>
 </resources>
 

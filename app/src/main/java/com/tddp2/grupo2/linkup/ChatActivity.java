@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getContext;
@@ -63,6 +66,15 @@ public class ChatActivity extends AppCompatActivity {
 
         listOfMessages = (ListView)findViewById(R.id.list_of_messages);
 
+        listOfMessages.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int pos, long id) {
+                likeMessage(pos);
+                return true;
+            }
+        });
+
         adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
                 R.layout.message, mDatabase.child("chats").child(chatId)) {
             @Override
@@ -73,14 +85,19 @@ public class ChatActivity extends AppCompatActivity {
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
                 RelativeLayout messageGlobe = (RelativeLayout)v.findViewById(R.id.message_globe);
+                RelativeLayout messageGlobeText = (RelativeLayout)v.findViewById(R.id.message_globe_text);
 
                 // Set their text
                 messageText.setText(model.getMessageText());
                 messageUser.setText(model.getMessageUser());
-
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("HH:mm",
-                        model.getMessageTime()));
+                if (!model.isLiked()) {
+                    // Format the date before showing it
+                    messageTime.setText(DateFormat.format("HH:mm",
+                            model.getMessageTime())+ " ♡");
+                }else{
+                    messageTime.setText(DateFormat.format("HH:mm",
+                            model.getMessageTime())+ " ❤️");
+                }
 
                 if (model.getFbid()!=null && model.getFbid().equals(userId)){
                     RelativeLayout.LayoutParams params1 =
@@ -97,7 +114,15 @@ public class ChatActivity extends AppCompatActivity {
                     params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
 
-
+                    if (model.isLiked()) {
+                        GradientDrawable messageBox = (GradientDrawable) messageGlobeText.getBackground();
+                        int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
+                        messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                    }else{
+                        GradientDrawable messageBox = (GradientDrawable) messageGlobeText.getBackground();
+                        int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
+                        messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.chatMessage));
+                    }
                     messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 }else{
@@ -115,7 +140,15 @@ public class ChatActivity extends AppCompatActivity {
                     params2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
 
-
+                    if (model.isLiked()) {
+                        GradientDrawable messageBox = (GradientDrawable) messageGlobeText.getBackground();
+                        int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
+                        messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.colorSecondary));
+                    }else{
+                        GradientDrawable messageBox = (GradientDrawable) messageGlobeText.getBackground();
+                        int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
+                        messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.chatMessage));
+                    }
                     messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
                     messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
                 }
@@ -160,5 +193,12 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    private void likeMessage(int position) {
 
+        DatabaseReference itemRef = adapter.getRef(position);
+        ChatMessage message = adapter.getItem(position);
+        message.setLiked(!message.isLiked());
+        itemRef.setValue(message);
+
+    }
 }

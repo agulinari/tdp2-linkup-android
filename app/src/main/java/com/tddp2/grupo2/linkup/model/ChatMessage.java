@@ -7,6 +7,7 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private long messageTime;
+    private boolean liked;
     private String fbid;
     private String fbidTo;
 
@@ -15,6 +16,7 @@ public class ChatMessage {
         this.messageUser = messageUser;
         this.fbid = fbid;
         this.fbidTo = fbidTo;
+        this.liked = false;
         // Initialize to current time
         messageTime = new Date().getTime();
     }
@@ -61,5 +63,13 @@ public class ChatMessage {
 
     public void setFbidTo(String fbidTo) {
         this.fbidTo = fbidTo;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 }
