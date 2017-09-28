@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup;
 
-import com.tddp2.grupo2.linkup.model.Image;
+import android.graphics.Bitmap;
+
 import com.tddp2.grupo2.linkup.model.Profile;
 
 
@@ -16,7 +17,7 @@ public interface LinksView  extends BaseView{
 
     void showMatch(String matchName);
 
-    void showImage(Image image);
+    void showImage(Bitmap bitmap);
 
     void hideLoadingImage();
 

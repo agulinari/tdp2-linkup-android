@@ -4,8 +4,7 @@ import android.os.AsyncTask;
 
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.model.Image;
-import com.tddp2.grupo2.linkup.model.Links;
+import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 
 
@@ -29,13 +28,13 @@ public class LoadImageTask extends AsyncTask<Object, Void, TaskResponse> {
     @Override
     protected TaskResponse doInBackground(Object... params) {
         TaskResponse taskResponse = new TaskResponse();
-        Image image;
+        ImageBitmap image;
         String fbidCandidate = (String) params[0];
 
         try {
             image = linksService.loadImage(fbidCandidate);
         } catch (ServiceException e) {
-            TaskResponse response = new TaskResponse(e.getMessage());
+            TaskResponse response = new TaskResponse(fbidCandidate);
             return response;
         }
         taskResponse.setResponse(image);

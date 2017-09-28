@@ -1,12 +1,17 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.LinksView;
-import com.tddp2.grupo2.linkup.model.Image;
+import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.*;
+import com.tddp2.grupo2.linkup.task.AcceptLinkTask;
+import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
+import com.tddp2.grupo2.linkup.task.GetLinksTask;
+import com.tddp2.grupo2.linkup.task.LoadImageTask;
+import com.tddp2.grupo2.linkup.task.RejectLinkTask;
+import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 public class LinksController {
 
@@ -169,23 +174,28 @@ public class LinksController {
     }
 
     public void initLoadImageTask() {
-        view.blockCandidatesNavigation();
+        //view.blockCandidatesNavigation();
         view.showLoadingImage();
     }
 
     public void finishLoadImageTask() {
-        view.registerNextAndPreviousListeners();
-        view.hideLoadingImage();
+        //view.registerNextAndPreviousListeners();
+        //view.hideLoadingImage();
     }
 
     public void onLoadImageResult(TaskResponse response) {
-
+        String currentFbid = links.getLinks().get(currentLink).getFbid();
         if (response.hasError()) {
-            Profile profile = links.getLinks().get(currentLink);
-            view.showImage(profile.getImages().get(0).getImage());
+            if (currentFbid.equals(response.getError())){
+                view.showImage(null);
+            }
+
         } else {
-            Image image = (Image)response.getResponse();
-            view.showImage(image);
+            ImageBitmap image = (ImageBitmap)response.getResponse();
+            if (currentFbid.equals(image.getImageId())) {
+                view.hideLoadingImage();
+                view.showImage(image.getBitmap());
+            }
         }
     }
 

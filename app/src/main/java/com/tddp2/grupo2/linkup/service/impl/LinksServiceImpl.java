@@ -1,6 +1,9 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
+import android.graphics.Bitmap;
 import android.util.Log;
+
+import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
@@ -11,16 +14,25 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
-import com.tddp2.grupo2.linkup.model.*;
+import com.tddp2.grupo2.linkup.model.Acceptance;
+import com.tddp2.grupo2.linkup.model.Image;
+import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Links;
+import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.Rejection;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
-import retrofit2.Call;
-import retrofit2.Response;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
 import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
+
+import static com.tddp2.grupo2.linkup.LinkupApplication.getImageCache;
 
 
 public class LinksServiceImpl extends LinksService{
@@ -134,7 +146,15 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public Image loadImage(String fbidCandidate) throws ServiceException {
+    public ImageBitmap loadImage(String fbidCandidate) throws ServiceException {
+
+        Bitmap bitmap = LinkupApplication.getImageCache().getBitmapFromMemCache(fbidCandidate);
+        if (bitmap != null){
+            ImageBitmap imageBitmap = new ImageBitmap();
+            imageBitmap.setImageId(fbidCandidate);
+            imageBitmap.setBitmap(bitmap);
+            return imageBitmap;
+        }
 
         LinkupClient linkupClient = clientService.getClient();
 
@@ -144,9 +164,16 @@ public class LinksServiceImpl extends LinksService{
             if (response.isSuccessful()) {
                 ImageResponse imageResponse = response.body();
                 if (imageResponse.getImages().isEmpty()){
-                    throw new ServiceException("no hay imagenes");
+                    throw new ServiceException(fbidCandidate);
                 }else{
-                    return imageResponse.getImages().get(1);
+                    Image image = imageResponse.getImages().get(1);
+
+                    bitmap = ImageUtils.base64ToBitmap(image.getData());
+                    ImageBitmap imageBitmap = new ImageBitmap();
+                    imageBitmap.setImageId(fbidCandidate);
+                    imageBitmap.setBitmap(bitmap);
+                    getImageCache().addBitmapToMemoryCache(fbidCandidate, bitmap);
+                    return imageBitmap;
                 }
             } else {
                 APIError error = ErrorUtils.parseError(response);

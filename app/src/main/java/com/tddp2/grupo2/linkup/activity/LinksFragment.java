@@ -7,20 +7,30 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-import android.view.*;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
-import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LinksFragment extends Fragment implements LinksView{
 
@@ -28,6 +38,9 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @BindView(R.id.linkCard)
     CardView linkCard;
+
+    @BindView(R.id.linkImageNameAge)
+    CardView linkImageCard;
 
     @BindView(R.id.linkImage)
     ImageView imageViewLinkImage;
@@ -134,7 +147,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void registerNextAndPreviousListeners() {
-        imageViewLinkImage.setOnTouchListener(new OnSwipeTouchListener(activity) {
+        linkImageCard.setOnTouchListener(new OnSwipeTouchListener(activity) {
             public void onSwipeRight() {
                 controller.nextLink();
             }
@@ -146,7 +159,7 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @Override
     public void blockCandidatesNavigation() {
-        imageViewLinkImage.setOnClickListener(null);
+        /*imageViewLinkImage.setOnClickListener(null);*/
     }
 
     @Override
@@ -260,9 +273,9 @@ public class LinksFragment extends Fragment implements LinksView{
     }
 
     @Override
-    public void showImage(Image image) {
-        if (image != null && image.getData() != null) {
-            Bitmap bitmap = ImageUtils.base64ToBitmap(image.getData());
+    public void showImage(Bitmap bitmap) {
+
+        if (bitmap != null) {
             imageViewLinkImage.setImageBitmap(bitmap);
         }else{
             imageViewLinkImage.setImageBitmap(null);

@@ -2,7 +2,7 @@ package com.tddp2.grupo2.linkup.service.api;
 
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
-import com.tddp2.grupo2.linkup.model.Image;
+import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 
@@ -29,5 +29,5 @@ public abstract class LinksService implements LinkupService{
 
     public abstract Database getDatabase();
 
-    public abstract Image loadImage(String fbidCandidate) throws ServiceException;
+    public abstract ImageBitmap loadImage(String fbidCandidate) throws ServiceException;
 }
