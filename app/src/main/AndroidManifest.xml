@@ -19,6 +19,9 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"
             tools:replace="android:value" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCtxGa-VoJj88oImC6a1xXzS08SFl5r-gE"/>
 
         <activity
             android:name="com.facebook.FacebookActivity"

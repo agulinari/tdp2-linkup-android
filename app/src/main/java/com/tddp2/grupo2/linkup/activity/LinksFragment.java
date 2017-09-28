@@ -2,9 +2,7 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -81,9 +79,6 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.linlaHeaderProgress)
     LinearLayout progressView;
 
-    @BindView(R.id.goToMapButton)
-    Button buttonGoToMap;
-
     private Context activity;
     private LinksController controller;
     private Links links;
@@ -109,15 +104,6 @@ public class LinksFragment extends Fragment implements LinksView{
     }
 
     private void registerListeners() {
-
-        buttonGoToMap.setOnClickListener(new Button.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                goToMap();
-            }
-        });
 
         buttonYes.setOnClickListener(new Button.OnClickListener()
         {
@@ -309,17 +295,5 @@ public class LinksFragment extends Fragment implements LinksView{
     public void showLoadingImage() {
         imageViewLinkImage.setVisibility(View.GONE);
         progressBarImage.setVisibility(View.VISIBLE);
-    }
-
-    private void goToMap() {
-        //z establece el nivel de zoom inicial del mapa. Los valores aceptados varían de 0 (todo el planeta) a 21 (edificios separados)
-        Uri gmmIntentUri = Uri.parse("geo:-34.617077,-58.368839?z=15");
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        if (mapIntent.resolveActivity(activity.getPackageManager()) != null) {
-            startActivity(mapIntent);
-        } else {
-            Toast.makeText(activity, "No tenes google maps instalada. Despues pongo un popup mas lindo", Toast.LENGTH_SHORT).show();
-        }
     }
 }
