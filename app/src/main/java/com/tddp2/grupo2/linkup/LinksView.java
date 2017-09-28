@@ -22,7 +22,7 @@ public interface LinksView  extends BaseView{
 
     void showLoadingImage();
 
-    void registerArrowButtonsListeners();
+    void registerNextAndPreviousListeners();
 
-    void blockArrowButtons();
+    void blockCandidatesNavigation();
 }

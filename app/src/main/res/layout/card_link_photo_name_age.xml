@@ -37,20 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="gone"/>
-            <ImageButton
-                    android:layout_above="@+id/candidateNameAndAgeTextContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" card_view:srcCompat="@drawable/arrow_right"
-                    android:layout_alignParentEnd="true"
-                    android:paddingBottom="2dp"
-                    android:id="@+id/linkArrowRight" android:backgroundTint="@android:color/transparent"/>
-            <ImageButton
-                    android:layout_above="@+id/candidateNameAndAgeTextContainer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" card_view:srcCompat="@drawable/arrow_left"
-                    android:layout_alignParentStart="true"
-                    android:paddingBottom="2dp"
-                    android:id="@+id/linkArrowLeft" android:backgroundTint="@android:color/transparent"/>
             <RelativeLayout
                     android:id="@+id/candidateNameAndAgeTextContainer"
                     android:layout_width="fill_parent"

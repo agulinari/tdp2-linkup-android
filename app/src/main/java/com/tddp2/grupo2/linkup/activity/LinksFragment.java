@@ -20,6 +20,7 @@ import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
 
 public class LinksFragment extends Fragment implements LinksView{
 
@@ -63,12 +64,6 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @BindView(R.id.reloadButton)
     ImageButton reloadButton;
-
-    @BindView(R.id.linkArrowRight)
-    ImageButton buttonNextCandidate;
-
-    @BindView(R.id.linkArrowLeft)
-    ImageButton buttonPreviousCandidate;
 
     @BindView(R.id.progressImage)
     ProgressBar progressImage;
@@ -134,35 +129,24 @@ public class LinksFragment extends Fragment implements LinksView{
             }
         });
 
-        registerArrowButtonsListeners();
+        registerNextAndPreviousListeners();
     }
 
     @Override
-    public void registerArrowButtonsListeners() {
-        buttonNextCandidate.setOnClickListener(new Button.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+    public void registerNextAndPreviousListeners() {
+        imageViewLinkImage.setOnTouchListener(new OnSwipeTouchListener(activity) {
+            public void onSwipeRight() {
                 controller.nextLink();
             }
-        });
-
-        buttonPreviousCandidate.setOnClickListener(new Button.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
+            public void onSwipeLeft() {
                 controller.previousLink();
             }
         });
     }
 
     @Override
-    public void blockArrowButtons() {
-        buttonNextCandidate.setOnClickListener(null);
-
-        buttonPreviousCandidate.setOnClickListener(null);
+    public void blockCandidatesNavigation() {
+        imageViewLinkImage.setOnClickListener(null);
     }
 
     @Override
