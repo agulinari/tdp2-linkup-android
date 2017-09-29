@@ -7,4 +7,6 @@
     <dimen name="card_separation">5dp</dimen>
     <dimen name="link_card_side_margin">5dp</dimen>
     <dimen name="profile_card_side_margin">5dp</dimen>
+    <dimen name="image_height">350dp</dimen>
+    <dimen name="name_age_text_height">40dp</dimen>
 </resources>
