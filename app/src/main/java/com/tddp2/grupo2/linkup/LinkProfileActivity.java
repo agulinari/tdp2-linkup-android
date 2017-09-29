@@ -90,4 +90,9 @@ public class LinkProfileActivity extends AppCompatActivity implements LinkProfil
             cardViewEducationCard.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void showImage(Bitmap photo) {
+        imageViewLinkProfilePhoto.setImageBitmap(photo);
+    }
 }

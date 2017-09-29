@@ -20,5 +20,11 @@ public class LinkProfileController {
     public void showLinkData(int currentLink) {
         Profile profile = this.linksService.getDatabase().getLinks().getLinks().get(currentLink);
         view.showData(profile);
+
+        String fbidCandidate = profile.getFbid();
+        Bitmap bitmap = LinkupApplication.getImageCache().getBitmapFromMemCache(fbidCandidate);
+        if (bitmap != null) {
+            view.showImage(bitmap);
+        }
     }
 }
