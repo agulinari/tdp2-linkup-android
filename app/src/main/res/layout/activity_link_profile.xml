@@ -21,6 +21,7 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
+                android:background="@color/profileCard"
                 app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="64dp">
 
