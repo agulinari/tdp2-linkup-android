@@ -61,7 +61,7 @@ public class LinksController {
             currentLink--;
         }
         Profile profile = links.getLinks().get(currentLink);
-        view.showLink(profile);
+        view.showLink(profile, currentLink);
     }
 
     public void nextLink(){
@@ -74,7 +74,7 @@ public class LinksController {
             currentLink++;
         }
         Profile profile = links.getLinks().get(currentLink);
-        view.showLink(profile);
+        view.showLink(profile, currentLink);
     }
 
     public void initGetLinksTask() {
@@ -111,7 +111,7 @@ public class LinksController {
         if (!links.getLinks().isEmpty()){
             Profile profile = links.getLinks().get(0);
             this.currentLink = 0;
-            view.showLink(profile);
+            view.showLink(profile, currentLink);
         }else{
             view.showEmptyLinks();
         }
@@ -132,11 +132,11 @@ public class LinksController {
                 //si el current era el ultimo
                 Profile profile = links.getLinks().get(links.getLinks().size()-1);
                 this.currentLink = links.getLinks().size()-1;
-                view.showLink(profile);
+                view.showLink(profile, currentLink);
             }else{
                 //si el current no era el ultimo
                 Profile profile = links.getLinks().get(currentLink);
-                view.showLink(profile);
+                view.showLink(profile, currentLink);
             }
         }
     }
@@ -165,11 +165,11 @@ public class LinksController {
             //si el current era el ultimo
             Profile profile = links.getLinks().get(links.getLinks().size()-1);
             this.currentLink = links.getLinks().size()-1;
-            view.showLink(profile);
+            view.showLink(profile, currentLink);
         }else{
             //si el current no era el ultimo
             Profile profile = links.getLinks().get(currentLink);
-            view.showLink(profile);
+            view.showLink(profile, currentLink);
         }
     }
 
