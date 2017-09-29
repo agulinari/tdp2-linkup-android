@@ -17,6 +17,9 @@ public class LinkProfileActivity extends AppCompatActivity implements LinkProfil
 
         ButterKnife.bind(this);
 
+        Bundle b = getIntent().getExtras();
+        int currentLink = (b != null) ? b.getInt("currentLinkIndex") : -1;
+
         controller = new LinkProfileController(this);
     }
 

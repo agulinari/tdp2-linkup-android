@@ -93,6 +93,7 @@ public class LinksFragment extends Fragment implements LinksView{
     private Context activity;
     private LinksController controller;
     private Links links;
+    private int currentLinkIndex;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -151,6 +152,9 @@ public class LinksFragment extends Fragment implements LinksView{
             public void onClick(View v)
             {
                 Intent intent = new Intent(getContext(), LinkProfileActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("currentLinkIndex", currentLinkIndex);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });
@@ -221,7 +225,8 @@ public class LinksFragment extends Fragment implements LinksView{
     }
 
     @Override
-    public void showLink(Profile profile) {
+        public void showLink(Profile profile, int currentLinkIndex) {
+        this.currentLinkIndex = currentLinkIndex;
         linkCard.setVisibility(View.VISIBLE);
         this.enableActions();
         progressImage.setVisibility(View.INVISIBLE);
