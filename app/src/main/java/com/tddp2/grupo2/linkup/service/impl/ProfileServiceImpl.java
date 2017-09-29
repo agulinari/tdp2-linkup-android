@@ -31,6 +31,7 @@ public class ProfileServiceImpl extends ProfileService {
     @Override
     public void createProfile(Profile profile) throws ServiceException {
         LinkupClient linkupClient = clientService.getClient();
+        profile.setToken(database.getToken());
         PostUserRequest request = new PostUserRequest(profile);
         Call<UserResponse> call = linkupClient.profiles.createProfile(request);
         try {

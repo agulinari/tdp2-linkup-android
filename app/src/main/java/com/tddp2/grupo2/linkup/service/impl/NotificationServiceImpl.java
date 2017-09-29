@@ -38,6 +38,7 @@ public class NotificationServiceImpl  extends NotificationService{
     @Override
     public void updateToken(String token) throws ServiceException {
         Profile profile = this.database.getProfile();
+        this.saveToken(token);
         if (profile == null){
             return;
         }
