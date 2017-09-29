@@ -87,6 +87,9 @@ public class LinksFragment extends Fragment implements LinksView{
     @BindView(R.id.linlaHeaderProgress)
     LinearLayout progressView;
 
+    @BindView(R.id.goToCandidateProfile)
+    Button buttonGoToCandidateProfile;
+
     private Context activity;
     private LinksController controller;
     private Links links;
@@ -139,6 +142,16 @@ public class LinksFragment extends Fragment implements LinksView{
                 //TODO: SUPERLINKS
                 progressImage.setVisibility(View.VISIBLE);
                 controller.nextLink();
+            }
+        });
+
+        buttonGoToCandidateProfile.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), LinkProfileActivity.class);
+                startActivity(intent);
             }
         });
 
