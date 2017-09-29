@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +38,9 @@ public class LinkProfileActivity extends AppCompatActivity implements LinkProfil
 
     @BindView(R.id.linkProfilePhoto)
     ImageView imageViewLinkProfilePhoto;
+
+    @BindView(R.id.linkProfileImageProgress)
+    ProgressBar progressBarImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,5 +98,15 @@ public class LinkProfileActivity extends AppCompatActivity implements LinkProfil
     @Override
     public void showImage(Bitmap photo) {
         imageViewLinkProfilePhoto.setImageBitmap(photo);
+    }
+
+    @Override
+    public void showLoadingImage() {
+        progressBarImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingImage() {
+        progressBarImage.setVisibility(View.GONE);
     }
 }
