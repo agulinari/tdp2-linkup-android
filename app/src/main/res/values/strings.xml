@@ -32,7 +32,7 @@
     <string name="location_profile_fragment_settings_denied">Lo sentimos, debes permitir acceder a tu ubicación para poder actualizarla.</string>
     <string name="location_profile_error">Lo sentimos, ha ocurrido un error intentando actualizar su ubicación.</string>
     <string name="fetching_location">Cargando ubicación</string>
-    <string name="location_popup_button">Entiendo</string>
+    <string name="location_popup_button">Entendido</string>
     <string name="missing_age">Lo sentimos, es necesario conocer tu edad para que puedas usar esta aplicación. Por favor, agrega esa información en Facebook y vuelve a intentarlo.</string>
     <string name="comment_edit">Escriba algo sobre usted:</string>
     <string name="comment_edit_save">Guardar</string>
@@ -43,7 +43,7 @@
     <string name="candidate_match_ok">Aceptar</string>
     <string name="settings_wrong_search_parameters_title">Configuración inválida</string>
     <string name="settings_wrong_search_parameters_description">Debes seleccionar buscar al menos amigos, hombres o mujeres. De otra forma, no podrás continuar.</string>
-    <string name="settings_wrong_search_parameters_ok">Entiendo</string>
+    <string name="settings_wrong_search_parameters_ok">Entendido</string>
     <string name="save_profile_title_ok">¡Perfil guardado!</string>
     <string name="save_profile_title_error">Ha ocurrido un error</string>
     <string name="save_profile_text_ok">La información de perfil se guardó exitosamente</string>
@@ -54,6 +54,7 @@
     <string name="save_settings_text_ok">La información de preferencias se guardó exitosamente</string>
     <string name="save_settings_text_error">No hemos podido guardar la información, por favor vuelva a intentarlo.</string>
     <string name="save_settings_ok">Aceptar</string>
+    <string name="go_to_link_profile">Ver perfil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
