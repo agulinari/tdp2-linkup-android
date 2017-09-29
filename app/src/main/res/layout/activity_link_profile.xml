@@ -43,6 +43,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+            <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
+             <include
+                    android:id="@+id/linkLocationCard"
+                    layout="@layout/card_link_location" />
+             <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
+             <include
+                    android:id="@+id/cardMap"
+                    layout="@layout/card_link_map" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
