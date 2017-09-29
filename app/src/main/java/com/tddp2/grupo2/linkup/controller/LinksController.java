@@ -105,17 +105,17 @@ public class LinksController {
 
         if (response.hasError()) {
             view.onError(response.getError());
-        } else {
-            //view.goToNext();
-            links = (Links) response.getResponse();
-            if (!links.getLinks().isEmpty()){
-                Profile profile = links.getLinks().get(0);
-                this.currentLink = 0;
-                view.showLink(profile);
-            }else{
-                view.showEmptyLinks();
-            }
         }
+        //view.goToNext();
+        links = (Links) response.getResponse();
+        if (!links.getLinks().isEmpty()){
+            Profile profile = links.getLinks().get(0);
+            this.currentLink = 0;
+            view.showLink(profile);
+        }else{
+            view.showEmptyLinks();
+        }
+
     }
 
     public void onRejectResult(TaskResponse response) {

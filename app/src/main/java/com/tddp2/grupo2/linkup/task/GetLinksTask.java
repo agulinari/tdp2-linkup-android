@@ -3,14 +3,9 @@ package com.tddp2.grupo2.linkup.task;
 import android.os.AsyncTask;
 
 import com.tddp2.grupo2.linkup.controller.LinksController;
-import com.tddp2.grupo2.linkup.controller.LoginController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
-import com.tddp2.grupo2.linkup.service.api.LoginService;
-
-import static com.tddp2.grupo2.linkup.R.drawable.user;
 
 
 public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
@@ -37,6 +32,7 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
             links = linksService.getLinks();
         } catch (ServiceException e) {
             taskResponse.setError(e.getMessage());
+            taskResponse.setResponse(linksService.getDatabase().getLinks());
             return taskResponse;
         }
         taskResponse.setResponse(links);
