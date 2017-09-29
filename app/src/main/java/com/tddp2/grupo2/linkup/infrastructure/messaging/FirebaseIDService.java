@@ -4,6 +4,9 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.tddp2.grupo2.linkup.exception.ServiceException;
+import com.tddp2.grupo2.linkup.service.api.NotificationService;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class FirebaseIDService extends FirebaseInstanceIdService {
     private static final String TAG = "FirebaseIDService";
@@ -27,6 +30,13 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // Add custom implementation, as needed.
+        NotificationService notificationService = ServiceFactory.getNotificationService();
+
+        try {
+            notificationService.updateToken(token);
+        } catch (ServiceException e) {
+            Log.e(TAG, e.getMessage(), e);
+        }
+
     }
 }

@@ -27,11 +27,10 @@ public class MyLinksController {
     public void onGetMyLinksResult(TaskResponse response) {
         if (response.hasError()) {
             view.onError(response.getError());
-        } else {
-            //view.goToNext();
-            links = (MyLinks) response.getResponse();
-            view.showMyLinks(links);
         }
+
+        links = (MyLinks) response.getResponse();
+        view.showMyLinks(links);
 
     }
 

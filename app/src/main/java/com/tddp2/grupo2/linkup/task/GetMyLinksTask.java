@@ -33,6 +33,7 @@ public class GetMyLinksTask extends AsyncTask<Object, Void, TaskResponse> {
             links = myLinksService.getMyLinks();
         } catch (ServiceException e) {
             taskResponse.setError(e.getMessage());
+            taskResponse.setResponse(myLinksService.getDatabase().getMyLinks());
             return taskResponse;
         }
         taskResponse.setResponse(links);

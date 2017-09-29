@@ -2,13 +2,19 @@ package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.TokenRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
-import retrofit2.Call;
-import retrofit2.http.*;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 
 
 public interface Profiles {
@@ -27,5 +33,8 @@ public interface Profiles {
 
     @GET("image/{id}")
     Call<ImageResponse> getImage(@Path("id") String fbid);
+
+    @PUT("token")
+    Call<?> updateToken(@Body TokenRequest request);
 
 }
