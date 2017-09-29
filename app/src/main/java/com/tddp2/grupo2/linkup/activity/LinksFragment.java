@@ -2,11 +2,13 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.tddp2.grupo2.linkup.LinkProfileActivity;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
@@ -28,9 +33,6 @@ import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LinksFragment extends Fragment implements LinksView{
 
@@ -50,24 +52,6 @@ public class LinksFragment extends Fragment implements LinksView{
 
     @BindView(R.id.linkName)
     TextView textViewLinkName;
-
-    @BindView(R.id.linkCommentCard)
-    CardView cardViewCommentCard;
-
-    @BindView(R.id.linkCommentText)
-    TextView textViewLinkComment;
-
-    @BindView(R.id.linkOccupationCard)
-    CardView cardViewOccupationCard;
-
-    @BindView(R.id.linkWorkText)
-    TextView textViewLinkWork;
-
-    @BindView(R.id.linkEducationCard)
-    CardView cardViewEducationCard;
-
-    @BindView(R.id.linkStudiesText)
-    TextView textViewLinkStudies;
 
     @BindView(R.id.yesButton)
     ImageButton buttonYes;
@@ -241,30 +225,6 @@ public class LinksFragment extends Fragment implements LinksView{
         } catch (MissingAgeException e) {
         }
         textViewLinkName.setText(name + ", " + age);
-
-        String comment = profile.getComments();
-        if (!comment.equals("")) {
-            cardViewCommentCard.setVisibility(View.VISIBLE);
-            textViewLinkComment.setText(comment);
-        } else {
-            cardViewCommentCard.setVisibility(View.GONE);
-        }
-
-        String occupation = profile.getOccupation();
-        if (!occupation.equals("")) {
-            cardViewOccupationCard.setVisibility(View.VISIBLE);
-            textViewLinkWork.setText(occupation);
-        } else {
-            cardViewOccupationCard.setVisibility(View.GONE);
-        }
-
-        String studies = profile.getEducation();
-        if (!studies.equals("")) {
-            cardViewEducationCard.setVisibility(View.VISIBLE);
-            textViewLinkStudies.setText(studies);
-        } else {
-            cardViewEducationCard.setVisibility(View.GONE);
-        }
     }
 
     @Override

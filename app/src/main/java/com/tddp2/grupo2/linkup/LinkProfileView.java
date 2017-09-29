@@ -1,5 +1,7 @@
 package com.tddp2.grupo2.linkup;
 
-public interface LinkProfileView extends BaseView {
+import com.tddp2.grupo2.linkup.model.Profile;
 
+public interface LinkProfileView extends BaseView {
+    void showData(Profile profile);
 }
