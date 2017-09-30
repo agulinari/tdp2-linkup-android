@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.graphics.drawable.GradientDrawable;
@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;

@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;

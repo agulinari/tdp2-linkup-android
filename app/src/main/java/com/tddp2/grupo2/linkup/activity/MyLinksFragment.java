@@ -19,8 +19,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tddp2.grupo2.linkup.MyLinksView;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.adapter.RVChatLinksAdapter;
+import com.tddp2.grupo2.linkup.activity.adapter.RVNewLinksAdapter;
+import com.tddp2.grupo2.linkup.activity.view.MyLinksView;
 import com.tddp2.grupo2.linkup.controller.MyLinksController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
@@ -37,7 +39,7 @@ import butterknife.ButterKnife;
 
 
 
-public class MyLinksFragment extends BroadcastFragment implements MyLinksView{
+public class MyLinksFragment extends BroadcastFragment implements MyLinksView {
 
     private static final String TAG = "MyLinksFragment";
     private Context activity;

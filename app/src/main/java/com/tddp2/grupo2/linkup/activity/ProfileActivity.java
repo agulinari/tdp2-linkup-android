@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;

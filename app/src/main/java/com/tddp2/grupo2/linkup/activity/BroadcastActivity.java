@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

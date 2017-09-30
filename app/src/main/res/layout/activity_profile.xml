@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        tools:context="com.tddp2.grupo2.linkup.ProfileActivity">
+        tools:context="com.tddp2.grupo2.linkup.activity.ProfileActivity">
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

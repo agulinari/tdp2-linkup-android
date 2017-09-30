@@ -1,7 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import android.graphics.Bitmap;
-import com.tddp2.grupo2.linkup.ProfileView;
+import com.tddp2.grupo2.linkup.activity.view.ProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;

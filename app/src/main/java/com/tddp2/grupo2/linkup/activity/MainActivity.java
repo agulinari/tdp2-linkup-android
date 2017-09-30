@@ -1,17 +1,15 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.facebook.AccessToken;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
+import com.tddp2.grupo2.linkup.activity.LinksActivity;
+import com.tddp2.grupo2.linkup.activity.LoginActivity;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import static com.tddp2.grupo2.linkup.service.factory.ServiceFactory.getLoginService;
 
 public class MainActivity extends Activity {
 

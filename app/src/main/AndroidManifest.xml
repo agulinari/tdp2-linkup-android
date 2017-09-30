@@ -42,7 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
@@ -52,22 +52,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".activity.ProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LinksActivity"
+            android:name=".activity.LinksActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".activity.ChatActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".LinkProfileActivity"
+            android:name=".activity.LinkProfileActivity"
             android:screenOrientation="portrait" />
         <service
             android:name="com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService"

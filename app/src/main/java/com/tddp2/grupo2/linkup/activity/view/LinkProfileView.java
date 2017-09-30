@@ -1,6 +1,8 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity.view;
 
 import android.graphics.Bitmap;
+
+import com.tddp2.grupo2.linkup.activity.view.BaseView;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 public interface LinkProfileView extends BaseView {

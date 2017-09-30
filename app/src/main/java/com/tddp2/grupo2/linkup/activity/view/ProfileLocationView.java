@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity.view;
 
 public interface ProfileLocationView extends ProfileView {
     void checkPermissionsAndLoadLocation();

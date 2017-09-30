@@ -1,6 +1,6 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import com.tddp2.grupo2.linkup.MyLinksView;
+import com.tddp2.grupo2.linkup.activity.view.MyLinksView;
 import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;

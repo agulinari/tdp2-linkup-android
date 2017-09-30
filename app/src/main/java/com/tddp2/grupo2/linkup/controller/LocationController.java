@@ -19,7 +19,7 @@ import com.google.android.gms.location.*;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.tddp2.grupo2.linkup.ProfileLocationView;
+import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;

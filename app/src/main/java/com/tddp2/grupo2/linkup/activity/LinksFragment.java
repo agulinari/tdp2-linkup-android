@@ -28,9 +28,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tddp2.grupo2.linkup.LinkProfileActivity;
-import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
@@ -44,7 +43,7 @@ import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LinksFragment extends BroadcastFragment implements LinksView{
+public class LinksFragment extends BroadcastFragment implements LinksView {
 
     private static final String TAG = "LinksFragment";
 

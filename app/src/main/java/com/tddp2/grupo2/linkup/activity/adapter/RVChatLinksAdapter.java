@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup.activity;
+package com.tddp2.grupo2.linkup.activity.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.ChatActivity;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
@@ -26,7 +26,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
 
     List<MyLink> myChats;
 
-    RVChatLinksAdapter(List<MyLink> myChats){
+    public RVChatLinksAdapter(List<MyLink> myChats){
         this.myChats = myChats;
     }
 

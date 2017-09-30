@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.tddp2.grupo2.linkup.MainActivity;
+import com.tddp2.grupo2.linkup.activity.MainActivity;
 import com.tddp2.grupo2.linkup.R;
 
 public class PushIntentService extends IntentService {

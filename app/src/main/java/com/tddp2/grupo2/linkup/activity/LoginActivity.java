@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup;
+package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +21,8 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
+import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.LoginView;
 import com.tddp2.grupo2.linkup.controller.LoginController;
 
 import java.util.Arrays;

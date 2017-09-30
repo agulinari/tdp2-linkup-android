@@ -1,8 +1,6 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import android.util.Log;
-
-import com.tddp2.grupo2.linkup.LoginView;
+import com.tddp2.grupo2.linkup.activity.view.LoginView;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadUserTask;

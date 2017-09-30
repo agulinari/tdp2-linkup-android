@@ -1,6 +1,6 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import com.tddp2.grupo2.linkup.LinksView;
+import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;

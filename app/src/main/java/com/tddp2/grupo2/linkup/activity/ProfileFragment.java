@@ -23,8 +23,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tddp2.grupo2.linkup.ProfileLocationView;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;

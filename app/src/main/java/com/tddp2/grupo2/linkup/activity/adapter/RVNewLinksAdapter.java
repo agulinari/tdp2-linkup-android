@@ -1,4 +1,4 @@
-package com.tddp2.grupo2.linkup.activity;
+package com.tddp2.grupo2.linkup.activity.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tddp2.grupo2.linkup.ChatActivity;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.ChatActivity;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -25,7 +25,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
 
     List<MyLink> myNewLinks;
 
-    RVNewLinksAdapter(List<MyLink> myChats){
+    public RVNewLinksAdapter(List<MyLink> myChats){
         this.myNewLinks = myChats;
     }
 
