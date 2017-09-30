@@ -70,5 +70,6 @@
     <string name="new_links">Nuevos Links</string>
     <string name="no_data_available">No hay candidatos para mostrar</string>
     <string name="like_it">Me gusta</string>
+    <string name="ticker">ticker</string>
 </resources>
 

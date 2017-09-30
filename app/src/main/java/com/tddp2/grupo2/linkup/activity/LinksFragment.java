@@ -1,14 +1,19 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,21 +27,31 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tddp2.grupo2.linkup.LinkProfileActivity;
 import com.tddp2.grupo2.linkup.LinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LinksFragment extends Fragment implements LinksView{
 
     private static final String TAG = "LinksFragment";
+
+    @BindView(R.id.myCoordinatorLayout)
+    CoordinatorLayout coordView;
 
     @BindView(R.id.linkCard)
     CardView linkCard;
@@ -125,8 +140,14 @@ public class LinksFragment extends Fragment implements LinksView{
             public void onClick(View v)
             {
                 //TODO: SUPERLINKS
-                progressImage.setVisibility(View.VISIBLE);
-                controller.nextLink();
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+                String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+                String fbid = ServiceFactory.getProfileService().getLocalProfile().getFbid();
+                final ChatMessage chatMessage = new ChatMessage("probando", name, fbid, fbid);
+
+                mDatabase.child("notifications")
+                        .push()
+                        .setValue(chatMessage);
             }
         });
 
@@ -214,9 +235,7 @@ public class LinksFragment extends Fragment implements LinksView{
         linkCard.setVisibility(View.VISIBLE);
         this.enableActions();
         progressImage.setVisibility(View.INVISIBLE);
-        /*String image = profile.getImages().get(0).getImage();
-        Bitmap bitmap = ImageUtils.base64ToBitmap(image);
-        imageViewLinkImage.setImageBitmap(bitmap);*/
+
         controller.loadImage();
         String name = profile.getFirstName();
         String age = "";
@@ -271,4 +290,42 @@ public class LinksFragment extends Fragment implements LinksView{
         imageViewLinkImage.setVisibility(View.GONE);
         progressBarImage.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        IntentFilter filter = new IntentFilter("io.esparta.notifications.BROADCAST_NOTIFICATION");
+        filter.setPriority(1);
+
+        getActivity().registerReceiver(notificationReceiver, filter);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().unregisterReceiver(notificationReceiver);
+    }
+
+    private BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Do something with this incoming message here
+            // Since we will process the message and update the UI, we don't need to show a message in Status Bar
+            // To do this, we call abortBroadcast()
+            Log.i(TAG, "Notificacion RECIBIDA");
+            Notification notification = intent.getParcelableExtra("notification");
+
+            if (notification!=null) {
+                Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+                View snackbarView = snackbar.getView();
+                snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                snackbar.show();
+            }
+
+            abortBroadcast();
+        }
+    };
+
+
 }

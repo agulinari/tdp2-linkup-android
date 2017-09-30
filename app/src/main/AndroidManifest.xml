@@ -84,6 +84,19 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+
+        <service android:name=".infrastructure.messaging.PushReceiverIntentService"></service>
+
+        <service android:name=".infrastructure.messaging.PushIntentService"></service>
+
+        <receiver
+            android:name=".infrastructure.messaging.PushReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="0">
+                <action android:name="io.esparta.notifications.BROADCAST_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
