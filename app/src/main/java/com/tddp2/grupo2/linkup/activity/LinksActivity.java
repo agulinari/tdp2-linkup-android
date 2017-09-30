@@ -12,16 +12,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
 public class LinksActivity extends AppCompatActivity {
 
+    private static final String TAG = "LinksActivity";
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -31,20 +33,16 @@ public class LinksActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Notification n = getIntent().getParcelableExtra("notification");
+
         setContentView(R.layout.activity_main);
 
         fragment = null;
-        FirebaseMessaging.getInstance().subscribeToTopic("chats");
+
+        resolveFragment(n);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        Fragment fragment = new LinksFragment();
-        tx.replace(R.id.frame, fragment);
-        tx.commit();
-
-       // createProfileInfo();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setCheckedItem(R.id.drawer_search_links);
@@ -72,27 +70,23 @@ public class LinksActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-   /* private void createProfileInfo() {
-        User localUser = ServiceFactory.getUserService().getLocalUser();
-        String photo = localUser.getPhoto();
+    private void resolveFragment(Notification n) {
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
 
-        if (photo != null) {
-            Bitmap photoBitmap = PhotoUtils.base64ToBitmap(localUser.getPhoto());
-
-            // Fill user information in header.
-            CircleImageView imageProfileView = (CircleImageView) findViewById(R.id.profile_image);
-            imageProfileView.setImageBitmap(photoBitmap);
+        if (n.fbid.isEmpty()) {
+            Log.i(TAG, "savedInstanceState null");
+            fragment = new LinksFragment();
+        }else {
+            Log.i(TAG, "savedInstanceState NOT null");
+            fragment = new MyLinksFragment();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("notification", n);
+            fragment.setArguments(bundle);
         }
+        tx.replace(R.id.frame, fragment);
+        tx.commit();
 
-
-        TextView userName = (TextView) findViewById(R.id.username);
-        userName.setText(localUser.getName());
-
-        TextView email = (TextView) findViewById(R.id.email);
-        if (localUser.getEmail() != null) {
-            email.setText(localUser.getEmail());
-        }
-    }*/
+    }
 
     private boolean selectFragment(MenuItem menuItem) {
         return changeFragment(menuItem.getItemId());
@@ -108,6 +102,9 @@ public class LinksActivity extends AppCompatActivity {
                 break;
             case R.id.drawer_my_links:
                 fragment = new MyLinksFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("notification", new Notification("","",""));
+                fragment.setArguments(bundle);
                 currentFragment = getResources().getString(R.string.item_my_links);
                 break;
             case R.id.drawer_settings:

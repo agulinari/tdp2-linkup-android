@@ -6,11 +6,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.tddp2.grupo2.linkup.activity.MainActivity;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.MainActivity;
 
 public class PushIntentService extends IntentService {
 
@@ -36,7 +37,14 @@ public class PushIntentService extends IntentService {
         if (notification == null) {
             return;
         }
+        // First create Parcel and write your data to it
+        Parcel parcel = Parcel.obtain();
+        notification.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+
         Intent notificationIntent = new Intent(this, MainActivity.class);
+        notificationIntent.putExtra("notification",parcel.marshall());
+
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);

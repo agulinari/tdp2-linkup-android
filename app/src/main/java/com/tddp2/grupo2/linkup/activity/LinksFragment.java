@@ -25,18 +25,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
-import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
 
@@ -137,14 +132,6 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
             public void onClick(View v)
             {
                 //TODO: SUPERLINKS
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-                String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-                String fbid = ServiceFactory.getProfileService().getLocalProfile().getFbid();
-                final ChatMessage chatMessage = new ChatMessage("probando", name, fbid, fbid);
-
-                mDatabase.child("notifications")
-                        .push()
-                        .setValue(chatMessage);
             }
         });
 

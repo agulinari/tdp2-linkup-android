@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -107,6 +108,14 @@ public class MyLinksFragment extends BroadcastFragment implements MyLinksView {
         rvChatLinks.setLayoutManager(llmCL);
         adapterChats = new RVChatLinksAdapter(chats);
         rvChatLinks.setAdapter(adapterChats);
+
+        Notification n = getArguments().getParcelable("notification");
+        if (!n.fbid.isEmpty()){
+            Intent intent = new Intent(activity, ChatActivity.class);
+            intent.putExtra("USER_ID", userId);
+            intent.putExtra("LINK_ID", n.fbid);
+            activity.startActivity(intent);
+        }
 
         return mainView;
     }
