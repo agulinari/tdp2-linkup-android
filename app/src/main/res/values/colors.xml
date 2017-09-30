@@ -10,4 +10,6 @@
     <color name="button_disable">#F8BBD0</color>
     <color name="chatMessage">#B1BCBE</color>
     <color name="colorSecondary">#119dc2</color>
+
+    <color name="screen_background_dark_transparent2">#C2185B</color>
 </resources>
