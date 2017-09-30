@@ -55,6 +55,9 @@
     <string name="save_settings_text_error">No hemos podido guardar la información, por favor vuelva a intentarlo.</string>
     <string name="save_settings_ok">Aceptar</string>
     <string name="go_to_link_profile">Ver perfil</string>
+    <string name="link_distance_singular">A %1$s kilómetro</string>
+    <string name="link_distance_plural">A %1$s kilómetros</string>
+    <string name="link_distance_close">¡A menos de 100 metros!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -52,5 +53,11 @@ public class LinkProfileController implements ImageLinkController {
 
     public void finishLoadImageTask() {
         view.hideLoadingImage();
+    }
+
+    public void getCoordinatesAndUpdateDistance() {
+        Location loggedUserLocation = this.linksService.getDatabase().getProfile().getLocation();
+        Location linkLocation = this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex).getLocation();
+        view.updateDistance(loggedUserLocation, linkLocation);
     }
 }

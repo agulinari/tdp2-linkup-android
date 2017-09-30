@@ -13,20 +13,25 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.text.DecimalFormat;
 
-public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView {
+public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
 
     private static final String TAG = "LinkProfileActivity";
     private LinkProfileController controller;
+    private GoogleMap locationMap;
 
     @BindView(R.id.linkProfileCoordinatorLayout)
     CoordinatorLayout coordView;
@@ -55,6 +60,9 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     @BindView(R.id.linkProfileImageProgress)
     ProgressBar progressBarImage;
 
+    @BindView(R.id.linkLocationText)
+    TextView textViewLinkDistance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,10 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
         controller = new LinkProfileController(this);
         controller.showLinkData(currentLink);
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.linkMap);
+        mapFragment.getMapAsync(this);
     }
 
     public void showProgress() {}
@@ -135,5 +147,57 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
         broadcastReceiver.abortBroadcast();
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        this.locationMap = map;
+        UiSettings mapSettings = this.locationMap.getUiSettings();
+        mapSettings.setAllGesturesEnabled(false);
+        controller.getCoordinatesAndUpdateDistance();
+    }
+
+    public void updateDistance(Location loggedUserLocation, Location linkLocation) {
+        android.location.Location loc1 = new android.location.Location("");
+        loc1.setLatitude(loggedUserLocation.getLatitude());
+        loc1.setLongitude(loggedUserLocation.getLongitude());
+
+        android.location.Location loc2 = new android.location.Location("");
+        loc2.setLatitude(linkLocation.getLatitude());
+        loc2.setLongitude(linkLocation.getLongitude());
+
+        float distanceInMeters = loc1.distanceTo(loc2);
+        Log.i("DISTANCE", String.valueOf(distanceInMeters) + " meters");
+
+        if (distanceInMeters <= 100) {
+            textViewLinkDistance.setText(getString(R.string.link_distance_close));
+        } else {
+            float distanceInKilometers = distanceInMeters / 1000;
+            Log.i("DISTANCE", String.valueOf(distanceInKilometers) + " kilometers");
+            DecimalFormat decimalFormat = new DecimalFormat();
+            decimalFormat.setMaximumFractionDigits(1);
+            if (((distanceInKilometers >= 1) && (distanceInKilometers < 2))) {
+                textViewLinkDistance.setText(getString(R.string.link_distance_singular, decimalFormat.format(distanceInKilometers)));
+            } else {
+                textViewLinkDistance.setText(getString(R.string.link_distance_plural, decimalFormat.format(distanceInKilometers)));
+            }
+        }
+
+        double latitude1 = loggedUserLocation.getLatitude();
+        double latitude2 = linkLocation.getLatitude();
+        double longitude1 = loggedUserLocation.getLongitude();
+        double longitude2 = linkLocation.getLongitude();
+
+        double southLatitude = (latitude1 < latitude2) ? latitude1 : latitude2;
+        double northLatitude = (latitude1 < latitude2) ? latitude2 : latitude1;
+        double westLongitude = (longitude1 < longitude2) ? longitude1 : longitude2;
+        double eastLongitude = (longitude1 < longitude2) ? longitude2 : longitude1;
+
+        LatLng southwest = new LatLng(southLatitude, westLongitude);
+        LatLng northeast = new LatLng(northLatitude, eastLongitude);
+        LatLngBounds centerPoint = new LatLngBounds(southwest, northeast);
+
+        int padding = 0;
+        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPoint, padding));
     }
 }
