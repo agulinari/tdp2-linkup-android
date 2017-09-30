@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
             Log.i(TAG, notification.fbid);
         }else{
             Log.i(TAG, "Bundle NULL");
-            notification = new Notification("","","");
+            notification = new Notification();
         }
 
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
 
     private void goLoginScreen(Notification notification) {
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("notification", notification);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

@@ -10,6 +10,12 @@ public class Notification implements Parcelable{
     public String title;
     public String message;
 
+    public Notification(){
+        this.fbid="";
+        this.title="";
+        this.message="";
+    }
+
     public Notification(String fbid, String title, String message) {
         this.fbid = fbid;
         this.title = title;

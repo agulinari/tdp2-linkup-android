@@ -103,7 +103,7 @@ public class LinksActivity extends AppCompatActivity {
             case R.id.drawer_my_links:
                 fragment = new MyLinksFragment();
                 Bundle bundle = new Bundle();
-                bundle.putParcelable("notification", new Notification("","",""));
+                bundle.putParcelable("notification", new Notification());
                 fragment.setArguments(bundle);
                 currentFragment = getResources().getString(R.string.item_my_links);
                 break;
@@ -138,6 +138,8 @@ public class LinksActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("notification", new Notification());
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
