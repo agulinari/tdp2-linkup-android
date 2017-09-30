@@ -29,9 +29,12 @@ public class PushReceiverIntentService extends IntentService {
 
         Bundle extras = intent.getExtras();
         String fbid = extras.getString("fbid");
-        String body = extras.getString("body");
+        String fbidTo = extras.getString("fbidTo");
+        String message = extras.getString("body");
         String title = extras.getString("title");
-        Notification notification = new Notification(fbid, title, body);
+        String firstName = extras.getString("firstName");
+        String motive = extras.getString("motive");
+        Notification notification = new Notification(fbid, fbidTo, title, message, firstName, motive);
 
         sendNotification(notification);
 

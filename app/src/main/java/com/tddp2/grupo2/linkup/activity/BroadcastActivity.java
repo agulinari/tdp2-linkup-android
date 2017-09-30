@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 
+import com.facebook.Profile;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
 
@@ -35,9 +36,12 @@ public abstract class BroadcastActivity extends AppCompatActivity {
             // To do this, we call abortBroadcast()
 
             Notification notification = intent.getParcelableExtra("notification");
-
-            handleNotification(notification, this);
-
+            Profile profile = Profile.getCurrentProfile();
+            if (profile!=null && !notification.fbidTo.equals(profile.getId())){
+                notificationReceiver.abortBroadcast();
+            }else {
+                handleNotification(notification, this);
+            }
         }
     };
 

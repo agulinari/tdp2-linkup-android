@@ -296,7 +296,7 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
         Log.i(TAG, "Notificacion RECIBIDA");
 
         if (notification!=null) {
-            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(coordView, notification.messageBody, Snackbar.LENGTH_SHORT);
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
             snackbar.show();

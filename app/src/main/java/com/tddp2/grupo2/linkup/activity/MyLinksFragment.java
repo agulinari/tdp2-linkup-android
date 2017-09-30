@@ -110,7 +110,7 @@ public class MyLinksFragment extends BroadcastFragment implements MyLinksView {
         rvChatLinks.setAdapter(adapterChats);
 
         Notification n = getArguments().getParcelable("notification");
-        if (!n.fbid.isEmpty()){
+        if (n.motive.equals(Notification.CHAT)){
             Intent intent = new Intent(activity, ChatActivity.class);
             intent.putExtra("USER_ID", userId);
             intent.putExtra("LINK_ID", n.fbid);
