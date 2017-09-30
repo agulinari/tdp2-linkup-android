@@ -1,8 +1,8 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tddp2.grupo2.linkup.MyLinksView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.MyLinksController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.MyLinks;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 
 
 
-public class MyLinksFragment extends Fragment implements MyLinksView{
+public class MyLinksFragment extends BroadcastFragment implements MyLinksView{
 
     private static final String TAG = "MyLinksFragment";
     private Context activity;
@@ -185,5 +186,11 @@ public class MyLinksFragment extends Fragment implements MyLinksView{
     public void onError(String errorMsg) {
         Toast.makeText(activity, errorMsg, Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+        broadcastReceiver.abortBroadcast();
     }
 }

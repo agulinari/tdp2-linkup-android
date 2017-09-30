@@ -1,29 +1,32 @@
 package com.tddp2.grupo2.linkup;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
 import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.tddp2.grupo2.linkup.controller.SettingsController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
-public class SettingsActivity extends AppCompatActivity implements BaseView {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class SettingsActivity extends BroadcastActivity implements BaseView {
 
     @BindView(R.id.seek_age)
     CrystalRangeSeekbar seekBarAge;
@@ -212,5 +215,11 @@ public class SettingsActivity extends AppCompatActivity implements BaseView {
     @Override
     public void onError(String errorMsg) {
         Toast.makeText(getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+
+        broadcastReceiver.abortBroadcast();
     }
 }

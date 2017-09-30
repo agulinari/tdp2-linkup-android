@@ -1,37 +1,51 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.tddp2.grupo2.linkup.ProfileLocationView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by agustin on 09/09/2017.
  */
 
-public class ProfileFragment extends Fragment implements ProfileLocationView {
+public class ProfileFragment extends BroadcastFragment implements ProfileLocationView {
 
     private static final String TAG = "ProfileFragment";
 
     ProfileController controller;
     LocationController locationController;
     private Context activity;
+
+    @BindView(R.id.profileCoordinatorLayout)
+    CoordinatorLayout coordView;
 
     @BindView(R.id.userNameAndAge)
     TextView textViewUserNameAndAge;
@@ -312,5 +326,19 @@ public class ProfileFragment extends Fragment implements ProfileLocationView {
                 });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        if (notification!=null) {
+            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            snackbar.show();
+        }
+
+        broadcastReceiver.abortBroadcast();
     }
 }

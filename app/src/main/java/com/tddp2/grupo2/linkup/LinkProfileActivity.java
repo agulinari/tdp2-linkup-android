@@ -1,22 +1,33 @@
 package com.tddp2.grupo2.linkup;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-public class LinkProfileActivity extends AppCompatActivity implements LinkProfileView {
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
+public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView {
+
+    private static final String TAG = "LinkProfileActivity";
     private LinkProfileController controller;
+
+    @BindView(R.id.linkProfileCoordinatorLayout)
+    CoordinatorLayout coordView;
 
     @BindView(R.id.linkCommentCard)
     CardView cardViewCommentCard;
@@ -108,5 +119,19 @@ public class LinkProfileActivity extends AppCompatActivity implements LinkProfil
     @Override
     public void hideLoadingImage() {
         progressBarImage.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+        if (notification!=null) {
+            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
+        broadcastReceiver.abortBroadcast();
+
     }
 }

@@ -4,12 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -46,11 +44,11 @@ import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LinksFragment extends Fragment implements LinksView{
+public class LinksFragment extends BroadcastFragment implements LinksView{
 
     private static final String TAG = "LinksFragment";
 
-    @BindView(R.id.myCoordinatorLayout)
+    @BindView(R.id.linksCoordinatorLayout)
     CoordinatorLayout coordView;
 
     @BindView(R.id.linkCard)
@@ -292,40 +290,16 @@ public class LinksFragment extends Fragment implements LinksView{
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
 
-        IntentFilter filter = new IntentFilter("io.esparta.notifications.BROADCAST_NOTIFICATION");
-        filter.setPriority(1);
-
-        getActivity().registerReceiver(notificationReceiver, filter);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(notificationReceiver);
-    }
-
-    private BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Do something with this incoming message here
-            // Since we will process the message and update the UI, we don't need to show a message in Status Bar
-            // To do this, we call abortBroadcast()
-            Log.i(TAG, "Notificacion RECIBIDA");
-            Notification notification = intent.getParcelableExtra("notification");
-
-            if (notification!=null) {
-                Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
-                View snackbarView = snackbar.getView();
-                snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-                snackbar.show();
-            }
-
-            abortBroadcast();
+        if (notification!=null) {
+            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            snackbar.show();
         }
-    };
 
-
+        broadcastReceiver.abortBroadcast();
+    }
 }

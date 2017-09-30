@@ -1,16 +1,26 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.crystal.crystalrangeseekbar.interfaces.OnRangeSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.interfaces.OnSeekbarChangeListener;
 import com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar;
@@ -18,17 +28,24 @@ import com.crystal.crystalrangeseekbar.widgets.CrystalSeekbar;
 import com.tddp2.grupo2.linkup.BaseView;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.controller.SettingsController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.model.Settings;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class SettingsFragment extends Fragment implements BaseView {
+
+public class SettingsFragment extends BroadcastFragment implements BaseView {
 
     private static final String TAG = "SettingsFragment";
 
     private TextView emptyView;
     private Context activity;
+
+    @BindView(R.id.settingsCoordinatorLayout)
+    CoordinatorLayout coordView;
 
     @BindView(R.id.seek_age)
     CrystalRangeSeekbar seekBarAge;
@@ -272,5 +289,19 @@ public class SettingsFragment extends Fragment implements BaseView {
     public void onError(String errorMsg) {
         showAfterSettingsSaveDialog(false);
         Toast.makeText(getActivity().getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        if (notification!=null) {
+            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+            snackbar.show();
+        }
+
+        broadcastReceiver.abortBroadcast();
     }
 }

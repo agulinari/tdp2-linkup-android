@@ -6,22 +6,25 @@ import android.os.Parcelable;
 
 public class Notification implements Parcelable{
 
+    public String fbid;
     public String title;
-
     public String message;
 
-    public Notification(String title, String message) {
+    public Notification(String fbid, String title, String message) {
+        this.fbid = fbid;
         this.title = title;
         this.message = message;
     }
 
     protected Notification(Parcel in) {
+        fbid = in.readString();
         title = in.readString();
         message = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(fbid);
         dest.writeString(title);
         dest.writeString(message);
     }

@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.infrastructure.messaging;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -24,35 +25,16 @@ public class LinkupMessagingService extends FirebaseMessagingService {
         Map<String, String> data = remoteMessage.getData();
 
         //you can get your text message here.
+        String fbid = data.get("fbid");
         String title= data.get("title");
         String body = data.get("body");
 
         Intent intent = new Intent(this, PushReceiverIntentService.class);
-
-        intent.putExtra("title", title);
-        intent.putExtra("body", body);
+        Bundle bundle = new Bundle();
+        bundle.putString("fbid", fbid);
+        bundle.putString("title", title);
+        bundle.putString("body", body);
+        intent.putExtras(bundle);
         startService(intent);
-
-       /* Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this,
-                0, notificationIntent,
-                PendingIntent.FLAG_CANCEL_CURRENT);
-
-        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        Resources res = getResources();
-        Notification.Builder builder = new Notification.Builder(this);
-
-        builder.setContentIntent(contentIntent)
-                .setSmallIcon(R.mipmap.ic_linkup)
-                .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_linkup))
-                .setTicker(res.getString(R.string.ticker))
-                .setWhen(System.currentTimeMillis())
-                .setAutoCancel(true)
-                .setContentTitle(title)
-                .setContentText(body);
-        Notification n = builder.build();
-
-        nm.notify(FM_NOTIFICATION_ID, n);*/
     }
 }

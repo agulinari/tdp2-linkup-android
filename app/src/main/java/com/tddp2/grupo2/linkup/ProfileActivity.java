@@ -1,13 +1,13 @@
 package com.tddp2.grupo2.linkup;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.View;
@@ -15,15 +15,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-public class ProfileActivity extends AppCompatActivity implements ProfileLocationView {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class ProfileActivity extends BroadcastActivity implements ProfileLocationView {
     private ProgressDialog progressDialog;
 
     ProfileController controller;
@@ -236,5 +239,10 @@ public class ProfileActivity extends AppCompatActivity implements ProfileLocatio
     public void updateLocationView(String locationName) {
         cardViewUserLocation.setVisibility(View.VISIBLE);
         textViewUserLocation.setText(locationName);
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        broadcastReceiver.abortBroadcast();
     }
 }

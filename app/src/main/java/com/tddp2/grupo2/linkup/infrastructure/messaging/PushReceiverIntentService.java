@@ -27,9 +27,11 @@ public class PushReceiverIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        String body = intent.getStringExtra("body");
-        String title = intent.getStringExtra("title");
-        Notification notification = new Notification(title, body);
+        Bundle extras = intent.getExtras();
+        String fbid = extras.getString("fbid");
+        String body = extras.getString("body");
+        String title = extras.getString("title");
+        Notification notification = new Notification(fbid, title, body);
 
         sendNotification(notification);
 

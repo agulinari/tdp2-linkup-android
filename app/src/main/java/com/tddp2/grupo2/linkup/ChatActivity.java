@@ -1,10 +1,10 @@
 package com.tddp2.grupo2.linkup;
 
+import android.content.BroadcastReceiver;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -22,13 +22,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getContext;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends BroadcastActivity {
 
     private static final String TAG = "ChatActivity";
     private FirebaseListAdapter<ChatMessage> adapter;
@@ -200,5 +201,12 @@ public class ChatActivity extends AppCompatActivity {
         message.setLiked(!message.isLiked());
         itemRef.setValue(message);
 
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        broadcastReceiver.abortBroadcast();
     }
 }
