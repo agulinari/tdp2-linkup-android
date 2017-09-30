@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.service.impl;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
@@ -14,6 +15,7 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.AcceptanceResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Acceptance;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
@@ -119,6 +121,9 @@ public class LinksServiceImpl extends LinksService{
                 AcceptLinkTaskResponse acceptLinkTaskResponse = new AcceptLinkTaskResponse();
                 acceptLinkTaskResponse.setIsAMatch(isAMatch);
                 acceptLinkTaskResponse.setLinks(filteredLinks);
+                if (isAMatch){
+                    sendNotification(fbid, fbidCandidate);
+                }
                 return acceptLinkTaskResponse;
             } else {
                 APIError error = ErrorUtils.parseError(response);
@@ -127,6 +132,13 @@ public class LinksServiceImpl extends LinksService{
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
         }
+    }
+
+    private void sendNotification(String fbid, String fbidCandidate) {
+        Notification n = new Notification(fbid, fbidCandidate, "Felicidades", "¡Has linkeado con alguien!", "", Notification.MATCH);
+        FirebaseDatabase.getInstance().getReference().child("notifications")
+                .push()
+                .setValue(n);
     }
 
     private Links removeLink(String fbidCandidate) {

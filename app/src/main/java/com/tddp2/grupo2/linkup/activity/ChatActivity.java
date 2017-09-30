@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -189,9 +190,10 @@ public class ChatActivity extends BroadcastActivity {
             }
         });
 
+        Notification n = new Notification(chatMessage.getFbid(), chatMessage.getFbidTo(), "Tienes un mensaje", chatMessage.getMessageText(), chatMessage.getMessageUser(), Notification.CHAT);
         mDatabase.child("notifications")
                 .push()
-                .setValue(chatMessage);
+                .setValue(n);
 
     }
 
@@ -207,7 +209,13 @@ public class ChatActivity extends BroadcastActivity {
     @Override
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         Log.i(TAG, "Notificacion RECIBIDA");
-
-        broadcastReceiver.abortBroadcast();
+        if ((notification!=null) && (!notification.fbid.equals(linkId))){
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.chatCoordinatorLayout), notification.messageBody, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }else {
+            broadcastReceiver.abortBroadcast();
+        }
     }
 }

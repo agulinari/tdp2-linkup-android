@@ -52,8 +52,8 @@ public class PushIntentService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(contentIntent)
                 .setSmallIcon(R.mipmap.ic_linkup)
-                .setContentTitle(notification.title)
-                .setContentText(notification.message)
+                .setContentTitle(notification.messageTitle)
+                .setContentText(notification.messageBody)
                 .setAutoCancel(true);
 
         mNotificationManager.notify("default-push", 1, mBuilder.build());

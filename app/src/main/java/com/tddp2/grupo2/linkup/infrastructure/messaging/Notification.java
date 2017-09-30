@@ -6,33 +6,52 @@ import android.os.Parcelable;
 
 public class Notification implements Parcelable{
 
+    public static String MATCH = "Match";
+    public static String CHAT = "Chat";
+    public static String FAKE = "Fake";
+
     public String fbid;
-    public String title;
-    public String message;
+    public String fbidTo;
+    public String messageTitle;
+    public String messageBody;
+    public String firstName;
+    public String motive;
 
     public Notification(){
         this.fbid="";
-        this.title="";
-        this.message="";
+        this.fbidTo="";
+        this.messageTitle="";
+        this.messageBody="";
+        this.firstName="";
+        this.motive= FAKE;
     }
 
-    public Notification(String fbid, String title, String message) {
+    public Notification(String fbid, String fbidTo, String title, String message, String name, String motive) {
         this.fbid = fbid;
-        this.title = title;
-        this.message = message;
+        this.fbidTo = fbidTo;
+        this.messageTitle = title;
+        this.messageBody = message;
+        this.firstName = name;
+        this.motive = motive;
     }
 
     protected Notification(Parcel in) {
         fbid = in.readString();
-        title = in.readString();
-        message = in.readString();
+        fbidTo = in.readString();
+        messageTitle = in.readString();
+        messageBody = in.readString();
+        firstName = in.readString();
+        motive = in.readString();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(fbid);
-        dest.writeString(title);
-        dest.writeString(message);
+        dest.writeString(fbidTo);
+        dest.writeString(messageTitle);
+        dest.writeString(messageBody);
+        dest.writeString(firstName);
+        dest.writeString(motive);
     }
 
     @Override

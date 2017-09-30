@@ -13,9 +13,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.google.android.gms.maps.*;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
@@ -26,6 +29,9 @@ import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.text.DecimalFormat;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
 
@@ -139,7 +145,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         Log.i(TAG, "Notificacion RECIBIDA");
         if (notification!=null) {
-            Snackbar snackbar = Snackbar.make(coordView, notification.message, Snackbar.LENGTH_SHORT);
+            Snackbar snackbar = Snackbar.make(coordView, notification.messageBody, Snackbar.LENGTH_SHORT);
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
             snackbar.show();

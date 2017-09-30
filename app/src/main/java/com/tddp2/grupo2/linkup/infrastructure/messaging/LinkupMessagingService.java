@@ -26,14 +26,20 @@ public class LinkupMessagingService extends FirebaseMessagingService {
 
         //you can get your text message here.
         String fbid = data.get("fbid");
+        String fbidTo = data.get("fbidTo");
         String title= data.get("title");
         String body = data.get("body");
+        String firstName = data.get("firstName");
+        String motive = data.get("motive");
 
         Intent intent = new Intent(this, PushReceiverIntentService.class);
         Bundle bundle = new Bundle();
         bundle.putString("fbid", fbid);
+        bundle.putString("fbidTo", fbidTo);
         bundle.putString("title", title);
         bundle.putString("body", body);
+        bundle.putString("firstName", firstName);
+        bundle.putString("motive", motive);
         intent.putExtras(bundle);
         startService(intent);
     }
