@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#E91E63</color>
+    <color name="colorPrimary">#DE1D5F</color>
     <color name="colorPrimaryDark">#C2185B</color>
     <color name="colorPrimaryLight">#ffffff</color>
     <color name="colorAccent">#FF4081</color>
@@ -10,6 +10,4 @@
     <color name="button_disable">#F8BBD0</color>
     <color name="chatMessage">#B1BCBE</color>
     <color name="colorSecondary">#119dc2</color>
-
-    <color name="screen_background_dark_transparent2">#C2185B</color>
 </resources>
