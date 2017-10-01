@@ -13,25 +13,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
+import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.utils.DateUtils;
 
 import java.text.DecimalFormat;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
 
@@ -41,6 +37,9 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
     @BindView(R.id.linkProfileCoordinatorLayout)
     CoordinatorLayout coordView;
+
+    @BindView(R.id.linkProfileNameText)
+    TextView textViewLinkName;
 
     @BindView(R.id.linkCommentCard)
     CardView cardViewCommentCard;
@@ -101,6 +100,14 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
     @Override
     public void showData(Profile profile) {
+        String age = "";
+        try {
+            age = String.valueOf(DateUtils.getAgeFromBirthday(profile.getBirthday()));
+        } catch (MissingAgeException e) {
+            e.printStackTrace();
+        }
+        textViewLinkName.setText(profile.getFirstName() + ", " + age);
+
         String comment = profile.getComments();
         if (!comment.equals("")) {
             cardViewCommentCard.setVisibility(View.VISIBLE);

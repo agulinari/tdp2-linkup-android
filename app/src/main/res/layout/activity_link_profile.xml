@@ -51,13 +51,13 @@
             </RelativeLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
         <RelativeLayout
-                android:id="@+id/candidateNameAndAgeTextContainer3"
+                android:id="@+id/candidateProfileNameAndAgeTextContainer"
                 app:layout_collapseMode="pin"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
                 android:background="@color/colorPrimary">
             <TextView
-                    android:id="@+id/linkName3"
+                    android:id="@+id/linkProfileNameText"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
