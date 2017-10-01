@@ -12,31 +12,21 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.*;
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Links;
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
+import com.tddp2.grupo2.linkup.utils.DistanceUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LinksFragment extends BroadcastFragment implements LinksView {
 
@@ -59,6 +49,9 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
     @BindView(R.id.linkName)
     TextView textViewLinkName;
+
+    @BindView(R.id.linkDistance)
+    TextView textViewLinkDistance;
 
     @BindView(R.id.yesButton)
     ImageButton buttonYes;
@@ -228,6 +221,13 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         } catch (MissingAgeException e) {
         }
         textViewLinkName.setText(name + ", " + age);
+        controller.updateDistance();
+    }
+
+    @Override
+    public void updateDistance(Location loggedUserLocation, Location linkLocation) {
+        String distanceText = DistanceUtils.getDistanceTextBetweenLocations(loggedUserLocation, linkLocation, getContext());
+        textViewLinkDistance.setText(distanceText);
     }
 
     @Override

@@ -199,5 +199,10 @@ public class LinksController implements ImageLinkController {
         }
     }
 
-
+    public void updateDistance() {
+        view.updateDistance(
+                this.linksService.getDatabase().getProfile().getLocation(),
+                this.links.getLinks().get(currentLink).getLocation()
+        );
+    }
 }

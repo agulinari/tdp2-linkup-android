@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/card_below_picture_height"
     android:layout_gravity="center_horizontal"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
+    android:layout_marginLeft="@dimen/link_card_side_margin"
+    android:layout_marginRight="@dimen/link_card_side_margin"
     android:backgroundTint="@color/profileCard"
     android:orientation="horizontal"
     card_view:cardElevation="4dp">
@@ -40,10 +40,11 @@
                     android:layout_height="match_parent"
                     />
             <TextView
-                    android:textSize="18sp"
+                    android:id="@+id/linkDistance"
+                    android:textSize="16sp"
                     android:layout_width="match_parent"
-                    android:text="A 15,8 kilometros"
-                    android:layout_height="match_parent" android:id="@+id/linkLocationText2"
+                    android:text="Distancia"
+                    android:layout_height="match_parent"
             />
         </LinearLayout>
 

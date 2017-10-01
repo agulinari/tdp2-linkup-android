@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity.view;
 
 import android.graphics.Bitmap;
 
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 
@@ -26,4 +27,6 @@ public interface LinksView  extends BaseView {
     void registerNextAndPreviousListeners();
 
     void blockCandidatesNavigation();
+
+    void updateDistance(Location loggedUserLocation, Location linkLocation);
 }
