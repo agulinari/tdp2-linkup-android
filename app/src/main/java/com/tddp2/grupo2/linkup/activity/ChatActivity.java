@@ -214,8 +214,8 @@ public class ChatActivity extends BroadcastActivity {
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
             snackbar.show();
-        }else {
-            broadcastReceiver.abortBroadcast();
         }
+        broadcastReceiver.abortBroadcast();
+
     }
 }

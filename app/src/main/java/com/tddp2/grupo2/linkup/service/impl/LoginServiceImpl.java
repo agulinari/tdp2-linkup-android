@@ -12,6 +12,7 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.LoginService;
+import com.tddp2.grupo2.linkup.service.api.NotificationService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadUserTaskResponse;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
@@ -38,6 +39,7 @@ public class LoginServiceImpl extends LoginService {
                     if (success) {
                         facebookData.isNewUser = false;
                         Log.i("LOGIN", "no en la base lo traigo de server y da ok");
+                        updateToken();
                     }else{
                         //El servidor responde con codigo diferente a 200
                         facebookData.isNewUser = true;
@@ -54,6 +56,16 @@ public class LoginServiceImpl extends LoginService {
                 Log.i("LOGIN", "existe en la base y fue registrado, lo devuelvo");
                 facebookData.isNewUser = false;
             }
+    }
+
+    private void updateToken() {
+        NotificationService notificationService = ServiceFactory.getNotificationService();
+        String token = notificationService.getToken();
+        try {
+            notificationService.updateToken(token);
+        } catch (ServiceException e) {
+            Log.e("LOGIN" , e.getMessage(), e);
+        }
     }
 
     @Override

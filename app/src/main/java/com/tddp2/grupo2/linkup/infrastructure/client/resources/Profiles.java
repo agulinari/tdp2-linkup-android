@@ -35,6 +35,6 @@ public interface Profiles {
     Call<ImageResponse> getImage(@Path("id") String fbid);
 
     @PUT("token")
-    Call<?> updateToken(@Body TokenRequest request);
+    Call<Void> updateToken(@Body TokenRequest request);
 
 }

@@ -46,9 +46,9 @@ public class NotificationServiceImpl  extends NotificationService{
 
         LinkupClient linkupClient = clientService.getClient();
         TokenRequest request = new TokenRequest(fbid, token);
-        Call<?> call = linkupClient.profiles.updateToken(request);
+        Call<Void> call = linkupClient.profiles.updateToken(request);
         try {
-            Response<?> response = call.execute();
+            Response<Void> response = call.execute();
             if (response.isSuccessful()) {
                 return;
             } else {
