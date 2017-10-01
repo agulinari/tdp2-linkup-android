@@ -1,0 +1,60 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/card_below_picture_height"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:backgroundTint="@color/profileCard"
+    android:orientation="horizontal"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_below="@+id/linkLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="5dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:paddingBottom="5dp">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:layout_weight="1" android:layout_gravity="center">
+
+            <TextView
+                    android:id="@+id/linkName"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:text="Nombre, edad"
+                    android:layout_height="match_parent"
+                    />
+            <TextView
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:text="A 15,8 kilometros"
+                    android:layout_height="match_parent" android:id="@+id/linkLocationText2"
+            />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/goToCandidateProfile"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_margin="4dp"
+                android:padding="12dp"
+                android:layout_gravity="center"
+                android:text="@string/go_to_link_profile"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
