@@ -16,7 +16,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
@@ -26,8 +25,7 @@ import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-
-import java.text.DecimalFormat;
+import com.tddp2.grupo2.linkup.utils.DistanceUtils;
 
 public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
 
@@ -171,46 +169,10 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     }
 
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {
-        android.location.Location loc1 = new android.location.Location("");
-        loc1.setLatitude(loggedUserLocation.getLatitude());
-        loc1.setLongitude(loggedUserLocation.getLongitude());
+        String distanceText = DistanceUtils.getDistanceTextBetweenLocations(loggedUserLocation, linkLocation, this);
+        textViewLinkDistance.setText(distanceText);
 
-        android.location.Location loc2 = new android.location.Location("");
-        loc2.setLatitude(linkLocation.getLatitude());
-        loc2.setLongitude(linkLocation.getLongitude());
-
-        float distanceInMeters = loc1.distanceTo(loc2);
-        Log.i("DISTANCE", String.valueOf(distanceInMeters) + " meters");
-
-        if (distanceInMeters <= 100) {
-            textViewLinkDistance.setText(getString(R.string.link_distance_close));
-        } else {
-            float distanceInKilometers = distanceInMeters / 1000;
-            Log.i("DISTANCE", String.valueOf(distanceInKilometers) + " kilometers");
-            DecimalFormat decimalFormat = new DecimalFormat();
-            decimalFormat.setMaximumFractionDigits(1);
-            if (((distanceInKilometers >= 1) && (distanceInKilometers < 2))) {
-                textViewLinkDistance.setText(getString(R.string.link_distance_singular, decimalFormat.format(distanceInKilometers)));
-            } else {
-                textViewLinkDistance.setText(getString(R.string.link_distance_plural, decimalFormat.format(distanceInKilometers)));
-            }
-        }
-
-        double latitude1 = loggedUserLocation.getLatitude();
-        double latitude2 = linkLocation.getLatitude();
-        double longitude1 = loggedUserLocation.getLongitude();
-        double longitude2 = linkLocation.getLongitude();
-
-        double southLatitude = (latitude1 < latitude2) ? latitude1 : latitude2;
-        double northLatitude = (latitude1 < latitude2) ? latitude2 : latitude1;
-        double westLongitude = (longitude1 < longitude2) ? longitude1 : longitude2;
-        double eastLongitude = (longitude1 < longitude2) ? longitude2 : longitude1;
-
-        LatLng southwest = new LatLng(southLatitude, westLongitude);
-        LatLng northeast = new LatLng(northLatitude, eastLongitude);
-        LatLngBounds centerPoint = new LatLngBounds(southwest, northeast);
-
-        int padding = 0;
-        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPoint, padding));
+        LatLngBounds centerPoint = DistanceUtils.getLocationBounds(loggedUserLocation, linkLocation);
+        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPoint, DistanceUtils.MAP_PADDING));
     }
 }
