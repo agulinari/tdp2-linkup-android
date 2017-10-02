@@ -58,6 +58,12 @@
     <string name="link_distance_singular">A %1$s kilómetro</string>
     <string name="link_distance_plural">A %1$s kilómetros</string>
     <string name="link_distance_close">¡A menos de 100 metros!</string>
+    <string name="select_action">Seleccione una acción</string>
+    <string name="start_chat">Comenzar una conversación</string>
+    <string name="wait_woman_title">Lo sentimos</string>
+    <string name="wait_woman_description">Debes esperar a que ella inicie la conversación</string>
+    <string name="wait_woman_ok">Entendido</string>
+    <string name="go_to_my_link_profile">Ver perfil</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
