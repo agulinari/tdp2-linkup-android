@@ -19,16 +19,14 @@
         <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/main.collapsing"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/image_height"
+                android:layout_height="fill_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/colorPrimary"
-                android:background="@color/profileCard"
-                app:expandedTitleMarginStart="48dp"
-                app:expandedTitleMarginEnd="64dp">
+                android:background="@color/profileCard">
             <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="@dimen/image_height">
 
             <ImageView
                     android:id="@+id/linkProfilePhoto"
