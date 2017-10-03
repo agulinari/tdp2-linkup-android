@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -16,7 +17,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
@@ -169,10 +171,23 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     }
 
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {
-        String distanceText = DistanceUtils.getDistanceTextBetweenLocations(loggedUserLocation, linkLocation, this);
+        float distanceInMeters = DistanceUtils.getDistanceBetweenLocationsInMeters(loggedUserLocation, linkLocation);
+
+        String distanceText = DistanceUtils.getDistanceTextFromMeters(distanceInMeters, this);
         textViewLinkDistance.setText(distanceText);
 
-        LatLngBounds centerPoint = DistanceUtils.getLocationBounds(loggedUserLocation, linkLocation);
-        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPoint, DistanceUtils.MAP_PADDING));
+        //LatLngBounds centerPointBounds = DistanceUtils.getLocationBounds(loggedUserLocation, linkLocation);
+        //this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPointBounds, DistanceUtils.MAP_PADDING));
+
+        LatLng centerPoint = new LatLng(loggedUserLocation.getLatitude(), loggedUserLocation.getLongitude());
+        //this.locationMap.moveCamera(CameraUpdateFactory.newLatLng(centerPoint));
+        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPoint, 13));
+        CircleOptions circleOptions = new CircleOptions();
+        circleOptions.center(centerPoint);
+        circleOptions.radius(distanceInMeters);
+        circleOptions.strokeColor(Color.BLACK);
+        circleOptions.fillColor(0x30ff0000);
+        circleOptions.strokeWidth(2);
+        this.locationMap.addCircle(circleOptions);
     }
 }
