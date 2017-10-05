@@ -25,7 +25,7 @@ import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.utils.DistanceUtils;
+import com.tddp2.grupo2.linkup.utils.MapUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
 
 public class LinksFragment extends BroadcastFragment implements LinksView {
@@ -226,7 +226,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
     @Override
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {
-        String distanceText = DistanceUtils.getDistanceTextBetweenLocations(loggedUserLocation, linkLocation, getContext());
+        String distanceText = MapUtils.getDistanceTextBetweenLocations(loggedUserLocation, linkLocation, getContext());
         textViewLinkDistance.setText(distanceText);
     }
 

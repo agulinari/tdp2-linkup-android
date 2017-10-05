@@ -3,7 +3,6 @@ package com.tddp2.grupo2.linkup.activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -19,6 +18,7 @@ import butterknife.ButterKnife;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
@@ -27,7 +27,7 @@ import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.utils.DistanceUtils;
+import com.tddp2.grupo2.linkup.utils.MapUtils;
 
 public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
 
@@ -171,23 +171,17 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     }
 
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {
-        float distanceInMeters = DistanceUtils.getDistanceBetweenLocationsInMeters(loggedUserLocation, linkLocation);
+        float distanceInMeters = MapUtils.getDistanceBetweenLocationsInMeters(loggedUserLocation, linkLocation);
 
-        String distanceText = DistanceUtils.getDistanceTextFromMeters(distanceInMeters, this);
+        String distanceText = MapUtils.getDistanceTextFromMeters(distanceInMeters, this);
         textViewLinkDistance.setText(distanceText);
 
-        //LatLngBounds centerPointBounds = DistanceUtils.getLocationBounds(loggedUserLocation, linkLocation);
-        //this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPointBounds, DistanceUtils.MAP_PADDING));
+        LatLng centerPoint = MapUtils.getCenterPoint(loggedUserLocation, linkLocation);
+        double radiusInMeters = distanceInMeters / 2;
+        LatLngBounds centerPointBounds = MapUtils.getLocationBounds(centerPoint, radiusInMeters);
+        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPointBounds, MapUtils.MAP_PADDING));
 
-        LatLng centerPoint = new LatLng(loggedUserLocation.getLatitude(), loggedUserLocation.getLongitude());
-        //this.locationMap.moveCamera(CameraUpdateFactory.newLatLng(centerPoint));
-        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centerPoint, 13));
-        CircleOptions circleOptions = new CircleOptions();
-        circleOptions.center(centerPoint);
-        circleOptions.radius(distanceInMeters);
-        circleOptions.strokeColor(Color.BLACK);
-        circleOptions.fillColor(0x30ff0000);
-        circleOptions.strokeWidth(2);
+        CircleOptions circleOptions = MapUtils.getCircleOptions(centerPoint, radiusInMeters);
         this.locationMap.addCircle(circleOptions);
     }
 }
