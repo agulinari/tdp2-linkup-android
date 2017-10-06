@@ -4,20 +4,36 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.widget.TextView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.controller.MyLinkProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 public class MyLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
+    private MyLinkProfileController controller;
+
+    @BindView(R.id.myLinkProfileNameText)
+    TextView textViewLinkName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_link_profile);
+
+        ButterKnife.bind(this);
+
+        Bundle b = getIntent().getExtras();
+        String linkUserId = (b != null) ? b.getString("LINK_USER_ID") : "";
+
+        controller = new MyLinkProfileController(this);
+        controller.loadUser(linkUserId);
     }
 
     public void showProgress() {}
@@ -33,7 +49,9 @@ public class MyLinkProfileActivity extends BroadcastActivity implements LinkProf
     public void onError(String errorMsg) {}
 
     @Override
-    public void showData(Profile profile) {}
+    public void showData(Profile profile) {
+        textViewLinkName.setText(profile.getFirstName());
+    }
 
     @Override
     public void showImage(Bitmap photo) {}

@@ -157,7 +157,7 @@ public class ChatActivity extends BroadcastActivity {
         chatToolbar.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyLinkProfileActivity.class);
-                //intent.putExtra("LINK_USER_ID", fbid.getText().toString());
+                intent.putExtra("LINK_USER_ID", linkId);
                 getContext().startActivity(intent);
             }
         });
