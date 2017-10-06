@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,20 +10,10 @@ import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
+import com.google.firebase.database.*;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
@@ -161,6 +152,15 @@ public class ChatActivity extends BroadcastActivity {
         };
 
         listOfMessages.setAdapter(adapter);
+
+        android.support.v7.widget.Toolbar chatToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chatToolbar);
+        chatToolbar.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MyLinkProfileActivity.class);
+                //intent.putExtra("LINK_USER_ID", fbid.getText().toString());
+                getContext().startActivity(intent);
+            }
+        });
     }
 
     private void postMessage(String message, final String chatId) {
