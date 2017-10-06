@@ -1,22 +1,8 @@
 package com.tddp2.grupo2.linkup.service.factory;
 
 import com.tddp2.grupo2.linkup.infrastructure.Database;
-import com.tddp2.grupo2.linkup.service.api.ClientService;
-import com.tddp2.grupo2.linkup.service.api.FacebookService;
-import com.tddp2.grupo2.linkup.service.api.LinksService;
-import com.tddp2.grupo2.linkup.service.api.LinkupService;
-import com.tddp2.grupo2.linkup.service.api.LoginService;
-import com.tddp2.grupo2.linkup.service.api.MyLinksService;
-import com.tddp2.grupo2.linkup.service.api.NotificationService;
-import com.tddp2.grupo2.linkup.service.api.ProfileService;
-import com.tddp2.grupo2.linkup.service.api.ServiceType;
-import com.tddp2.grupo2.linkup.service.impl.ClientServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.FacebookServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.LinksServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.LoginServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.MyLinksServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.NotificationServiceImpl;
-import com.tddp2.grupo2.linkup.service.impl.ProfileServiceImpl;
+import com.tddp2.grupo2.linkup.service.api.*;
+import com.tddp2.grupo2.linkup.service.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,12 +32,14 @@ public class ServiceFactory {
         LinksService linksService = new LinksServiceImpl(database, clientService);
         MyLinksService myLinksService = new MyLinksServiceImpl(database, clientService);
         NotificationService notificationService = new NotificationServiceImpl(database, clientService);
+        LinkUserService linkUserService = new LinkUserServiceImpl(clientService);
         save(profileService);
         save(LoginService);
         save(facebookService);
         save(linksService);
         save(myLinksService);
         save(notificationService);
+        save(linkUserService);
     }
 
     private static void buildMockServices() {
@@ -84,5 +72,9 @@ public class ServiceFactory {
 
     public static NotificationService getNotificationService(){
         return (NotificationService) services.get(ServiceType.FCM);
+    }
+
+    public static LinkUserService getUserService() {
+        return (LinkUserService) services.get(ServiceType.LINK_USER);
     }
 }
