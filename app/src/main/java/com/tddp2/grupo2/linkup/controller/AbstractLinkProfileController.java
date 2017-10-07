@@ -13,6 +13,8 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
 
     public abstract void getCoordinatesAndUpdateDistance();
     public abstract void showLinkData(String userId);
+    public abstract void reportAbuse();
+    public abstract void blockUser();
 
     public AbstractLinkProfileController(LinkProfileView view) {
         this.view = view;

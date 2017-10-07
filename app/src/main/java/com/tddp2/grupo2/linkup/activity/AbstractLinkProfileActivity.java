@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,6 +67,12 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     @BindView(R.id.linkLocationText)
     TextView textViewLinkDistance;
 
+    @BindView(R.id.reportAbuseButton)
+    Button buttonReportAbuse;
+
+    @BindView(R.id.blockuserButton)
+    Button buttonBlockUser;
+
     protected String TAG;
     private ProgressDialog progressDialog;
     protected GoogleMap locationMap;
@@ -77,6 +84,28 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         setContentView(R.layout.activity_link_profile);
 
         ButterKnife.bind(this);
+
+        registerListeners();
+    }
+
+    private void registerListeners() {
+        buttonReportAbuse.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.reportAbuse();
+            }
+        });
+
+        buttonBlockUser.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.blockUser();
+            }
+        });
     }
 
     protected void loadMap() {

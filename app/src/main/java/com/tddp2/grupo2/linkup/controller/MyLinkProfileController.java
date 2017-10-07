@@ -62,4 +62,13 @@ public class MyLinkProfileController extends AbstractLinkProfileController {
         Location linkLocation = this.profile.getLocation();
         view.updateDistance(loggedUserLocation, linkLocation);
     }
+
+    @Override
+    public void reportAbuse() {
+    }
+
+    @Override
+    public void blockUser() {
+
+    }
 }
