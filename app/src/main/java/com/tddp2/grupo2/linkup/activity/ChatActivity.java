@@ -158,6 +158,7 @@ public class ChatActivity extends BroadcastActivity {
             @Override public void onClick(View v) {
                 Intent intent = new Intent(getContext(), MyLinkProfileActivity.class);
                 intent.putExtra("LINK_USER_ID", linkId);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
             }
         });
