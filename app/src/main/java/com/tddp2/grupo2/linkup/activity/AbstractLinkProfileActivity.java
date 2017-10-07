@@ -18,14 +18,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
+import com.tddp2.grupo2.linkup.utils.MapUtils;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -63,6 +67,9 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     protected String TAG;
     private ProgressDialog progressDialog;
+    protected GoogleMap locationMap;
+
+    protected abstract void getCoordinatesAndUpdateDistance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,5 +179,28 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
         broadcastReceiver.abortBroadcast();
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        this.locationMap = map;
+        UiSettings mapSettings = this.locationMap.getUiSettings();
+        mapSettings.setAllGesturesEnabled(false);
+        getCoordinatesAndUpdateDistance();
+    }
+
+    public void updateDistance(Location loggedUserLocation, Location linkLocation) {
+        float distanceInMeters = MapUtils.getDistanceBetweenLocationsInMeters(loggedUserLocation, linkLocation);
+
+        String distanceText = MapUtils.getDistanceTextFromMeters(distanceInMeters, this);
+        textViewLinkDistance.setText(distanceText);
+
+        LatLng centerPoint = MapUtils.getCenterPoint(loggedUserLocation, linkLocation);
+        double radiusInMeters = distanceInMeters / 2;
+        LatLngBounds centerPointBounds = MapUtils.getLocationBounds(centerPoint, radiusInMeters);
+        this.locationMap.moveCamera(CameraUpdateFactory.newLatLngBounds(centerPointBounds, MapUtils.MAP_PADDING));
+
+        CircleOptions circleOptions = MapUtils.getCircleOptions(centerPoint, radiusInMeters);
+        this.locationMap.addCircle(circleOptions);
     }
 }

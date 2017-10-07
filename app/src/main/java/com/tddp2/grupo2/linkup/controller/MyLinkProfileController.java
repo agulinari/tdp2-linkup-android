@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
@@ -16,6 +17,7 @@ public class MyLinkProfileController implements LinkImageControllerInterface {
     private LinkUserService linkUserService;
     private LinkProfileView view;
     private String fbId;
+    private Profile profile;
 
     public MyLinkProfileController(LinkProfileView view) {
         this.linksService = ServiceFactory.getLinksService();
@@ -44,6 +46,7 @@ public class MyLinkProfileController implements LinkImageControllerInterface {
             view.onError(response.getError());
         } else {
             Profile profile = (Profile) response.getResponse();
+            this.profile = profile;
             view.showData(profile);
         }
     }
@@ -72,5 +75,11 @@ public class MyLinkProfileController implements LinkImageControllerInterface {
 
     public void finishLoadImageTask() {
         view.hideLoadingImage();
+    }
+
+    public void getCoordinatesAndUpdateDistance() {
+        Location loggedUserLocation = this.linksService.getDatabase().getProfile().getLocation();
+        Location linkLocation = this.profile.getLocation();
+        view.updateDistance(loggedUserLocation, linkLocation);
     }
 }

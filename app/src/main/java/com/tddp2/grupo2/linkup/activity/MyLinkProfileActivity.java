@@ -3,10 +3,11 @@ package com.tddp2.grupo2.linkup.activity;
 import android.os.Bundle;
 import com.google.android.gms.maps.GoogleMap;
 import com.tddp2.grupo2.linkup.controller.MyLinkProfileController;
-import com.tddp2.grupo2.linkup.model.Location;
+import com.tddp2.grupo2.linkup.model.Profile;
 
 public class MyLinkProfileActivity extends AbstractLinkProfileActivity {
     private MyLinkProfileController controller;
+    private GoogleMap locationMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,13 @@ public class MyLinkProfileActivity extends AbstractLinkProfileActivity {
     }
 
     @Override
-    public void onMapReady(GoogleMap map) {}
+    public void showData(Profile profile) {
+        super.showData(profile);
+        loadMap();
+    }
 
-    public void updateDistance(Location loggedUserLocation, Location linkLocation) {}
+    @Override
+    public void getCoordinatesAndUpdateDistance() {
+        controller.getCoordinatesAndUpdateDistance();
+    }
 }
