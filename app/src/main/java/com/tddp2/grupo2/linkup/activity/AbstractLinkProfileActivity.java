@@ -110,7 +110,22 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     }
 
     private void openReportAbusePopUp() {
-        controller.reportAbuse();
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.report_abuse_popup));
+        CharSequence[] arrayExample = {"Motivo 0", "Motivo 1", "Motivo 2"};
+        builder.setSingleChoiceItems(arrayExample, -1, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                controller.reportAbuse(which, "");
+            }
+        });
+        builder.setNeutralButton(getString(R.string.report_abuse_popup_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     private void openBlockUserPopUp() {

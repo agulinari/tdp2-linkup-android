@@ -14,7 +14,7 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
 
     public abstract void getCoordinatesAndUpdateDistance();
     public abstract void showLinkData(String userId);
-    public abstract void reportAbuse();
+    public abstract void reportAbuse(int idCategory, String comment);
     public abstract void blockUser();
 
     public AbstractLinkProfileController(LinkProfileView view) {

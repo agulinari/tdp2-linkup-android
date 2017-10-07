@@ -65,7 +65,7 @@ public class MyLinkProfileController extends AbstractLinkProfileController {
     }
 
     @Override
-    public void reportAbuse() {
+    public void reportAbuse(int idCategory, String comment) {
         AbuseReport abuseReport = new AbuseReport();
         Profile reporter = this.linksService.getDatabase().getProfile();
         Profile reported = this.profile;
@@ -73,8 +73,8 @@ public class MyLinkProfileController extends AbstractLinkProfileController {
         abuseReport.setFullnameReporter(reporter.getFirstName() + " " + reporter.getLastName());
         abuseReport.setIdReported(reported.getFbid());
         abuseReport.setFullnameReported(reported.getFirstName() + " " + reported.getLastName());
-        abuseReport.setIdCategory(1);//FIXME
-        abuseReport.setComment("un comnetario");//FIXME
+        abuseReport.setIdCategory(idCategory);
+        abuseReport.setComment(comment);
         ReportAbuseTask task = new ReportAbuseTask(linkUserService, this);
         task.execute(abuseReport);
     }
