@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.model.AbuseReport;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -45,6 +46,15 @@ public class LinkProfileController extends AbstractLinkProfileController {
 
     @Override
     public void reportAbuse() {
+        AbuseReport abuseReport = new AbuseReport();
+        Profile reporter = this.linksService.getDatabase().getProfile();
+        Profile reported = this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex);
+        abuseReport.setIdReporter(reporter.getFbid());
+        abuseReport.setFullnameReporter(reporter.getFirstName() + " " + reporter.getLastName());
+        abuseReport.setIdReported(reported.getFbid());
+        abuseReport.setFullnameReported(reported.getFirstName() + " " + reported.getLastName());
+        abuseReport.setIdCategory(1);//FIXME
+        abuseReport.setComment("un comnetario");//FIXME
     }
 
     @Override
