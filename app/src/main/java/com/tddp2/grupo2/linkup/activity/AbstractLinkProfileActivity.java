@@ -95,7 +95,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
             @Override
             public void onClick(View v)
             {
-                controller.reportAbuse();
+                openReportAbusePopUp();
             }
         });
 
@@ -104,9 +104,32 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
             @Override
             public void onClick(View v)
             {
+                openBlockUserPopUp();
+            }
+        });
+    }
+
+    private void openReportAbusePopUp() {
+        controller.reportAbuse();
+    }
+
+    private void openBlockUserPopUp() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.block_user_popup));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.block_user_popup_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
                 controller.blockUser();
             }
         });
+        builder.setNeutralButton(getString(R.string.block_user_popup_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
     protected void loadMap() {

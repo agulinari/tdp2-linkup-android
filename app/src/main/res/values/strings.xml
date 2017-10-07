@@ -79,6 +79,9 @@
     <string name="block_user_failure">Ha habido un error al intentar procesar el bloqueo. Por favor vuelva a intentarlo</string>
     <string name="block_user_failure_ok">Entiendo</string>
     <string name="block_user_success_ok">Aceptar</string>
+    <string name="block_user_popup">¿Está seguro que desea bloquear a este usuario?</string>
+    <string name="block_user_popup_ok">Sí, estoy seguro</string>
+    <string name="block_user_popup_cancel">Cancelar</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
