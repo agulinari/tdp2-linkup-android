@@ -1,20 +1,17 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
+import com.tddp2.grupo2.linkup.infrastructure.client.request.AbuseReportRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.TokenRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.AbuseReportResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
+import retrofit2.Call;
+import retrofit2.http.*;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
 
 
 public interface Profiles {
@@ -37,4 +34,6 @@ public interface Profiles {
     @PUT("token")
     Call<Void> updateToken(@Body TokenRequest request);
 
+    @POST("abuseReport")
+    Call<AbuseReportResponse> reportAbuse(@Body AbuseReportRequest request);
 }
