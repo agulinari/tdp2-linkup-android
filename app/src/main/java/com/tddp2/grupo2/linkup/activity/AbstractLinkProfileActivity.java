@@ -1,10 +1,14 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -16,6 +20,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
+import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 
@@ -52,6 +57,8 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     @BindView(R.id.linkLocationText)
     TextView textViewLinkDistance;
+
+    protected String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,5 +134,19 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     @Override
     public void hideLoadingImage() {
         progressBarImage.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+        if (notification!=null) {
+            Snackbar snackbar = Snackbar.make(coordView, notification.messageBody, Snackbar.LENGTH_SHORT);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
+        broadcastReceiver.abortBroadcast();
+
     }
 }
