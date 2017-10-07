@@ -90,6 +90,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
                         Intent intent = new Intent(context, ChatActivity.class);
                         intent.putExtra("USER_ID", fbidU);
                         intent.putExtra("LINK_ID", fbidL);
+                        intent.putExtra("LINK_NAME", personName.getText().toString());
                         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intent);
                     } else {

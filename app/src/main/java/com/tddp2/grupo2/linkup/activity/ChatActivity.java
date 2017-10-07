@@ -43,6 +43,10 @@ public class ChatActivity extends BroadcastActivity {
         linkId = getIntent().getStringExtra("LINK_ID");
         chatId = LinkupUtils.getChatId(userId, linkId);
 
+        String linkName = getIntent().getStringExtra("LINK_NAME");
+        TextView linkNameTextView = (TextView)findViewById(R.id.chatToolBarName);
+        linkNameTextView.setText(linkName);
+
         FloatingActionButton fab =
                 (FloatingActionButton)findViewById(R.id.fab);
 

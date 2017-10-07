@@ -114,6 +114,7 @@ public class MyLinksFragment extends BroadcastFragment implements MyLinksView {
             Intent intent = new Intent(activity, ChatActivity.class);
             intent.putExtra("USER_ID", userId);
             intent.putExtra("LINK_ID", n.fbid);
+            intent.putExtra("LINK_NAME", n.firstName);
             activity.startActivity(intent);
         }
 
