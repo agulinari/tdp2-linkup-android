@@ -10,7 +10,7 @@
         android:id="@+id/message_globe_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="@dimen/chat_padding_inside_globe"
         android:background="@drawable/message_container">
 
         <TextView
