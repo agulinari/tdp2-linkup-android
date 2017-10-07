@@ -10,4 +10,7 @@ public interface LinkProfileView extends BaseView {
     void showLoadingImage();
     void hideLoadingImage();
     void updateDistance(Location loggedUserLocation, Location linkLocation);
+    void showReportAbuseProgress();
+    void onReportAbuseSuccess();
+    void onReportAbuseFailure();
 }

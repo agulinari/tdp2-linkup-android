@@ -5,6 +5,7 @@ import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadImageTask;
+import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 public abstract class AbstractLinkProfileController implements LinkImageControllerInterface {
     protected LinkProfileView view;
@@ -33,6 +34,23 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
 
     public void finishLoadImageTask() {
         view.hideLoadingImage();
+    }
+
+    public void initReportAbuseTask() {
+        view.showReportAbuseProgress();
+    }
+
+    public void finishReportAbuseTask() {
+        view.hideProgress();
+    }
+
+    public void onReportAbuseTaskResult(Object result) {
+        TaskResponse response = (TaskResponse) result;
+        if (response.hasError()) {
+            view.onReportAbuseFailure();
+        } else {
+            view.onReportAbuseSuccess();
+        }
     }
 }
 

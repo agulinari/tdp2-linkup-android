@@ -5,6 +5,7 @@ import com.tddp2.grupo2.linkup.model.AbuseReport;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.task.ReportAbuseTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 public class LinkProfileController extends AbstractLinkProfileController {
@@ -55,6 +56,8 @@ public class LinkProfileController extends AbstractLinkProfileController {
         abuseReport.setFullnameReported(reported.getFirstName() + " " + reported.getLastName());
         abuseReport.setIdCategory(1);//FIXME
         abuseReport.setComment("un comnetario");//FIXME
+        ReportAbuseTask task = new ReportAbuseTask(linkUserService, this);
+        task.execute(abuseReport);
     }
 
     @Override

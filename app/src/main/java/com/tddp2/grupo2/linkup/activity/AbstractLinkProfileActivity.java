@@ -232,4 +232,34 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         CircleOptions circleOptions = MapUtils.getCircleOptions(centerPoint, radiusInMeters);
         this.locationMap.addCircle(circleOptions);
     }
+
+    @Override
+    public void showReportAbuseProgress() {
+        String message = getResources().getString(R.string.report_abuse_loading);
+        progressDialog = ProgressDialog.show(this, "", message, true, false);
+        progressDialog.show();
+    }
+
+    @Override
+    public void onReportAbuseSuccess() {
+        showAfterTaskDialog(R.string.report_abuse_success, R.string.report_abuse_success_ok);
+    }
+
+    @Override
+    public void onReportAbuseFailure() {
+        showAfterTaskDialog(R.string.report_abuse_failure, R.string.report_abuse_failure_ok);
+    }
+
+    private void showAfterTaskDialog(int description, int textButton) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(description));
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(textButton), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }
