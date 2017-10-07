@@ -26,9 +26,9 @@ public class AcceptLinkTask extends AsyncTask<Object, Void, TaskResponse>{
     protected TaskResponse doInBackground(Object... params) {
         String fbidCandidate = (String) params[0];
         String candidateName = (String) params[1];
-
+        String tipoDeLink = (String) params[2];
         try {
-            AcceptLinkTaskResponse acceptLinkResponse = linksService.acceptLink(fbidCandidate);
+            AcceptLinkTaskResponse acceptLinkResponse = linksService.acceptLink(fbidCandidate, tipoDeLink);
             acceptLinkResponse.setMatchName(candidateName);
             return acceptLinkResponse;
         } catch (ServiceException e) {

@@ -39,10 +39,10 @@ public class LinksController implements LinkImageControllerInterface {
         task.execute(p.getFbid());
     }
 
-    public void acceptCurrentLink() {
+    public void acceptCurrentLink(String tipoDeLink) {
         AcceptLinkTask task = new AcceptLinkTask(linksService, this);
         Profile p = links.getLinks().get(currentLink);
-        task.execute(p.getFbid(), p.getFirstName());
+        task.execute(p.getFbid(), p.getFirstName(), tipoDeLink);
     }
 
     public void rejectCurrentLink(){
