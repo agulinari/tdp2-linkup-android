@@ -103,12 +103,12 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public AcceptLinkTaskResponse acceptLink(String fbidCandidate) throws ServiceException {
+    public AcceptLinkTaskResponse acceptLink(String fbidCandidate, String tipoDeLink) throws ServiceException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
 
         LinkupClient linkupClient = clientService.getClient();
-        Acceptance acceptance = new Acceptance(fbid, fbidCandidate);
+        Acceptance acceptance = new Acceptance(fbid, fbidCandidate, tipoDeLink);
         AcceptanceRequest request = new AcceptanceRequest(acceptance);
         Call<AcceptanceResponse> call = linkupClient.candidates.accept(request);
         try {

@@ -21,7 +21,7 @@ public abstract class LinksService implements LinkupService{
 
     public abstract Links rejectLink(String fbidCandidate) throws ServiceException;
 
-    public abstract AcceptLinkTaskResponse acceptLink(String fbidCandidate) throws ServiceException;
+    public abstract AcceptLinkTaskResponse acceptLink(String fbidCandidate, String tipoDeLink) throws ServiceException;
 
     public ServiceType getType() {
         return ServiceType.LINKS;
