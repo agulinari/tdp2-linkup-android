@@ -202,9 +202,10 @@ public class ChatActivity extends BroadcastActivity {
 
         DatabaseReference itemRef = adapter.getRef(position);
         ChatMessage message = adapter.getItem(position);
-        message.setLiked(!message.isLiked());
-        itemRef.setValue(message);
-
+        if (!message.getFbid().equals(this.userId)) {
+            message.setLiked(!message.isLiked());
+            itemRef.setValue(message);
+        }
     }
 
     @Override
