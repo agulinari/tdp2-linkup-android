@@ -79,7 +79,6 @@ public class ChatActivity extends BroadcastActivity {
             protected void populateView(View v, ChatMessage model, int position) {
                 // Get references to the views of message.xml
                 TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
 
                 RelativeLayout messageGlobe = (RelativeLayout)v.findViewById(R.id.message_globe);
@@ -87,7 +86,6 @@ public class ChatActivity extends BroadcastActivity {
 
                 // Set their text
                 messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
                 if (!model.isLiked()) {
                     // Format the date before showing it
                     messageTime.setText(DateFormat.format("HH:mm",
@@ -103,12 +101,9 @@ public class ChatActivity extends BroadcastActivity {
                                     RelativeLayout.LayoutParams.WRAP_CONTENT);
                     params1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
 
-                    messageUser.setLayoutParams(params1);
-
                     RelativeLayout.LayoutParams params2 =
                             new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                                     RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
                     params2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
 
@@ -121,7 +116,6 @@ public class ChatActivity extends BroadcastActivity {
                         int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
                         messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.chatMessage));
                     }
-                    messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                     messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
                 }else{
                     RelativeLayout.LayoutParams params1 =
@@ -129,12 +123,9 @@ public class ChatActivity extends BroadcastActivity {
                                     RelativeLayout.LayoutParams.WRAP_CONTENT);
                     params1.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
 
-                    messageUser.setLayoutParams(params1);
-
                     RelativeLayout.LayoutParams params2 =
                             new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
                                     RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
                     params2.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
                     messageGlobe.setLayoutParams(params2);
 
@@ -147,7 +138,6 @@ public class ChatActivity extends BroadcastActivity {
                         int pix = ImageUtils.dpToPx(ChatActivity.this, 2);
                         messageBox.setStroke(pix,ContextCompat.getColor(getContext(), R.color.chatMessage));
                     }
-                    messageUser.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
                     messageTime.setTextColor(ContextCompat.getColor(getContext(), R.color.colorSecondary));
                 }
 
