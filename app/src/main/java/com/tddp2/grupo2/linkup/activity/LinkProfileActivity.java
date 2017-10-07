@@ -4,8 +4,6 @@ import android.os.Bundle;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 
 public class LinkProfileActivity extends AbstractLinkProfileActivity {
-    private LinkProfileController controller;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -13,16 +11,11 @@ public class LinkProfileActivity extends AbstractLinkProfileActivity {
         TAG = "LinkProfileActivity";
 
         Bundle b = getIntent().getExtras();
-        int currentLink = (b != null) ? b.getInt("currentLinkIndex") : -1;
+        int currentLink = (b != null) ? b.getInt("currentLinkIndex") : 0;
 
         controller = new LinkProfileController(this);
-        controller.showLinkData(currentLink);
+        controller.showLinkData(String.valueOf(currentLink));
 
         loadMap();
-    }
-
-    @Override
-    public void getCoordinatesAndUpdateDistance() {
-        controller.getCoordinatesAndUpdateDistance();
     }
 }

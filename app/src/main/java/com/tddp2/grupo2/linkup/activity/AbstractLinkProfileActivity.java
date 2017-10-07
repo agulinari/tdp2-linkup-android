@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
@@ -68,8 +69,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     protected String TAG;
     private ProgressDialog progressDialog;
     protected GoogleMap locationMap;
-
-    protected abstract void getCoordinatesAndUpdateDistance();
+    protected AbstractLinkProfileController controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,7 +186,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         this.locationMap = map;
         UiSettings mapSettings = this.locationMap.getUiSettings();
         mapSettings.setAllGesturesEnabled(false);
-        getCoordinatesAndUpdateDistance();
+        controller.getCoordinatesAndUpdateDistance();
     }
 
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {

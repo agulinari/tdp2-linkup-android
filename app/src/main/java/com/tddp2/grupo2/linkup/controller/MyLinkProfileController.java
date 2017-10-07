@@ -5,21 +5,19 @@ import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadLinkUserTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 public class MyLinkProfileController extends AbstractLinkProfileController {
-    private LinkUserService linkUserService;
     private String fbId;
     private Profile profile;
 
     public MyLinkProfileController(LinkProfileView view) {
         super(view);
-        this.linkUserService = ServiceFactory.getUserService();
     }
 
-    public void loadUser(String linkUserId) {
+    @Override
+    public void showLinkData(String linkUserId) {
         this.fbId = linkUserId;
         LoadLinkUserTask task = new LoadLinkUserTask(this.linkUserService, this);
         task.execute(this.fbId);
@@ -58,6 +56,7 @@ public class MyLinkProfileController extends AbstractLinkProfileController {
         }
     }
 
+    @Override
     public void getCoordinatesAndUpdateDistance() {
         Location loggedUserLocation = this.linksService.getDatabase().getProfile().getLocation();
         Location linkLocation = this.profile.getLocation();

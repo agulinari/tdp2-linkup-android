@@ -13,8 +13,9 @@ public class LinkProfileController extends AbstractLinkProfileController {
         super(view);
     }
 
-    public void showLinkData(int currentLinkIndex) {
-        this.currentLinkIndex = currentLinkIndex;
+    @Override
+    public void showLinkData(String currentLinkIndex) {
+        this.currentLinkIndex = Integer.decode(currentLinkIndex);
         Profile profile = this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex);
         view.showData(profile);
 
@@ -35,6 +36,7 @@ public class LinkProfileController extends AbstractLinkProfileController {
         }
     }
 
+    @Override
     public void getCoordinatesAndUpdateDistance() {
         Location loggedUserLocation = this.linksService.getDatabase().getProfile().getLocation();
         Location linkLocation = this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex).getLocation();
