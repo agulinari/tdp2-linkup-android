@@ -1,7 +1,6 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
@@ -25,7 +23,6 @@ import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 
 public class LinkProfileActivity extends AbstractLinkProfileActivity {
-
     private static final String TAG = "LinkProfileActivity";
     private LinkProfileController controller;
     private GoogleMap locationMap;
@@ -41,74 +38,6 @@ public class LinkProfileActivity extends AbstractLinkProfileActivity {
         controller.showLinkData(currentLink);
 
         loadMap();
-    }
-
-    public void loadMap() {
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.linkMap);
-        mapFragment.getMapAsync(this);
-    }
-
-    public void showProgress() {}
-
-    public void hideProgress() {}
-
-    public void goToNext() {}
-
-    public Context getContext() {
-        return this.getContext();
-    }
-
-    public void onError(String errorMsg) {}
-
-    @Override
-    public void showData(Profile profile) {
-        String age = "";
-        try {
-            age = String.valueOf(DateUtils.getAgeFromBirthday(profile.getBirthday()));
-        } catch (MissingAgeException e) {
-            e.printStackTrace();
-        }
-        textViewLinkName.setText(profile.getFirstName() + ", " + age);
-
-        String comment = profile.getComments();
-        if (!comment.equals("")) {
-            cardViewCommentCard.setVisibility(View.VISIBLE);
-            textViewLinkComment.setText(comment);
-        } else {
-            cardViewCommentCard.setVisibility(View.GONE);
-        }
-
-        String occupation = profile.getOccupation();
-        if (!occupation.equals("")) {
-            cardViewOccupationCard.setVisibility(View.VISIBLE);
-            textViewLinkWork.setText(occupation);
-        } else {
-            cardViewOccupationCard.setVisibility(View.GONE);
-        }
-
-        String studies = profile.getEducation();
-        if (!studies.equals("")) {
-            cardViewEducationCard.setVisibility(View.VISIBLE);
-            textViewLinkStudies.setText(studies);
-        } else {
-            cardViewEducationCard.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void showImage(Bitmap photo) {
-        imageViewLinkProfilePhoto.setImageBitmap(photo);
-    }
-
-    @Override
-    public void showLoadingImage() {
-        progressBarImage.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideLoadingImage() {
-        progressBarImage.setVisibility(View.GONE);
     }
 
     @Override

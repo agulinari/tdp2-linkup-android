@@ -1,16 +1,23 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.CardView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.exception.MissingAgeException;
+import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.utils.DateUtils;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -52,5 +59,73 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         setContentView(R.layout.activity_link_profile);
 
         ButterKnife.bind(this);
+    }
+
+    protected void loadMap() {
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.linkMap);
+        mapFragment.getMapAsync(this);
+    }
+
+    public void showProgress() {}
+
+    public void hideProgress() {}
+
+    public void goToNext() {}
+
+    public Context getContext() {
+        return this.getContext();
+    }
+
+    public void onError(String errorMsg) {}
+
+    @Override
+    public void showData(Profile profile) {
+        String age = "";
+        try {
+            age = String.valueOf(DateUtils.getAgeFromBirthday(profile.getBirthday()));
+        } catch (MissingAgeException e) {
+            e.printStackTrace();
+        }
+        textViewLinkName.setText(profile.getFirstName() + ", " + age);
+
+        String comment = profile.getComments();
+        if (!comment.equals("")) {
+            cardViewCommentCard.setVisibility(View.VISIBLE);
+            textViewLinkComment.setText(comment);
+        } else {
+            cardViewCommentCard.setVisibility(View.GONE);
+        }
+
+        String occupation = profile.getOccupation();
+        if (!occupation.equals("")) {
+            cardViewOccupationCard.setVisibility(View.VISIBLE);
+            textViewLinkWork.setText(occupation);
+        } else {
+            cardViewOccupationCard.setVisibility(View.GONE);
+        }
+
+        String studies = profile.getEducation();
+        if (!studies.equals("")) {
+            cardViewEducationCard.setVisibility(View.VISIBLE);
+            textViewLinkStudies.setText(studies);
+        } else {
+            cardViewEducationCard.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void showImage(Bitmap photo) {
+        imageViewLinkProfilePhoto.setImageBitmap(photo);
+    }
+
+    @Override
+    public void showLoadingImage() {
+        progressBarImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingImage() {
+        progressBarImage.setVisibility(View.GONE);
     }
 }
