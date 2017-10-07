@@ -29,7 +29,7 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 
-public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
+public class LinkProfileActivity extends AbstractLinkProfileActivity {
 
     private static final String TAG = "LinkProfileActivity";
     private LinkProfileController controller;

@@ -16,7 +16,7 @@ import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-public class MyLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
+public class MyLinkProfileActivity extends AbstractLinkProfileActivity {
     private MyLinkProfileController controller;
 
     @BindView(R.id.linkProfileNameText)
