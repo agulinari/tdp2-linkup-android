@@ -241,6 +241,13 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     }
 
     @Override
+    public void showBlockUserProgress() {
+        String message = getResources().getString(R.string.block_user_loading);
+        progressDialog = ProgressDialog.show(this, "", message, true, false);
+        progressDialog.show();
+    }
+
+    @Override
     public void onReportAbuseSuccess() {
         showAfterTaskDialog(R.string.report_abuse_success, R.string.report_abuse_success_ok);
     }
@@ -248,6 +255,16 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     @Override
     public void onReportAbuseFailure() {
         showAfterTaskDialog(R.string.report_abuse_failure, R.string.report_abuse_failure_ok);
+    }
+
+    @Override
+    public void onBlockUserSuccess() {
+        showAfterTaskDialog(R.string.block_user_success, R.string.block_user_success_ok);
+    }
+
+    @Override
+    public void onBlockUserFailure() {
+        showAfterTaskDialog(R.string.block_user_failure, R.string.block_user_failure_ok);
     }
 
     private void showAfterTaskDialog(int description, int textButton) {

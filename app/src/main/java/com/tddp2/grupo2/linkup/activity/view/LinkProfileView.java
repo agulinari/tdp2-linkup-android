@@ -11,6 +11,9 @@ public interface LinkProfileView extends BaseView {
     void hideLoadingImage();
     void updateDistance(Location loggedUserLocation, Location linkLocation);
     void showReportAbuseProgress();
+    void showBlockUserProgress();
     void onReportAbuseSuccess();
     void onReportAbuseFailure();
+    void onBlockUserSuccess();
+    void onBlockUserFailure();
 }

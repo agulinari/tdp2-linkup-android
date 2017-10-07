@@ -40,6 +40,10 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
         view.showReportAbuseProgress();
     }
 
+    public void initBlockUserTask() {
+        view.showBlockUserProgress();
+    }
+
     public void finishReportAbuseTask() {
         view.hideProgress();
     }
