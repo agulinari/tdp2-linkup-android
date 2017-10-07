@@ -19,13 +19,13 @@ import com.tddp2.grupo2.linkup.model.Profile;
 public class MyLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     private MyLinkProfileController controller;
 
-    @BindView(R.id.myLinkProfileNameText)
+    @BindView(R.id.linkProfileNameText)
     TextView textViewLinkName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_link_profile);
+        setContentView(R.layout.activity_link_profile);
 
         ButterKnife.bind(this);
 
