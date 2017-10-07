@@ -92,11 +92,14 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
         ButterKnife.bind(this, mainView);
 
-        registerListeners();
-
-        controller.getLinks();
-
         return mainView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        registerListeners();
+        controller.getLinks();
     }
 
     private void registerListeners() {
