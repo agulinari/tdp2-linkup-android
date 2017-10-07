@@ -67,11 +67,13 @@
     <string name="loading_link_profile">Cargando información</string>
     <string name="error_loading_link_profile">Lo sentimos, no hemos podido cargar este perfil. Vuelva a intentarlo más tarde.</string>
     <string name="error_loading_link_profile_ok">Entendido</string>
+    <string name="report_abuse_button">Denunciar usuario</string>
     <string name="report_abuse_loading">Realizando denuncia de usuario</string>
     <string name="report_abuse_success">La denuncia ha sido realizada con éxito</string>
     <string name="report_abuse_failure">Ha habido un error al intentar procesar la denuncia. Por favor vuelva a intentarlo</string>
     <string name="report_abuse_failure_ok">Entiendo</string>
     <string name="report_abuse_success_ok">Aceptar</string>
+    <string name="block_user_button">Bloquear usuario</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
