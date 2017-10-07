@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -249,31 +250,39 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     @Override
     public void onReportAbuseSuccess() {
-        showAfterTaskDialog(R.string.report_abuse_success, R.string.report_abuse_success_ok);
+        showAfterTaskDialog(R.string.report_abuse_success, R.string.report_abuse_success_ok, true);
     }
 
     @Override
     public void onReportAbuseFailure() {
-        showAfterTaskDialog(R.string.report_abuse_failure, R.string.report_abuse_failure_ok);
+        showAfterTaskDialog(R.string.report_abuse_failure, R.string.report_abuse_failure_ok, false);
     }
 
     @Override
     public void onBlockUserSuccess() {
-        showAfterTaskDialog(R.string.block_user_success, R.string.block_user_success_ok);
+        showAfterTaskDialog(R.string.block_user_success, R.string.block_user_success_ok, true);
     }
 
     @Override
     public void onBlockUserFailure() {
-        showAfterTaskDialog(R.string.block_user_failure, R.string.block_user_failure_ok);
+        showAfterTaskDialog(R.string.block_user_failure, R.string.block_user_failure_ok, false);
     }
 
-    private void showAfterTaskDialog(int description, int textButton) {
+    private void showAfterTaskDialog(int description, int textButton, final boolean leaveActivity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(description));
         builder.setCancelable(Boolean.FALSE);
         builder.setPositiveButton(getString(textButton), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                if (leaveActivity) {
+                    Intent intent = new Intent(getContext(), LinksActivity.class);
+                    Notification notification = new Notification();
+                    intent.putExtra("notification", notification);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
         AlertDialog alert = builder.create();
