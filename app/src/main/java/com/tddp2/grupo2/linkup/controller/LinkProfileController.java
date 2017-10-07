@@ -4,20 +4,13 @@ import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.service.api.LinksService;
-import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.LoadImageTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
-public class LinkProfileController implements LinkImageControllerInterface {
-
-    private LinksService linksService;
-    private LinkProfileView view;
+public class LinkProfileController extends AbstractLinkProfileController {
     private int currentLinkIndex;
 
     public LinkProfileController(LinkProfileView view) {
-        this.linksService = ServiceFactory.getLinksService();
-        this.view = view;
+        super(view);
     }
 
     public void showLinkData(int currentLinkIndex) {
@@ -26,11 +19,6 @@ public class LinkProfileController implements LinkImageControllerInterface {
         view.showData(profile);
 
         loadImage(profile.getFbid());
-    }
-
-    public void loadImage(String fbidCandidate) {
-        LoadImageTask task = new LoadImageTask(linksService, this);
-        task.execute(fbidCandidate);
     }
 
     public void onLoadImageResult(TaskResponse response) {
@@ -45,14 +33,6 @@ public class LinkProfileController implements LinkImageControllerInterface {
                 view.showImage(image.getBitmap());
             }
         }
-    }
-
-    public void initLoadImageTask() {
-        view.showLoadingImage();
-    }
-
-    public void finishLoadImageTask() {
-        view.hideLoadingImage();
     }
 
     public void getCoordinatesAndUpdateDistance() {
