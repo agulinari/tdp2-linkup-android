@@ -8,6 +8,7 @@
     android:layout_marginLeft="@dimen/link_card_side_margin"
     android:layout_marginRight="@dimen/link_card_side_margin"
     android:backgroundTint="@color/profileCard"
+    android:visibility="gone"
     card_view:cardElevation="4dp">
 
     <LinearLayout

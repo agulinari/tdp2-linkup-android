@@ -64,6 +64,9 @@
     <string name="wait_woman_description">Debes esperar a que ella inicie la conversación</string>
     <string name="wait_woman_ok">Entendido</string>
     <string name="go_to_my_link_profile">Ver perfil</string>
+    <string name="loading_link_profile">Cargando información</string>
+    <string name="error_loading_link_profile">Lo sentimos, no hemos podido cargar este perfil. Vuelva a intentarlo más tarde.</string>
+    <string name="error_loading_link_profile_ok">Entendido</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

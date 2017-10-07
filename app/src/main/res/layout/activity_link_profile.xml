@@ -62,7 +62,6 @@
                     android:gravity="center_vertical"
                     android:paddingEnd="18dp"
                     android:paddingStart="18dp"
-                    android:text="Nombre, edad"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/toolbar_text_size"
                     android:textStyle="bold" />

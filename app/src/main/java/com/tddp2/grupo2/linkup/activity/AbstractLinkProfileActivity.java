@@ -1,12 +1,15 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
@@ -59,6 +62,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     TextView textViewLinkDistance;
 
     protected String TAG;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +78,17 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         mapFragment.getMapAsync(this);
     }
 
-    public void showProgress() {}
+    public void showProgress() {
+        String message = getResources().getString(R.string.loading_link_profile);
+        progressDialog = ProgressDialog.show(this, "", message, true, false);
+        progressDialog.show();
+    }
 
-    public void hideProgress() {}
+    public void hideProgress() {
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
 
     public void goToNext() {}
 
@@ -84,7 +96,19 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         return this;
     }
 
-    public void onError(String errorMsg) {}
+    public void onError(String errorMsg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(Boolean.FALSE);
+        builder.setMessage(R.string.error_loading_link_profile);
+        builder.setNeutralButton(R.string.error_loading_link_profile_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                onBackPressed();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 
     @Override
     public void showData(Profile profile) {
