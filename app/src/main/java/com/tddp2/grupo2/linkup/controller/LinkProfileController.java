@@ -9,7 +9,7 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadImageTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
-public class LinkProfileController implements ImageLinkController {
+public class LinkProfileController implements LinkImageControllerInterface {
 
     private LinksService linksService;
     private LinkProfileView view;

@@ -13,7 +13,7 @@ import com.tddp2.grupo2.linkup.task.LoadImageTask;
 import com.tddp2.grupo2.linkup.task.RejectLinkTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
-public class LinksController implements ImageLinkController {
+public class LinksController implements LinkImageControllerInterface {
 
     private LinksService linksService;
     private LinksView view;
