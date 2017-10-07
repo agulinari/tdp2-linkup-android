@@ -81,7 +81,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     public void goToNext() {}
 
     public Context getContext() {
-        return this.getContext();
+        return this;
     }
 
     public void onError(String errorMsg) {}
