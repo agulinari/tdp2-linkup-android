@@ -4,23 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.google.android.gms.maps.*;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
-import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
@@ -35,45 +30,9 @@ public class LinkProfileActivity extends AbstractLinkProfileActivity {
     private LinkProfileController controller;
     private GoogleMap locationMap;
 
-    @BindView(R.id.linkProfileCoordinatorLayout)
-    CoordinatorLayout coordView;
-
-    @BindView(R.id.linkProfileNameText)
-    TextView textViewLinkName;
-
-    @BindView(R.id.linkCommentCard)
-    CardView cardViewCommentCard;
-
-    @BindView(R.id.linkCommentText)
-    TextView textViewLinkComment;
-
-    @BindView(R.id.linkOccupationCard)
-    CardView cardViewOccupationCard;
-
-    @BindView(R.id.linkWorkText)
-    TextView textViewLinkWork;
-
-    @BindView(R.id.linkEducationCard)
-    CardView cardViewEducationCard;
-
-    @BindView(R.id.linkStudiesText)
-    TextView textViewLinkStudies;
-
-    @BindView(R.id.linkProfilePhoto)
-    ImageView imageViewLinkProfilePhoto;
-
-    @BindView(R.id.linkProfileImageProgress)
-    ProgressBar progressBarImage;
-
-    @BindView(R.id.linkLocationText)
-    TextView textViewLinkDistance;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_link_profile);
-
-        ButterKnife.bind(this);
 
         Bundle b = getIntent().getExtras();
         int currentLink = (b != null) ? b.getInt("currentLinkIndex") : -1;
