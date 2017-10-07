@@ -65,6 +65,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.ChatActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LinkProfileActivity"
