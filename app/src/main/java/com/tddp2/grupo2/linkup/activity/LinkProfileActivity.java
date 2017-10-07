@@ -81,6 +81,10 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
         controller = new LinkProfileController(this);
         controller.showLinkData(currentLink);
 
+        loadMap();
+    }
+
+    public void loadMap() {
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.linkMap);
         mapFragment.getMapAsync(this);
