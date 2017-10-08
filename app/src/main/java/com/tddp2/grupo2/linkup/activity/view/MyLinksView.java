@@ -8,4 +8,8 @@ public interface MyLinksView {
     void showMyLinks(MyLinks links);
 
     void onError(String error);
+
+    void showInactiveAccountAlert();
+
+    void hideChatAndNewLinksProgress();
 }

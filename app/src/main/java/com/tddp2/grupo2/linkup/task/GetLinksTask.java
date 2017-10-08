@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.task;
 import android.os.AsyncTask;
 
 import com.tddp2.grupo2.linkup.controller.LinksController;
+import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
@@ -25,14 +26,19 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
     }
 
     @Override
-    protected TaskResponse doInBackground(Object... params) {
-        TaskResponse taskResponse = new TaskResponse();
+    protected LinksTaskResponse doInBackground(Object... params) {
+        LinksTaskResponse taskResponse = new LinksTaskResponse();
         Links links;
         try {
             links = linksService.getLinks();
         } catch (ServiceException e) {
             taskResponse.setError(e.getMessage());
             taskResponse.setResponse(linksService.getDatabase().getLinks());
+            return taskResponse;
+        } catch (InactiveAccountException e) {
+            taskResponse.setError(e.getMessage());
+            taskResponse.setResponse(linksService.getDatabase().getMyLinks());
+            taskResponse.inactiveAccount = true;
             return taskResponse;
         }
         taskResponse.setResponse(links);
@@ -41,9 +47,14 @@ public class GetLinksTask extends AsyncTask<Object, Void, TaskResponse> {
 
     @Override
     protected void onPostExecute(TaskResponse response) {
-        if (controller != null)
+        if (controller != null) {
             controller.finishGetLinksTask();
-
-        controller.onGetLinksResult(response);
+            LinksTaskResponse linksTaskResponse = (LinksTaskResponse) response;
+            if (linksTaskResponse.inactiveAccount) {
+                controller.showInactiveAccountError();
+            } else {
+                controller.onGetLinksResult(response);
+            }
+        }
     }
 }

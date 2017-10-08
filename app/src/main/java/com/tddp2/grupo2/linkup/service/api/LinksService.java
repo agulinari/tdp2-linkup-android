@@ -1,5 +1,6 @@
 package com.tddp2.grupo2.linkup.service.api;
 
+import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
@@ -15,7 +16,7 @@ public abstract class LinksService implements LinkupService{
         this.database = database;
     }
 
-    public abstract Links getLinks() throws ServiceException;
+    public abstract Links getLinks() throws ServiceException, InactiveAccountException;
 
     public abstract void saveLinks(Links links);
 

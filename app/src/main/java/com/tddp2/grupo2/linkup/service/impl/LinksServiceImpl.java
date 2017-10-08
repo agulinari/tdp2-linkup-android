@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.APIError;
+import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
@@ -40,7 +41,7 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public Links getLinks() throws ServiceException {
+    public Links getLinks() throws ServiceException, InactiveAccountException {
         Profile profile = this.database.getProfile();
         String fbid = profile.getFbid();
 
@@ -59,6 +60,8 @@ public class LinksServiceImpl extends LinksService{
                 links.setLinks(profiles);
                 saveLinks(links);
                 return links;
+            } else if (response.code() == 401) {
+                throw new InactiveAccountException();
             } else {
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);

@@ -84,9 +84,10 @@
     <string name="block_user_popup">¿Está seguro que desea bloquear a este usuario?</string>
     <string name="block_user_popup_ok">Sí, estoy seguro</string>
     <string name="block_user_popup_cancel">Cancelar</string>
-
     <string name="report_abuse_comment_title">¿Algun detalle que nos quieras contar?</string>
     <string name="report_abuse_comment_save">Enviar</string>
+    <string name="inactive_account_popup_title">Lo sentimos, tu cuenta ha sido desactivada.</string>
+    <string name="inactive_account_popup_ok">Entiendo</string>
 
     <string name="report_abuse_category_1">Lenguaje abusivo</string>
     <string name="report_abuse_category_2">Foto inapropiada</string>

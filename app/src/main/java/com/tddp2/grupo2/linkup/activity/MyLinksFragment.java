@@ -2,24 +2,19 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.google.firebase.database.*;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.adapter.RVChatLinksAdapter;
 import com.tddp2.grupo2.linkup.activity.adapter.RVNewLinksAdapter;
@@ -34,9 +29,6 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 
@@ -204,5 +196,25 @@ public class MyLinksFragment extends BroadcastFragment implements MyLinksView {
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         Log.i(TAG, "Notificacion RECIBIDA");
         broadcastReceiver.abortBroadcast();
+    }
+
+    @Override
+    public void showInactiveAccountAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(R.string.inactive_account_popup_title);
+        builder.setCancelable(Boolean.FALSE);
+        builder.setPositiveButton(getString(R.string.inactive_account_popup_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    public void hideChatAndNewLinksProgress() {
+        this.chatsProgressView.setVisibility(View.GONE);
+        this.newLinksProgressView.setVisibility(View.GONE);
     }
 }

@@ -39,4 +39,9 @@ public class MyLinksController {
 
     public void initGetMyLinksTask() {
     }
+
+    public void showInactiveAccountError() {
+        view.hideChatAndNewLinksProgress();
+        view.showInactiveAccountAlert();
+    }
 }

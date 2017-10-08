@@ -205,4 +205,8 @@ public class LinksController implements LinkImageControllerInterface {
                 this.links.getLinks().get(currentLink).getLocation()
         );
     }
+
+    public void showInactiveAccountError() {
+        view.showInactiveAccountAlert();
+    }
 }

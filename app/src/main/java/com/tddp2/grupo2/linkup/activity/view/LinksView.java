@@ -29,4 +29,6 @@ public interface LinksView  extends BaseView {
     void blockCandidatesNavigation();
 
     void updateDistance(Location loggedUserLocation, Location linkLocation);
+
+    void showInactiveAccountAlert();
 }
