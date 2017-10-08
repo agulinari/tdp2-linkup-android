@@ -85,6 +85,14 @@
     <string name="block_user_popup_ok">Sí, estoy seguro</string>
     <string name="block_user_popup_cancel">Cancelar</string>
 
+    <string name="report_abuse_comment_title">¿Algun detalle que nos quieras contar?</string>
+    <string name="report_abuse_comment_save">Enviar</string>
+
+    <string name="report_abuse_category_1">Lenguaje abusivo</string>
+    <string name="report_abuse_category_2">Foto inapropiada</string>
+    <string name="report_abuse_category_3">Spam</string>
+    <string name="report_abuse_category_4">Otros</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat">Chat</string>

@@ -12,12 +12,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.android.gms.maps.*;
@@ -112,11 +110,17 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     private void openReportAbusePopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getString(R.string.report_abuse_popup));
-        CharSequence[] arrayExample = {"Motivo 0", "Motivo 1", "Motivo 2"};
-        builder.setSingleChoiceItems(arrayExample, -1, new DialogInterface.OnClickListener() {
+        CharSequence[] categories = {
+                getString(R.string.report_abuse_category_1),
+                getString(R.string.report_abuse_category_2),
+                getString(R.string.report_abuse_category_3),
+                getString(R.string.report_abuse_category_4)
+        };
+        builder.setSingleChoiceItems(categories, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                controller.reportAbuse(which, "");
+                int idCategory = which + 1;
+                openInsertCommentPopUp(idCategory);
             }
         });
         builder.setNeutralButton(getString(R.string.report_abuse_popup_cancel), new DialogInterface.OnClickListener() {
@@ -145,6 +149,26 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    private void openInsertCommentPopUp(int idCategory) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(Boolean.FALSE);
+        final int idC = idCategory;
+        builder.setTitle(getResources().getString(R.string.report_abuse_comment_title));
+
+        final EditText newCommentInput = new EditText(this);
+        newCommentInput.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(newCommentInput);
+
+        builder.setPositiveButton(getResources().getString(R.string.report_abuse_comment_save), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                controller.reportAbuse(idC, newCommentInput.getText().toString());
+            }
+        });
+
+        builder.show();
     }
 
     protected void loadMap() {
