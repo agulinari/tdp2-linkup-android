@@ -15,10 +15,17 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.google.android.gms.maps.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -31,6 +38,9 @@ import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -263,7 +273,13 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         Log.i(TAG, "Notificacion RECIBIDA");
         if (notification!=null) {
-            Snackbar snackbar = Snackbar.make(coordView, notification.messageBody, Snackbar.LENGTH_SHORT);
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else{
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(coordView, text, Snackbar.LENGTH_INDEFINITE);
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
             snackbar.show();

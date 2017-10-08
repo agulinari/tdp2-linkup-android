@@ -207,7 +207,13 @@ public class ChatActivity extends BroadcastActivity {
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         Log.i(TAG, "Notificacion RECIBIDA");
         if ((notification!=null) && (!notification.fbid.equals(linkId))){
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.chatCoordinatorLayout), notification.messageBody, Snackbar.LENGTH_SHORT);
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else {
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.chatCoordinatorLayout), text, Snackbar.LENGTH_INDEFINITE);
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
             snackbar.show();
