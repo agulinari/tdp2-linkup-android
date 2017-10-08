@@ -71,13 +71,13 @@
     <string name="report_abuse_loading">Realizando denuncia de usuario</string>
     <string name="report_abuse_success">La denuncia ha sido realizada con éxito</string>
     <string name="report_abuse_failure">Ha habido un error al intentar procesar la denuncia. Por favor vuelva a intentarlo</string>
-    <string name="report_abuse_failure_ok">Entiendo</string>
+    <string name="report_abuse_failure_ok">Entendido</string>
     <string name="report_abuse_success_ok">Aceptar</string>
     <string name="block_user_button">Bloquear usuario</string>
     <string name="block_user_loading">Realizando bloqueo de usuario</string>
     <string name="block_user_success">El bloqueo ha sido realizado con éxito</string>
     <string name="block_user_failure">Ha habido un error al intentar procesar el bloqueo. Por favor vuelva a intentarlo</string>
-    <string name="block_user_failure_ok">Entiendo</string>
+    <string name="block_user_failure_ok">Entendido</string>
     <string name="report_abuse_popup">¿Por qué motivo desea denunciar a este usuario?</string>
     <string name="report_abuse_popup_cancel">Cancelar</string>
     <string name="block_user_success_ok">Aceptar</string>
@@ -87,7 +87,7 @@
     <string name="report_abuse_comment_title">¿Algun detalle que nos quieras contar?</string>
     <string name="report_abuse_comment_save">Enviar</string>
     <string name="inactive_account_popup_title">Lo sentimos, tu cuenta ha sido desactivada.</string>
-    <string name="inactive_account_popup_ok">Entiendo</string>
+    <string name="inactive_account_popup_ok">Entendido</string>
 
     <string name="report_abuse_category_1">Lenguaje abusivo</string>
     <string name="report_abuse_category_2">Foto inapropiada</string>
