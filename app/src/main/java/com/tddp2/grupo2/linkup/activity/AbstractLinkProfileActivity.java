@@ -16,16 +16,12 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -37,10 +33,8 @@ import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
+import com.tddp2.grupo2.linkup.utils.LimitedEditText;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -83,6 +77,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     Button buttonBlockUser;
 
     protected String TAG;
+    private final int COMMENT_MAX_CHARS = 50;
     private ProgressDialog progressDialog;
     protected GoogleMap locationMap;
     protected AbstractLinkProfileController controller;
@@ -152,7 +147,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
                 controller.blockUser();
             }
         });
-        builder.setNeutralButton(getString(R.string.block_user_popup_cancel), new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.block_user_popup_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
             }
@@ -167,7 +162,8 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         final int idC = idCategory;
         builder.setTitle(getResources().getString(R.string.report_abuse_comment_title));
 
-        final EditText newCommentInput = new EditText(this);
+        final LimitedEditText newCommentInput = new LimitedEditText(this);
+        newCommentInput.setMaxTextSize(COMMENT_MAX_CHARS);
         newCommentInput.setInputType(InputType.TYPE_CLASS_TEXT);
         builder.setView(newCommentInput);
 
@@ -175,6 +171,11 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 controller.reportAbuse(idC, newCommentInput.getText().toString());
+            }
+        });
+        builder.setNegativeButton(getString(R.string.block_user_popup_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
             }
         });
 
