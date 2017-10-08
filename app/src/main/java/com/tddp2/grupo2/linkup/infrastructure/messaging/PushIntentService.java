@@ -60,6 +60,7 @@ public class PushIntentService extends IntentService {
                 .setContentIntent(contentIntent)
                 .setSmallIcon(R.mipmap.ic_linkup)
                 .setContentTitle(notification.messageTitle)
+                .setVibrate(new long[] { 1000, 1000})
                 .setContentText(text)
                 .setAutoCancel(true);
 
