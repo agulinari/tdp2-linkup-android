@@ -4,9 +4,12 @@ import android.util.Log;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.AbuseReportRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.BlockRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.AbuseReportResponse;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.BlockResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.AbuseReport;
+import com.tddp2.grupo2.linkup.model.Block;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
@@ -47,6 +50,21 @@ public class LinkUserServiceImpl extends LinkUserService {
             Response<AbuseReportResponse> response = call.execute();
             if (!response.isSuccessful()) {
                 throw new ServiceException("Abuse report error");
+            }
+        } catch (Exception e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void blockUser(Block block) throws ServiceException {
+        LinkupClient linkupClient = clientService.getClient();
+        BlockRequest blockRequest = new BlockRequest(block);
+        Call<BlockResponse> call = linkupClient.profiles.blockUser(blockRequest);
+        try {
+            Response<BlockResponse> response = call.execute();
+            if (!response.isSuccessful()) {
+                throw new ServiceException("Block user error");
             }
         } catch (Exception e) {
             throw new ServiceException(e.getLocalizedMessage());

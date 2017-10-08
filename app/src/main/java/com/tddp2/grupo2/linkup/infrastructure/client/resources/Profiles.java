@@ -1,10 +1,8 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.resources;
 
-import com.tddp2.grupo2.linkup.infrastructure.client.request.AbuseReportRequest;
-import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
-import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
-import com.tddp2.grupo2.linkup.infrastructure.client.request.TokenRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.*;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.AbuseReportResponse;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.BlockResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -36,4 +34,7 @@ public interface Profiles {
 
     @POST("abuseReport")
     Call<AbuseReportResponse> reportAbuse(@Body AbuseReportRequest request);
+
+    @POST("block")
+    Call<BlockResponse> blockUser(@Body BlockRequest request);
 }

@@ -1,10 +1,8 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
-import com.tddp2.grupo2.linkup.model.AbuseReport;
-import com.tddp2.grupo2.linkup.model.ImageBitmap;
-import com.tddp2.grupo2.linkup.model.Location;
-import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.*;
+import com.tddp2.grupo2.linkup.task.BlockUserTask;
 import com.tddp2.grupo2.linkup.task.ReportAbuseTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
@@ -62,6 +60,12 @@ public class LinkProfileController extends AbstractLinkProfileController {
 
     @Override
     public void blockUser() {
-
+        Profile bloquer = this.linksService.getDatabase().getProfile();
+        Profile bloqued = this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex);
+        Block block = new Block();
+        block.setIdBlockerUser(bloquer.getFbid());
+        block.setIdBlockedUser(bloqued.getFbid());
+        BlockUserTask task = new BlockUserTask(linkUserService, this);
+        task.execute(block);
     }
 }

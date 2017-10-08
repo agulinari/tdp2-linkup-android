@@ -3,16 +3,16 @@ package com.tddp2.grupo2.linkup.task;
 import android.os.AsyncTask;
 import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.model.AbuseReport;
+import com.tddp2.grupo2.linkup.model.Block;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 
 
-public class ReportAbuseTask extends AsyncTask<Object, Void, TaskResponse>{
+public class BlockUserTask extends AsyncTask<Object, Void, TaskResponse>{
 
     private LinkUserService linkUserService;
     private AbstractLinkProfileController controller;
 
-    public ReportAbuseTask(LinkUserService linksService, AbstractLinkProfileController controller) {
+    public BlockUserTask(LinkUserService linksService, AbstractLinkProfileController controller) {
         this.linkUserService = linksService;
         this.controller = controller;
     }
@@ -20,7 +20,7 @@ public class ReportAbuseTask extends AsyncTask<Object, Void, TaskResponse>{
     @Override
     protected void onPreExecute() {
         if (controller != null) {
-            controller.initReportAbuseTask();
+            controller.initBlockUserTask();
         }
     }
 
@@ -28,7 +28,7 @@ public class ReportAbuseTask extends AsyncTask<Object, Void, TaskResponse>{
     protected TaskResponse doInBackground(Object... params) {
         TaskResponse response = new TaskResponse();
         try {
-            linkUserService.reportAbuse((AbuseReport) params[0]);
+            linkUserService.blockUser((Block) params[0]);
         } catch (ServiceException e) {
             response.setError(e.getMessage());
         }
@@ -38,9 +38,8 @@ public class ReportAbuseTask extends AsyncTask<Object, Void, TaskResponse>{
     @Override
     protected void onPostExecute(TaskResponse response) {
         if (controller != null) {
-            controller.finishReportAbuseTask();
-            controller.onReportAbuseTaskResult(response);
+            controller.finishBlockUserTask();
+            controller.onBlockUserTaskResult(response);
         }
     }
-
 }

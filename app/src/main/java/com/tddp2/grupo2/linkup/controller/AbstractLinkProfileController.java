@@ -48,12 +48,25 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
         view.hideProgress();
     }
 
+    public void finishBlockUserTask() {
+        view.hideProgress();
+    }
+
     public void onReportAbuseTaskResult(Object result) {
         TaskResponse response = (TaskResponse) result;
         if (response.hasError()) {
             view.onReportAbuseFailure();
         } else {
             view.onReportAbuseSuccess();
+        }
+    }
+
+    public void onBlockUserTaskResult(Object result) {
+        TaskResponse response = (TaskResponse) result;
+        if (response.hasError()) {
+            view.onBlockUserFailure();
+        } else {
+            view.onBlockUserSuccess();
         }
     }
 }
