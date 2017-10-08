@@ -49,11 +49,19 @@ public class PushIntentService extends IntentService {
                 0, notificationIntent,
                 PendingIntent.FLAG_CANCEL_CURRENT);
 
+        String text;
+        if (notification.motive.equals(Notification.CHAT)) {
+            text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+        }else{
+            text = notification.messageBody;
+        }
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setContentIntent(contentIntent)
                 .setSmallIcon(R.mipmap.ic_linkup)
                 .setContentTitle(notification.messageTitle)
-                .setContentText(notification.messageBody)
+                .setVibrate(new long[] { 1000, 1000})
+                .setContentText(text)
                 .setAutoCancel(true);
 
         mNotificationManager.notify("default-push", 1, mBuilder.build());

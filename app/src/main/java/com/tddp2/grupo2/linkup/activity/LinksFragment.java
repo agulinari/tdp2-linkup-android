@@ -204,12 +204,14 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     public void disableActions() {
         buttonYes.setEnabled(Boolean.FALSE);
         buttonNo.setEnabled(Boolean.FALSE);
+        superlinkButton.setEnabled(Boolean.FALSE);
     }
 
     @Override
     public void enableActions() {
         buttonYes.setEnabled(Boolean.TRUE);
         buttonNo.setEnabled(Boolean.TRUE);
+        superlinkButton.setEnabled(Boolean.TRUE);
     }
 
 
@@ -251,8 +253,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     public void showEmptyLinks() {
         linkCard.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
-        buttonYes.setEnabled(Boolean.FALSE);
-        buttonNo.setEnabled(Boolean.FALSE);
+        this.disableActions();
     }
 
     public void showMatch(String matchName) {
@@ -297,7 +298,13 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         Log.i(TAG, "Notificacion RECIBIDA");
 
         if (notification!=null) {
-            Snackbar snackbar = Snackbar.make(coordView, notification.messageBody, Snackbar.LENGTH_SHORT);
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else{
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(coordView, text, Snackbar.LENGTH_INDEFINITE);
             View snackbarView = snackbar.getView();
             snackbarView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
             snackbar.show();
