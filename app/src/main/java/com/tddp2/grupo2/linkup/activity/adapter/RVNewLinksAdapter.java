@@ -102,6 +102,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
                     Intent intent = new Intent(context, MyLinkProfileActivity.class);
+                    intent.putExtra("LINK_USER_ID", fbid.getText().toString());
                     context.startActivity(intent);
                 }
             });
