@@ -14,7 +14,7 @@ public class AbuseReportResponse {
         return abuseReport;
     }
 
-    public void setAbuseReport(AbuseReport rejection) {
+    public void setAbuseReport(AbuseReport abuseReport) {
         this.abuseReport = abuseReport;
     }
 
