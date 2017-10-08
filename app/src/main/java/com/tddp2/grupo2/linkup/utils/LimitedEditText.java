@@ -177,7 +177,7 @@ public class LimitedEditText extends EditText
 
         limit_text_paint.setColor(Color.BLACK);
 
-        limit_text_paint.setTextSize(20);
+        limit_text_paint.setTextSize(25);
 
         maximum_text_size= UNLIMITED;
 
