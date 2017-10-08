@@ -13,6 +13,8 @@ import com.tddp2.grupo2.linkup.model.Block;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
+import com.tddp2.grupo2.linkup.service.api.LinksService;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -48,7 +50,10 @@ public class LinkUserServiceImpl extends LinkUserService {
         Call<AbuseReportResponse> call = linkupClient.profiles.reportAbuse(reportAbuseRequest);
         try {
             Response<AbuseReportResponse> response = call.execute();
-            if (!response.isSuccessful()) {
+            if (response.isSuccessful()) {
+                LinksService linksService = ServiceFactory.getLinksService();
+                linksService.removeLink(abuseReport.getIdReported());
+            } else {
                 throw new ServiceException("Abuse report error");
             }
         } catch (Exception e) {
@@ -63,7 +68,10 @@ public class LinkUserServiceImpl extends LinkUserService {
         Call<BlockResponse> call = linkupClient.profiles.blockUser(blockRequest);
         try {
             Response<BlockResponse> response = call.execute();
-            if (!response.isSuccessful()) {
+            if (response.isSuccessful()) {
+                LinksService linksService = ServiceFactory.getLinksService();
+                linksService.removeLink(block.getIdBlockedUser());
+            } else {
                 throw new ServiceException("Block user error");
             }
         } catch (Exception e) {

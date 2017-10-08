@@ -30,4 +30,6 @@ public abstract class LinksService implements LinkupService{
     public abstract Database getDatabase();
 
     public abstract ImageBitmap loadImage(String fbidCandidate) throws ServiceException;
+
+    public abstract Links removeLink(String fbidCandidate);
 }
