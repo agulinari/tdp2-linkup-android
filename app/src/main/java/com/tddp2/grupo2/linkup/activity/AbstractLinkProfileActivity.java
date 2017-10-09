@@ -160,7 +160,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(Boolean.FALSE);
         final int idC = idCategory;
-        builder.setTitle(getResources().getString(R.string.report_abuse_comment_title));
+        builder.setTitle(getResources().getString(R.string.report_abuse_comment_title) + " (" + COMMENT_MAX_CHARS + " caracteres)");
 
         final LimitedEditText newCommentInput = new LimitedEditText(this);
         newCommentInput.setMaxTextSize(COMMENT_MAX_CHARS);
