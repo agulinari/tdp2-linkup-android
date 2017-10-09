@@ -7,12 +7,12 @@ public class Acceptance implements Serializable {
 
     private String fbidUser;
     private String fbidCandidate;
-    private String tipoDeLink;
+    private String typeOfLink;
 
     public Acceptance(String fbidUser, String fbidCandidate, String tipoDeLink) {
         this.fbidUser = fbidUser;
         this.fbidCandidate = fbidCandidate;
-        this.tipoDeLink = tipoDeLink;
+        this.typeOfLink = tipoDeLink;
     }
 
     public String getFbidUser() {
@@ -31,11 +31,11 @@ public class Acceptance implements Serializable {
         this.fbidCandidate = fbidCandidate;
     }
 
-    public String getTipoDeLink() {
-        return tipoDeLink;
+    public String getTypeOfLink() {
+        return typeOfLink;
     }
 
-    public void setTipoDeLink(String tipoDeLink) {
-        this.tipoDeLink = tipoDeLink;
+    public void setTypeOfLink(String tipoDeLink) {
+        this.typeOfLink = tipoDeLink;
     }
 }
