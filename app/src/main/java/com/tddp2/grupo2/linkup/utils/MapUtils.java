@@ -1,13 +1,11 @@
 package com.tddp2.grupo2.linkup.utils;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.maps.android.SphericalUtil;
-import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.model.Location;
 
 import java.text.DecimalFormat;
@@ -42,9 +40,9 @@ public class MapUtils {
         return SphericalUtil.computeOffset(loggedUserLocationLatLng, distanceInMeters / 2, heading);
     }
 
-    public static String getDistanceTextBetweenLocations(Location linkUpLocation1, Location linkUpLocation2, Context context) {
+    public static String getDistanceTextBetweenLocations(Location linkUpLocation1, Location linkUpLocation2) {
         float distanceInMeters = getDistanceBetweenLocationsInMeters(linkUpLocation1, linkUpLocation2);
-        return getDistanceTextFromMeters(distanceInMeters, context);
+        return getDistanceTextFromMeters(distanceInMeters);
     }
 
     public static float getDistanceBetweenLocationsInMeters(Location linkUpLocation1, Location linkUpLocation2) {
@@ -62,17 +60,17 @@ public class MapUtils {
         return distanceInMeters;
     }
 
-    public static String getDistanceTextFromMeters(float distanceInMeters, Context context) {
+    public static String getDistanceTextFromMeters(float distanceInMeters) {
         if (distanceInMeters <= 100) {
-            return context.getString(R.string.link_distance_close);
+            return "¡A menos de 100 metros!";
         } else {
             float distanceInKilometers = distanceInMeters / 1000;
             DecimalFormat decimalFormat = new DecimalFormat();
             decimalFormat.setMaximumFractionDigits(1);
             if (distanceInKilometers == 1.0) {
-                return context.getString(R.string.link_distance_singular, decimalFormat.format(distanceInKilometers));
+                return "A " + decimalFormat.format(distanceInKilometers) + " kilómetro";
             } else {
-                return context.getString(R.string.link_distance_plural, decimalFormat.format(distanceInKilometers));
+                return "A " + decimalFormat.format(distanceInKilometers) + " kilómetros";
             }
         }
     }

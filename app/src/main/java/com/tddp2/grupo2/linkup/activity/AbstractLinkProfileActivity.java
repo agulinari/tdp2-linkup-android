@@ -301,7 +301,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     public void updateDistance(Location loggedUserLocation, Location linkLocation) {
         float distanceInMeters = MapUtils.getDistanceBetweenLocationsInMeters(loggedUserLocation, linkLocation);
 
-        String distanceText = MapUtils.getDistanceTextFromMeters(distanceInMeters, this);
+        String distanceText = MapUtils.getDistanceTextFromMeters(distanceInMeters);
         textViewLinkDistance.setText(distanceText);
 
         LatLng centerPoint = MapUtils.getCenterPoint(loggedUserLocation, linkLocation);
