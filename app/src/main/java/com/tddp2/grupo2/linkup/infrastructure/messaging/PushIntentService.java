@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.MainActivity;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class PushIntentService extends IntentService {
 
@@ -35,6 +36,14 @@ public class PushIntentService extends IntentService {
         Log.i(TAG, "Sending notification");
 
         if (notification == null) {
+            return;
+        }
+        if (ServiceFactory.getProfileService()!=null && ServiceFactory.getProfileService().getLocalProfile()!=null){
+           String fbid = ServiceFactory.getProfileService().getLocalProfile().getFbid();
+            if (!notification.fbidTo.equals(fbid)){
+                return;
+            }
+        }else{
             return;
         }
         // First create Parcel and write your data to it
