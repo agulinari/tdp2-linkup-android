@@ -165,10 +165,10 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     public void registerNextAndPreviousListeners() {
         linkImageCard.setOnTouchListener(new OnSwipeTouchListener(activity) {
             public void onSwipeRight() {
-                controller.nextLink();
+                controller.previousLink();
             }
             public void onSwipeLeft() {
-                controller.previousLink();
+                controller.nextLink();
             }
         });
     }
