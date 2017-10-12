@@ -1,5 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
+import android.os.AsyncTask;
+
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
@@ -36,7 +38,7 @@ public class LinksController implements LinkImageControllerInterface {
     public void loadImage(){
         LoadImageTask task = new LoadImageTask(linksService, this);
         Profile p = links.getLinks().get(currentLink);
-        task.execute(p.getFbid());
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p.getFbid());
     }
 
     public void acceptCurrentLink(String tipoDeLink) {
