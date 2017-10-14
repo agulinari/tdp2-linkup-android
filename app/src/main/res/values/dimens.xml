@@ -14,4 +14,11 @@
     <dimen name="toolbar_text_size">24sp</dimen>
     <dimen name="chat_padding_between_messages">5dp</dimen>
     <dimen name="chat_padding_inside_globe">8dp</dimen>
+
+    <dimen name="premium_gold_check_height">50dp</dimen>
+    <dimen name="premium_gold_check_width">50dp</dimen>
+    <dimen name="premium_gold_check_padding_right">20dp</dimen>
+    <dimen name="premium_advice_text_size">18sp</dimen>
+    <dimen name="premium_price_title_text_size">18sp</dimen>
+    <dimen name="premium_price_text_size">30sp</dimen>
 </resources>

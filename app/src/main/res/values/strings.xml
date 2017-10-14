@@ -95,6 +95,12 @@
     <string name="report_abuse_category_3">Spam</string>
     <string name="report_abuse_category_4">Otros</string>
 
+    <string name="premium_advice_1">Superlinks ilimitados</string>
+    <string name="premium_advice_2">Prioridad de aparición en todas las búsquedas</string>
+    <string name="premium_advice_3">Sin publicidad</string>
+    <string name="premium_price_title">Membresía de por vida, a tan sólo:</string>
+    <string name="premium_price">Ar$100,00</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chat">Chat</string>

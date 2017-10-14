@@ -10,20 +10,133 @@
             android:id="@+id/premium_advice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            tools:context="com.tddp2.grupo2.linkup.activity.PremiumAdviceActivity">
+
+    <ImageView
+            android:layout_width="200dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
-            tools:context="com.tddp2.grupo2.linkup.activity.PremiumAdviceActivity">
-    <android.support.v7.widget.AppCompatButton
-            android:id="@+id/goToPremiumPayFormButton"
-            style="@style/Base.Widget.AppCompat.Button.Colored"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginTop="5dp"
-            android:padding="12dp"
-            android:layout_gravity="center_horizontal|center"
-            android:text="@string/button_go_to_premium_pay_form" xmlns:android="http://schemas.android.com/apk/res/android"/>
-        </RelativeLayout>
+            android:layout_height="100dp" app:srcCompat="@drawable/linkup_logo"
+            android:id="@+id/linkupLogoView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"/>
+        <LinearLayout
+                android:id="@+id/advice1"
+                android:orientation="horizontal"
+                android:layout_below="@+id/linkupLogoView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp">
+            <ImageView
+                    android:layout_height="@dimen/premium_gold_check_height"
+                    android:layout_width="@dimen/premium_gold_check_width"
+                    android:paddingRight="@dimen/premium_gold_check_padding_right"
+                    app:srcCompat="@drawable/checkmark_gold"
+                    android:layout_gravity="center"/>
+            <TextView
+                    android:text="@string/premium_advice_1"
+                    android:textSize="@dimen/premium_advice_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_gravity="center"/>
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/advice2"
+                android:orientation="horizontal"
+                android:layout_below="@+id/advice1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp">
+            <ImageView
+                    android:layout_height="@dimen/premium_gold_check_height"
+                    android:layout_width="@dimen/premium_gold_check_width"
+                    android:paddingRight="@dimen/premium_gold_check_padding_right"
+                    app:srcCompat="@drawable/checkmark_gold"
+                    android:layout_gravity="center"/>
+            <TextView
+                    android:text="@string/premium_advice_2"
+                    android:textSize="@dimen/premium_advice_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/advice3"
+                android:orientation="horizontal"
+                android:layout_below="@+id/advice2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp">
+            <ImageView
+                    android:layout_height="@dimen/premium_gold_check_height"
+                    android:layout_width="@dimen/premium_gold_check_width"
+                    android:paddingRight="@dimen/premium_gold_check_padding_right"
+                    app:srcCompat="@drawable/checkmark_gold"
+                    android:layout_gravity="center"/>
+            <TextView
+                    android:text="@string/premium_advice_3"
+                    android:textSize="@dimen/premium_advice_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_below="@+id/advice3"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp">
+            <TextView
+                    android:id="@+id/premium_price_title"
+                    android:text="@string/premium_price_title"
+                    android:textSize="@dimen/premium_price_title_text_size"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+
+            <TextView
+                    android:id="@+id/premium_price"
+                    android:text="@string/premium_price"
+                    android:textSize="@dimen/premium_price_text_size"
+                    android:layout_marginTop="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
+        </LinearLayout>
+
+
+
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/goToPremiumPayFormButton"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:padding="12dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/button_go_to_premium_pay_form" android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
