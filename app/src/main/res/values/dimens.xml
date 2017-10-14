@@ -21,4 +21,5 @@
     <dimen name="premium_advice_text_size">18sp</dimen>
     <dimen name="premium_price_title_text_size">18sp</dimen>
     <dimen name="premium_price_text_size">30sp</dimen>
+    <dimen name="premium_pay_type_text_size">20sp</dimen>
 </resources>

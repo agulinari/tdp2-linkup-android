@@ -5,8 +5,59 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.tddp2.grupo2.linkup.activity.PremiumPayFormActivity">
-    <com.braintreepayments.cardform.view.CardForm
-            android:id="@+id/card_form"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/payFormToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        android:minHeight="?attr/actionBarSize">
+        <TextView
+                android:id="@+id/payFormToolBarName"
+                android:textSize="@dimen/toolbar_text_size"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_pay_form_toolbar"
+                android:paddingStart="20dp"
+                android:textColor="@color/white"
+                android:layout_gravity="center"/>
+    </android.support.v7.widget.Toolbar>
+    <RelativeLayout
+            android:layout_below="@+id/payFormToolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp">
+        <TextView
+                android:id="@+id/creditCardText"
+                android:textSize="18sp"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_pay_form_credit_card"
+                android:paddingStart="20dp"
+                android:textColor="@color/black"
+                android:layout_gravity="center"/>
+
+        <com.braintreepayments.cardform.view.CardForm
+                android:id="@+id/card_form"
+                android:layout_below="@+id/creditCardText"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        <android.support.v7.widget.AppCompatButton
+                android:id="@+id/PayFormButton"
+                style="@style/Base.Widget.AppCompat.Button.Colored"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:padding="12dp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:text="@string/premium_pay_form_button" android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </RelativeLayout>
