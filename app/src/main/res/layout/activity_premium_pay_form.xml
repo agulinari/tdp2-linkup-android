@@ -5,5 +5,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:context="com.tddp2.grupo2.linkup.activity.PremiumPayFormActivity">
-
+    <com.braintreepayments.cardform.view.CardForm
+            android:id="@+id/card_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 </RelativeLayout>
