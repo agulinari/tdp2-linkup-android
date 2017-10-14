@@ -88,6 +88,7 @@
     <string name="report_abuse_comment_save">Enviar</string>
     <string name="inactive_account_popup_title">Lo sentimos, tu cuenta ha sido desactivada.</string>
     <string name="inactive_account_popup_ok">Entendido</string>
+    <string name="button_go_to_premium_pay_form">Quiero ser Premium</string>
 
     <string name="report_abuse_category_1">Lenguaje abusivo</string>
     <string name="report_abuse_category_2">Foto inapropiada</string>
@@ -100,6 +101,7 @@
     <string name="action_logout">Salir</string>
     <string name="item_perfil">Perfil</string>
     <string name="item_settings">Preferencias</string>
+    <string name="item_premium">Cuenta Premium</string>
     <string name="openDrawer">Abrir Menú</string>
     <string name="closeDrawer">Cerrar Menú</string>
     <string name="item_search_links">Buscar Links</string>

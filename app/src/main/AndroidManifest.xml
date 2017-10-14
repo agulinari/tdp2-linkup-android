@@ -74,6 +74,9 @@
         <activity
             android:name=".activity.MyLinkProfileActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PremiumAdviceActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name="com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService"
             android:exported="false"/>

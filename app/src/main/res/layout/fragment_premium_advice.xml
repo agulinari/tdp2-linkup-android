@@ -1,0 +1,29 @@
+<android.support.design.widget.CoordinatorLayout
+        android:id="@+id/premiumAdviceCoordinatorLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/premium_advice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            tools:context="com.tddp2.grupo2.linkup.activity.PremiumAdviceActivity">
+    <android.support.v7.widget.AppCompatButton
+            android:id="@+id/goToPremiumPayFormButton"
+            style="@style/Base.Widget.AppCompat.Button.Colored"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="5dp"
+            android:padding="12dp"
+            android:layout_gravity="center_horizontal|center"
+            android:text="@string/button_go_to_premium_pay_form" xmlns:android="http://schemas.android.com/apk/res/android"/>
+        </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

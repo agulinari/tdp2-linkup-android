@@ -115,6 +115,10 @@ public class LinksActivity extends AppCompatActivity {
                 fragment = new ProfileFragment();
                 currentFragment = getResources().getString(R.string.item_perfil);
                 break;
+            case R.id.drawer_premium:
+                fragment = new PremiumAdviceFragment();
+                currentFragment = getResources().getString(R.string.item_premium);
+                break;
             case R.id.drawer_logout:
                 logout();
             default:
