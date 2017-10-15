@@ -1,6 +1,8 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 
+import android.util.Log;
+
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
@@ -18,6 +20,7 @@ import retrofit2.Response;
 
 public class NotificationServiceImpl  extends NotificationService{
 
+    private static final String TAG = "NotificationServiceImpl";
     private ClientService clientService;
 
     public NotificationServiceImpl(Database database, ClientService clientService) {
@@ -50,8 +53,10 @@ public class NotificationServiceImpl  extends NotificationService{
         try {
             Response<Void> response = call.execute();
             if (response.isSuccessful()) {
+                Log.i(TAG, "Token registrado");
                 return;
             } else {
+                Log.e(TAG, "Error al registrar token "+response.code());
                 APIError error = ErrorUtils.parseError(response);
                 throw new ServiceException(error);
             }
