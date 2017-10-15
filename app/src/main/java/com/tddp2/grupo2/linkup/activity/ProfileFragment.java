@@ -17,20 +17,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.daimajia.slider.library.SliderLayout;
 import com.tddp2.grupo2.linkup.R;
+import com.tddp2.grupo2.linkup.activity.view.PictureSliderView;
 import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by agustin on 09/09/2017.
@@ -63,7 +61,7 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
     TextView textViewUserStudies;
 
     @BindView(R.id.userProfilePicture)
-    ImageView profilePicture;
+    SliderLayout profilePicture;
 
     @BindView(R.id.userCommentText)
     TextView textViewUserComment;
@@ -183,7 +181,16 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
 
     @Override
     public void updateProfilePicture(Bitmap picture) {
-        profilePicture.setImageBitmap(picture);
+        PictureSliderView pictureSliderView = new PictureSliderView(getActivity());
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        Bundle b = new Bundle();
+        b.putByteArray("image", byteArray);
+        pictureSliderView.bundle(b);
+
+        profilePicture.stopAutoCycle();
+        profilePicture.addSlider(pictureSliderView);
     }
 
     @Override
