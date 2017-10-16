@@ -59,7 +59,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 "user_birthday",
                 "user_education_history",
                 "user_work_history",
-                "user_about_me"
+                "user_about_me",
+                "user_photos"
         ));
         loginButton.registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
