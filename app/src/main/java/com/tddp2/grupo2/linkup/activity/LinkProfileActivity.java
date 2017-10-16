@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.os.Bundle;
+
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 
 public class LinkProfileActivity extends AbstractLinkProfileActivity {
@@ -15,7 +16,8 @@ public class LinkProfileActivity extends AbstractLinkProfileActivity {
 
         controller = new LinkProfileController(this);
         controller.showLinkData(String.valueOf(currentLink));
-
+        controller.loadMyLinks();
         loadMap();
     }
+
 }

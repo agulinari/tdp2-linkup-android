@@ -8,7 +8,7 @@ import com.tddp2.grupo2.linkup.task.GetMyLinksTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 
-public class MyLinksController {
+public class MyLinksController implements MyLinksControllerInterface{
     private final MyLinksService myLinksService;
     private MyLinksView view;
     private MyLinks links;

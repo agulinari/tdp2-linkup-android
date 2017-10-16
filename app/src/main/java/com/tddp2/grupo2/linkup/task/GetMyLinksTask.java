@@ -2,7 +2,7 @@ package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
 
-import com.tddp2.grupo2.linkup.controller.MyLinksController;
+import com.tddp2.grupo2.linkup.controller.MyLinksControllerInterface;
 import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.MyLinks;
@@ -13,9 +13,9 @@ public class GetMyLinksTask extends AsyncTask<Object, Void, TaskResponse> {
 
 
     private MyLinksService myLinksService;
-    private MyLinksController controller;
+    private MyLinksControllerInterface controller;
 
-    public GetMyLinksTask(MyLinksService myLinksService, MyLinksController controller) {
+    public GetMyLinksTask(MyLinksService myLinksService, MyLinksControllerInterface controller) {
         this.myLinksService = myLinksService;
         this.controller = controller;
     }

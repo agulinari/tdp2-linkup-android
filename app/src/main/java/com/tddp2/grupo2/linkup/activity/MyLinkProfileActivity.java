@@ -16,6 +16,7 @@ public class MyLinkProfileActivity extends AbstractLinkProfileActivity {
 
         controller = new MyLinkProfileController(this);
         controller.showLinkData(linkUserId);
+        controller.loadMyLinks();
     }
 
     @Override
