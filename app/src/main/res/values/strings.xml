@@ -120,5 +120,9 @@
     <string name="no_data_available">No hay candidatos para mostrar</string>
     <string name="like_it">Me gusta</string>
     <string name="ticker">ticker</string>
+    <string name="cancel">Cancelar</string>
+    <string name="recommend">Recomendar</string>
+    <string name="recommend_list">Recomendar Link a:</string>
+    <string name="share_link_button">Recomendar usuario</string>
 </resources>
 

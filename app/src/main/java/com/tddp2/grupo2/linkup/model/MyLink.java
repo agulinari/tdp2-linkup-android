@@ -102,4 +102,9 @@ public class MyLink implements Serializable, Comparable<MyLink> {
             return -1;
         }
     }
+
+    @Override
+    public String toString() {
+        return name+" "+lastName;
+    }
 }

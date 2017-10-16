@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity.view;
 
 import android.graphics.Bitmap;
 import com.tddp2.grupo2.linkup.model.Location;
+import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 public interface LinkProfileView extends BaseView {
@@ -16,4 +17,5 @@ public interface LinkProfileView extends BaseView {
     void onReportAbuseFailure();
     void onBlockUserSuccess();
     void onBlockUserFailure();
+    void onFinishLoadMyLinks(MyLinks links);
 }

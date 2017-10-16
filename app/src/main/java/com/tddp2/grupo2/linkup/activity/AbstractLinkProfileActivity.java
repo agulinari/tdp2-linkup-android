@@ -15,13 +15,17 @@ import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import com.google.android.gms.maps.*;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -31,10 +35,18 @@ import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Location;
+import com.tddp2.grupo2.linkup.model.MyLink;
+import com.tddp2.grupo2.linkup.model.MyLinks;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.LimitedEditText;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -76,11 +88,17 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     @BindView(R.id.blockuserButton)
     Button buttonBlockUser;
 
+    @BindView(R.id.shareLinkButton)
+    Button buttonShareLink;
+
     protected String TAG;
     private final int COMMENT_MAX_CHARS = 50;
     private ProgressDialog progressDialog;
     protected GoogleMap locationMap;
     protected AbstractLinkProfileController controller;
+    private int selectedLink;
+    private List<MyLink> myLinks = new ArrayList<MyLink>();
+    private ArrayAdapter<MyLink> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +126,15 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
             public void onClick(View v)
             {
                 openBlockUserPopUp();
+            }
+        });
+
+        buttonShareLink.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                openShareLinkDialog();
             }
         });
     }
@@ -178,6 +205,35 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
             public void onClick(DialogInterface dialog, int id) {
             }
         });
+
+        builder.show();
+    }
+
+    public void openShareLinkDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        adapter = new ArrayAdapter<MyLink>(this, android.R.layout.select_dialog_singlechoice, myLinks);
+
+        builder.setTitle(R.string.recommend_list)
+                .setSingleChoiceItems(adapter, 0,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                selectedLink = which;
+                            }
+                        })
+                .setPositiveButton(R.string.recommend, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
 
         builder.show();
     }
@@ -347,6 +403,22 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         showAfterTaskDialog(R.string.block_user_failure, R.string.block_user_failure_ok, false);
     }
 
+    @Override
+    public void onFinishLoadMyLinks(MyLinks links) {
+        myLinks.clear();
+        String currentFbid = controller.getFbid();
+        for (MyLink myLink : links.getLinks()){
+            if (!currentFbid.equals(myLink.getFbid())){
+                myLinks.add(myLink);
+            }
+        }
+        if (adapter!=null) {
+            adapter.clear();
+            adapter.addAll(myLinks);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     private void showAfterTaskDialog(int description, int textButton, final boolean leaveActivity) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(getString(description));
@@ -367,4 +439,5 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         AlertDialog alert = builder.create();
         alert.show();
     }
+
 }
