@@ -114,6 +114,61 @@ public class FacebookServiceImpl extends FacebookService {
         if (hasProfilePicture) {
             getAndSaveProfilePicture(profile);
         }
+
+        loadUserPhotos(getStringParam(jsonResponse, "id"), profile);
+    }
+
+    public void loadUserPhotos(String fbid, Profile profile) throws ServiceException {
+        GraphRequest request = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + fbid + "/photos?type=uploaded&fields=images"
+        );
+        GraphResponse response = request.executeAndWait();
+        if (response.getError() != null) {
+            Log.i("FacebookData", "ERROR");
+        } else {
+            JSONObject jsonResponse = response.getJSONObject();
+            Log.i("FacebookData", jsonResponse.toString());
+            JSONArray userPicturesData = getJsonArray(jsonResponse, "data");
+            if (userPicturesData.length() != 0) {
+                int numberOfPictures = (userPicturesData.length() < 5) ? userPicturesData.length() : 5;
+                for (int i = 0; i < numberOfPictures; i++) {
+                    JSONObject pictureData = getJsonArrayElement(userPicturesData, i);
+                    JSONArray pictureSizes = getJsonArray(pictureData, "images");
+                    String pictureUrl = getBestPictureSizeUrl(pictureSizes);
+                    if (pictureUrl != "") {
+                        Bitmap picture = loadPictureFormUrl(pictureUrl);
+                        if (picture != null) {
+                            int pictureId = i + 2;
+                            addImageToProfile(profile, picture, pictureId);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private String getBestPictureSizeUrl(JSONArray pictureSizes) {
+        for (int j = 0; j < pictureSizes.length(); j++) {
+            JSONObject sizeData = getJsonArrayElement(pictureSizes, j);
+            int pictureWidth = getIntParam(sizeData, "width");
+            if (pictureWidth < 600 && pictureWidth > 0) {
+                return getStringParam(sizeData, "source");
+            }
+        }
+        return "";
+    }
+
+    private void addImageToProfile(Profile profile, Bitmap picture, int pictureId) {
+        String profileImage = ImageUtils.bitmapToBase64(picture);
+
+        Image image = new Image();
+        image.setData(profileImage);
+        image.setIdImage(String.valueOf(pictureId));
+
+        List<ImageWrapper> images = profile.getImages();
+        images.add(new ImageWrapper(image));
+        profile.setImages(images);
     }
 
     private void getAndSaveProfilePicture(Profile profile) {
@@ -161,11 +216,38 @@ public class FacebookServiceImpl extends FacebookService {
         }
     }
 
+    private int getIntParam(JSONObject object, String key) {
+        try {
+            return object.getInt(key);
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter " + key);
+            return 0;
+        }
+    }
+
     private JSONObject getJsonParam(JSONObject object, String key) {
         try {
             return object.getJSONObject(key);
         } catch (JSONException e) {
             Log.i("FacebookData", "Missing parameter " + key);
+            return new JSONObject();
+        }
+    }
+
+    private JSONArray getJsonArray(JSONObject object, String key) {
+        try {
+            return object.getJSONArray(key);
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter " + key);
+            return new JSONArray();
+        }
+    }
+
+    private JSONObject getJsonArrayElement(JSONArray object, int index) {
+        try {
+            return object.getJSONObject(index);
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing index " + index);
             return new JSONObject();
         }
     }
