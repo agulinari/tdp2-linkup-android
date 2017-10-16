@@ -407,6 +407,8 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     public void onFinishLoadMyLinks(MyLinks links) {
         myLinks = links.getLinks();
         if (adapter!=null) {
+            adapter.clear();
+            adapter.addAll(myLinks);
             adapter.notifyDataSetChanged();
         }
     }
