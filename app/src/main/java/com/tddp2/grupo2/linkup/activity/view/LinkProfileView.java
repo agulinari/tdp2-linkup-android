@@ -18,4 +18,6 @@ public interface LinkProfileView extends BaseView {
     void onBlockUserSuccess();
     void onBlockUserFailure();
     void onFinishLoadMyLinks(MyLinks links);
+    void onRecommendLinkFailure();
+    void onRecommendLinkSuccess();
 }

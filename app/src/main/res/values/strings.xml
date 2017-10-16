@@ -124,5 +124,9 @@
     <string name="recommend">Recomendar</string>
     <string name="recommend_list">Recomendar Link a:</string>
     <string name="share_link_button">Recomendar usuario</string>
+    <string name="recommend_user_failure">Ha habido un error al intentar enviar la recomendación. Por favor vuelva a intentarlo</string>
+    <string name="recommend_user_failure_ok">Entendido</string>
+    <string name="recommend_user_success">La recomendación se ha enviado con éxito</string>
+    <string name="recommend_user_success_ok">Aceptar</string>
 </resources>
 

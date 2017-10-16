@@ -92,7 +92,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     private ProgressDialog progressDialog;
     protected GoogleMap locationMap;
     protected AbstractLinkProfileController controller;
-    private int selectedLink;
+    private int selectedLink = -1;
     private List<MyLink> myLinks = new ArrayList<MyLink>();
     private ArrayAdapter<MyLink> adapter;
 
@@ -221,7 +221,9 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
                 .setPositiveButton(R.string.recommend, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
+                        if (selectedLink != -1) {
+                            controller.recommendLink(myLinks.get(selectedLink));
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -406,6 +408,16 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     @Override
     public void onBlockUserFailure() {
         showAfterTaskDialog(R.string.block_user_failure, R.string.block_user_failure_ok, false);
+    }
+
+    @Override
+    public void onRecommendLinkFailure() {
+        showAfterTaskDialog(R.string.recommend_user_failure, R.string.recommend_user_failure_ok, false);
+    }
+
+    @Override
+    public void onRecommendLinkSuccess() {
+        showAfterTaskDialog(R.string.recommend_user_success, R.string.recommend_user_success_ok, false);
     }
 
     @Override
