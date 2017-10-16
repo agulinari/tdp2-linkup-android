@@ -134,8 +134,13 @@ public class FacebookServiceImpl extends FacebookService {
     }
 
     private Bitmap loadProfilePicture(String fbid, String size) {
+        String pictureUrl = "https://graph.facebook.com/" + fbid + "/picture?width=" + size;
+        return this.loadPictureFormUrl(pictureUrl);
+    }
+
+    private Bitmap loadPictureFormUrl(String pictureUrl) {
         try {
-            URL url = new URL("https://graph.facebook.com/" + fbid + "/picture?width=" + size);
+            URL url = new URL(pictureUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
             connection.connect();
