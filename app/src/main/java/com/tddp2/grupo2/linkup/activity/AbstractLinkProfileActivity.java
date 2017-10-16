@@ -17,20 +17,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import com.daimajia.slider.library.SliderLayout;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.activity.view.PictureSliderView;
 import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
@@ -42,11 +40,9 @@ import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.LimitedEditText;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public abstract class AbstractLinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -74,7 +70,7 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
     TextView textViewLinkStudies;
 
     @BindView(R.id.linkProfilePhoto)
-    ImageView imageViewLinkProfilePhoto;
+    SliderLayout imageViewLinkProfilePhoto;
 
     @BindView(R.id.linkProfileImageProgress)
     ProgressBar progressBarImage;
@@ -313,7 +309,16 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     @Override
     public void showImage(Bitmap photo) {
-        imageViewLinkProfilePhoto.setImageBitmap(photo);
+        PictureSliderView pictureSliderView = new PictureSliderView(this);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        Bundle b = new Bundle();
+        b.putByteArray("image", byteArray);
+        pictureSliderView.bundle(b);
+
+        imageViewLinkProfilePhoto.stopAutoCycle();
+        imageViewLinkProfilePhoto.addSlider(pictureSliderView);
     }
 
     @Override
