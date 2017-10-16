@@ -1,5 +1,7 @@
 notifications:
   email:
+    on_failure: never
+    on_success: never
     recipients:
       - sivori.daniel@gmail.com
       - agustinlinari@gmail.com
