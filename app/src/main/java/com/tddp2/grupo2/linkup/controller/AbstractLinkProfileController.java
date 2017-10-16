@@ -1,13 +1,16 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
+import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.MyLinks;
+import com.tddp2.grupo2.linkup.model.Recommend;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.GetMyLinksTask;
 import com.tddp2.grupo2.linkup.task.LoadImageTask;
+import com.tddp2.grupo2.linkup.task.RecommendLinkTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 
 public abstract class AbstractLinkProfileController implements LinkImageControllerInterface, MyLinksControllerInterface {
@@ -103,6 +106,29 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
     public void loadMyLinks() {
         GetMyLinksTask task = new GetMyLinksTask(myLinksService, this);
         task.execute();
+    }
+
+    public void recommendLink(MyLink myLink) {
+        RecommendLinkTask task = new RecommendLinkTask(linkUserService, this);
+        Recommend recommend = new Recommend();
+        recommend.setIdReceiverUser(myLink.getFbid());
+        recommend.setIdRecommendedUser(this.getFbid());
+        task.execute(recommend);
+    }
+
+    public void initRecommendLinkTask() {
+    }
+
+
+    public void finishRecommendLinkTask() {
+    }
+
+    public void onRecommendLinkTaskResult(TaskResponse response) {
+        if (response.hasError()) {
+            view.onRecommendLinkFailure();
+        } else {
+            view.onRecommendLinkSuccess();
+        }
     }
 }
 

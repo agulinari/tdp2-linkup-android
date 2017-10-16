@@ -1,20 +1,25 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
+
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.AbuseReportRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.BlockRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.RecommendRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.AbuseReportResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.BlockResponse;
+import com.tddp2.grupo2.linkup.infrastructure.client.response.RecommendResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.AbuseReport;
 import com.tddp2.grupo2.linkup.model.Block;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.Recommend;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -71,6 +76,23 @@ public class LinkUserServiceImpl extends LinkUserService {
             if (response.isSuccessful()) {
                 LinksService linksService = ServiceFactory.getLinksService();
                 linksService.removeLink(block.getIdBlockedUser());
+            } else {
+                throw new ServiceException("Block user error");
+            }
+        } catch (Exception e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public void recommendUser(Recommend recommend) throws ServiceException {
+        LinkupClient linkupClient = clientService.getClient();
+        RecommendRequest request = new RecommendRequest(recommend);
+        Call<RecommendResponse> call = linkupClient.profiles.recommendUser(request);
+        try {
+            Response<RecommendResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                return;
             } else {
                 throw new ServiceException("Block user error");
             }
