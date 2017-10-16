@@ -77,4 +77,9 @@ public class LinkProfileController extends AbstractLinkProfileController {
         task.execute(block);
     }
 
+    @Override
+    public String getFbid() {
+        return this.linksService.getDatabase().getLinks().getLinks().get(this.currentLinkIndex).getFbid();
+    }
+
 }

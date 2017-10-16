@@ -21,6 +21,7 @@ public abstract class AbstractLinkProfileController implements LinkImageControll
     public abstract void showLinkData(String userId);
     public abstract void reportAbuse(int idCategory, String comment);
     public abstract void blockUser();
+    public abstract String getFbid();
 
     public AbstractLinkProfileController(LinkProfileView view) {
         this.view = view;

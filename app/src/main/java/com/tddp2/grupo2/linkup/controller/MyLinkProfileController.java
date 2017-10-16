@@ -87,4 +87,9 @@ public class MyLinkProfileController extends AbstractLinkProfileController {
         BlockUserTask task = new BlockUserTask(linkUserService, this);
         task.execute(block);
     }
+
+    @Override
+    public String getFbid() {
+        return this.fbId;
+    }
 }

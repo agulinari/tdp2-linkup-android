@@ -405,7 +405,13 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     @Override
     public void onFinishLoadMyLinks(MyLinks links) {
-        myLinks = links.getLinks();
+        myLinks.clear();
+        String currentFbid = controller.getFbid();
+        for (MyLink myLink : links.getLinks()){
+            if (!currentFbid.equals(myLink.getFbid())){
+                myLinks.add(myLink);
+            }
+        }
         if (adapter!=null) {
             adapter.clear();
             adapter.addAll(myLinks);
