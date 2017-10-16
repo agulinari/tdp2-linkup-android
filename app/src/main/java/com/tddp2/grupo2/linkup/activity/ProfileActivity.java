@@ -29,6 +29,7 @@ import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 public class ProfileActivity extends BroadcastActivity implements ProfileLocationView {
     private ProgressDialog progressDialog;
@@ -126,17 +127,19 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
     }
 
     @Override
-    public void updateProfilePicture(Bitmap picture) {
-        PictureSliderView pictureSliderView = new PictureSliderView(this);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        Bundle b = new Bundle();
-        b.putByteArray("image", byteArray);
-        pictureSliderView.bundle(b);
-
+    public void updateUserPictures(List<Bitmap> pictures) {
         profilePicture.stopAutoCycle();
-        profilePicture.addSlider(pictureSliderView);
+        profilePicture.removeAllSliders();
+        for (Bitmap picture : pictures) {
+            PictureSliderView pictureSliderView = new PictureSliderView(this);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            Bundle b = new Bundle();
+            b.putByteArray("image", byteArray);
+            pictureSliderView.bundle(b);
+            profilePicture.addSlider(pictureSliderView);
+        }
     }
 
     @Override

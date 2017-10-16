@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.controller;
 import android.graphics.Bitmap;
 import com.tddp2.grupo2.linkup.activity.view.ProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
+import com.tddp2.grupo2.linkup.model.ImageWrapper;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -11,6 +12,9 @@ import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileController {
 
@@ -84,9 +88,15 @@ public class ProfileController {
         view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
 
-        String image = profile.getImages().get(0).getImage().getData();
-        Bitmap bitmap = ImageUtils.base64ToBitmap(image);
-        view.updateProfilePicture(bitmap);
+        List<Bitmap> pictures = new ArrayList<>();
+        for (ImageWrapper image : profile.getImages()) {
+            String base64Image = image.getImage().getData();
+            if (base64Image != null) {
+                Bitmap bitmap = ImageUtils.base64ToBitmap(base64Image);
+                pictures.add(bitmap);
+            }
+        }
+        view.updateUserPictures(pictures);
     }
 
     public void saveNewComment(String newComment) {

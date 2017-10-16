@@ -2,7 +2,7 @@ package com.tddp2.grupo2.linkup.activity.view;
 
 import android.graphics.Bitmap;
 
-import com.tddp2.grupo2.linkup.activity.view.BaseView;
+import java.util.List;
 
 public interface ProfileView extends BaseView {
 
@@ -12,7 +12,7 @@ public interface ProfileView extends BaseView {
     void updateEducation(String education);
     void hideEducation();
     void updateComment(String comment);
-    void updateProfilePicture(Bitmap picture);
+    void updateUserPictures(List<Bitmap> pictures);
     void updateLocationView(String locationName);
 }
 
