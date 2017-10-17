@@ -35,6 +35,10 @@ public class LinksController implements LinkImageControllerInterface {
 
     }
 
+    public Profile getCurrentLink(){
+        return this.links.getLinks().get(currentLink);
+    }
+
     public void loadImage(){
         LoadImageTask task = new LoadImageTask(linksService, this);
         Profile p = links.getLinks().get(currentLink);

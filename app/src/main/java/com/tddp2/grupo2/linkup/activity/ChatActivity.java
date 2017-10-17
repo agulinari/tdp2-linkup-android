@@ -150,7 +150,7 @@ public class ChatActivity extends BroadcastActivity {
         android.support.v7.widget.Toolbar chatToolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.chatToolbar);
         chatToolbar.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                Intent intent = new Intent(getContext(), MyLinkProfileActivity.class);
+                Intent intent = new Intent(getContext(), LinkProfileActivity.class);
                 Bundle b = new Bundle();
                 b.putString("LINK_USER_ID", linkId);
                 intent.putExtras(b);

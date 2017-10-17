@@ -32,7 +32,7 @@ public class ServiceFactory {
         LinksService linksService = new LinksServiceImpl(database, clientService);
         MyLinksService myLinksService = new MyLinksServiceImpl(database, clientService);
         NotificationService notificationService = new NotificationServiceImpl(database, clientService);
-        LinkUserService linkUserService = new LinkUserServiceImpl(clientService);
+        LinkUserService linkUserService = new LinkUserServiceImpl(database, clientService);
         save(profileService);
         save(LoginService);
         save(facebookService);

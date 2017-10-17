@@ -2,7 +2,7 @@ package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
 
-import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
+import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.Recommend;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
@@ -10,9 +10,9 @@ import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 public class RecommendLinkTask extends AsyncTask<Object, Void, TaskResponse> {
 
     private LinkUserService linkUserService;
-    private AbstractLinkProfileController controller;
+    private LinkProfileController controller;
 
-    public RecommendLinkTask(LinkUserService linksService, AbstractLinkProfileController controller) {
+    public RecommendLinkTask(LinkUserService linksService, LinkProfileController controller) {
         this.linkUserService = linksService;
         this.controller = controller;
     }

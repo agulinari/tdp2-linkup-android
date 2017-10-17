@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.service.impl;
 import android.util.Log;
 
 import com.tddp2.grupo2.linkup.exception.ServiceException;
+import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.AbuseReportRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.BlockRequest;
@@ -20,19 +21,31 @@ import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
 public class LinkUserServiceImpl extends LinkUserService {
     private ClientService clientService;
+    private Database database;
     private static String TAG = "LINK_USER_SERVICE";
 
-    public LinkUserServiceImpl(ClientService clientService) {
+    public LinkUserServiceImpl(Database database, ClientService clientService) {
+        this.database = database;
         this.clientService = clientService;
     }
 
     @Override
     public Profile loadUser(String fbid) throws ServiceException {
+
+        List<Profile> links = this.database.getLinks().getLinks();
+        for (Profile profile : links){
+            if (profile.getFbid().equals(fbid)){
+                return profile;
+            }
+        }
+
         LinkupClient linkupClient = clientService.getClient();
         Call<UserResponse> call = linkupClient.profiles.getProfile(fbid);
         try {

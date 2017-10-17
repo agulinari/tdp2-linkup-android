@@ -12,10 +12,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
@@ -27,6 +36,9 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static com.tddp2.grupo2.linkup.R.id.reloadButton;
 
@@ -140,7 +152,8 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
             {
                 Intent intent = new Intent(getContext(), LinkProfileActivity.class);
                 Bundle b = new Bundle();
-                b.putInt("currentLinkIndex", currentLinkIndex);
+                Profile currentLink = controller.getCurrentLink();
+                b.putString("LINK_USER_ID", currentLink.getFbid());
                 intent.putExtras(b);
                 startActivity(intent);
             }

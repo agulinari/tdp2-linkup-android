@@ -10,16 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.ChatActivity;
-import com.tddp2.grupo2.linkup.activity.MyLinkProfileActivity;
+import com.tddp2.grupo2.linkup.activity.LinkProfileActivity;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.NewLinkViewHolder>{
@@ -101,7 +103,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
             builder.setNegativeButton(R.string.go_to_link_profile, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
-                    Intent intent = new Intent(context, MyLinkProfileActivity.class);
+                    Intent intent = new Intent(context, LinkProfileActivity.class);
                     intent.putExtra("LINK_USER_ID", fbid.getText().toString());
                     context.startActivity(intent);
                 }

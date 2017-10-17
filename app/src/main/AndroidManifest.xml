@@ -65,14 +65,11 @@
             android:name=".activity.LinksActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.ChatActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".activity.LinkProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.MyLinkProfileActivity"
+            android:name=".activity.ChatActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PremiumAdviceActivity"

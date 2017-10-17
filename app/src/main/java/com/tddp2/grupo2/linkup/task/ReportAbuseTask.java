@@ -1,7 +1,7 @@
 package com.tddp2.grupo2.linkup.task;
 
 import android.os.AsyncTask;
-import com.tddp2.grupo2.linkup.controller.AbstractLinkProfileController;
+import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.AbuseReport;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
@@ -10,9 +10,9 @@ import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 public class ReportAbuseTask extends AsyncTask<Object, Void, TaskResponse>{
 
     private LinkUserService linkUserService;
-    private AbstractLinkProfileController controller;
+    private LinkProfileController controller;
 
-    public ReportAbuseTask(LinkUserService linksService, AbstractLinkProfileController controller) {
+    public ReportAbuseTask(LinkUserService linksService, LinkProfileController controller) {
         this.linkUserService = linksService;
         this.controller = controller;
     }
