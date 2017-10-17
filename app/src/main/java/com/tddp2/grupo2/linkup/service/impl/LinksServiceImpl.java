@@ -156,7 +156,7 @@ public class LinksServiceImpl extends LinksService{
     @Override
     public ImageBitmap loadImage(String fbidCandidate) throws ServiceException {
 
-        Bitmap bitmap = LinkupApplication.getImageCache().getBitmapFromMemCache(fbidCandidate);
+        Bitmap bitmap = getUserPictureFromCache(fbidCandidate, 1);
         if (bitmap != null){
             ImageBitmap imageBitmap = new ImageBitmap();
             imageBitmap.setImageId(fbidCandidate);
@@ -180,7 +180,7 @@ public class LinksServiceImpl extends LinksService{
                     ImageBitmap imageBitmap = new ImageBitmap();
                     imageBitmap.setImageId(fbidCandidate);
                     imageBitmap.setBitmap(bitmap);
-                    getImageCache().addBitmapToMemoryCache(fbidCandidate, bitmap);
+                    saveUserPictureToCache(fbidCandidate, 1, bitmap);
                     return imageBitmap;
                 }
             } else {
@@ -190,5 +190,19 @@ public class LinksServiceImpl extends LinksService{
         } catch (IOException e) {
             throw new ServiceException(e.getLocalizedMessage());
         }
+    }
+
+    private Bitmap getUserPictureFromCache(String fbid, int imageIndex) {
+        String key = getImageKey(fbid, imageIndex);
+        return LinkupApplication.getImageCache().getBitmapFromMemCache(key);
+    }
+
+    private void saveUserPictureToCache(String fbid, int imageIndex, Bitmap picture) {
+        String key = getImageKey(fbid, imageIndex);
+        getImageCache().addBitmapToMemoryCache(key, picture);
+    }
+
+    private String getImageKey(String fbid, int imageIndex) {
+        return fbid + ":" + String.valueOf(imageIndex);
     }
 }
