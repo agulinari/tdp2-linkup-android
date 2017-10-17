@@ -311,6 +311,8 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
 
     @Override
     public void showImage(Bitmap photo) {
+        imageViewLinkProfilePhoto.stopAutoCycle();
+        imageViewLinkProfilePhoto.removeAllSliders();
         PictureSliderView pictureSliderView = new PictureSliderView(this);
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -318,8 +320,6 @@ public abstract class AbstractLinkProfileActivity extends BroadcastActivity impl
         Bundle b = new Bundle();
         b.putByteArray("image", byteArray);
         pictureSliderView.bundle(b);
-
-        imageViewLinkProfilePhoto.stopAutoCycle();
         imageViewLinkProfilePhoto.addSlider(pictureSliderView);
     }
 

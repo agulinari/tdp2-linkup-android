@@ -140,6 +140,7 @@ public class FacebookServiceImpl extends FacebookService {
                     if (!pictureUrl.equals("")) {
                         Bitmap picture = loadPictureFormUrl(pictureUrl);
                         if (picture != null) {
+                            // 2 por el avatar y la imagen de perfil
                             int pictureId = i + 2;
                             addImageToProfile(profile, picture, pictureId);
                         }
