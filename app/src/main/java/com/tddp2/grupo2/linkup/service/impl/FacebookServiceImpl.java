@@ -115,10 +115,11 @@ public class FacebookServiceImpl extends FacebookService {
             getAndSaveProfilePicture(profile);
         }
 
-        loadUserPhotos(getStringParam(jsonResponse, "id"), profile);
+        String fbid = getStringParam(jsonResponse, "id");
+        loadUserPhotos(fbid, profile);
     }
 
-    public void loadUserPhotos(String fbid, Profile profile) throws ServiceException {
+    public void loadUserPhotos(String fbid, Profile profile) {
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + fbid + "/photos?type=uploaded&fields=images"
@@ -136,7 +137,7 @@ public class FacebookServiceImpl extends FacebookService {
                     JSONObject pictureData = getJsonArrayElement(userPicturesData, i);
                     JSONArray pictureSizes = getJsonArray(pictureData, "images");
                     String pictureUrl = getBestPictureSizeUrl(pictureSizes);
-                    if (pictureUrl != "") {
+                    if (!pictureUrl.equals("")) {
                         Bitmap picture = loadPictureFormUrl(pictureUrl);
                         if (picture != null) {
                             int pictureId = i + 2;
