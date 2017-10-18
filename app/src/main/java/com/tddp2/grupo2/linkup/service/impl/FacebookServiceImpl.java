@@ -8,6 +8,7 @@ import android.util.Log;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Image;
@@ -171,6 +172,8 @@ public class FacebookServiceImpl extends FacebookService {
         List<ImageWrapper> images = profile.getImages();
         images.add(new ImageWrapper(image));
         profile.setImages(images);
+        //tambien se guarda en cache
+        addUserPictureToCache(profile.getFbid(), pictureId, picture);
     }
 
     private void getAndSaveProfilePicture(Profile profile) {
@@ -188,6 +191,17 @@ public class FacebookServiceImpl extends FacebookService {
         images.add(new ImageWrapper(image));
         profile.setImages(images);
         profile.setAvatar(new ImageWrapper(avatarImage));
+        //tambien se guarda en cache
+        addUserPictureToCache(profile.getFbid(),1, bitmap);
+    }
+
+    private void addUserPictureToCache(String fbid, int imageIndex, Bitmap bitmap) {
+        String key = getImageKey(fbid, imageIndex);
+        LinkupApplication.getImageCache().addBitmapToMemoryCache(key, bitmap);
+    }
+
+    private String getImageKey(String fbid, int imageIndex) {
+        return fbid + ":" + String.valueOf(imageIndex);
     }
 
     private Bitmap loadProfilePicture(String fbid, String size) {
