@@ -15,8 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.daimajia.slider.library.SliderLayout;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +29,9 @@ import com.tddp2.grupo2.linkup.model.Profile;
 
 import java.io.ByteArrayOutputStream;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ProfileActivity extends BroadcastActivity implements ProfileLocationView {
     private ProgressDialog progressDialog;
@@ -127,6 +129,10 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
     }
 
     @Override
+    public void loadUserPictures() {
+
+    }
+
     public void updateUserPictures(List<Bitmap> pictures) {
         profilePicture.stopAutoCycle();
         profilePicture.removeAllSliders();
@@ -255,6 +261,11 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
     public void updateLocationView(String locationName) {
         cardViewUserLocation.setVisibility(View.VISIBLE);
         textViewUserLocation.setText(locationName);
+    }
+
+    @Override
+    public void showImage(Bundle b, int number) {
+
     }
 
     @Override

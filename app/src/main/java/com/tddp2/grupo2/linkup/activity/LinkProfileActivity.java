@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -43,7 +42,6 @@ import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.LimitedEditText;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -326,15 +324,10 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     }
 
     @Override
-    public void showImage(Bitmap photo) {
+    public void showImage(Bundle b) {
         imageViewLinkProfilePhoto.stopAutoCycle();
         imageViewLinkProfilePhoto.removeAllSliders();
         PictureSliderView pictureSliderView = new PictureSliderView(this);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        Bundle b = new Bundle();
-        b.putByteArray("image", byteArray);
         pictureSliderView.bundle(b);
         imageViewLinkProfilePhoto.addSlider(pictureSliderView);
     }

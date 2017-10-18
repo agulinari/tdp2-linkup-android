@@ -1,8 +1,6 @@
 package com.tddp2.grupo2.linkup.activity.view;
 
-import android.graphics.Bitmap;
-
-import java.util.List;
+import android.os.Bundle;
 
 public interface ProfileView extends BaseView {
 
@@ -12,7 +10,8 @@ public interface ProfileView extends BaseView {
     void updateEducation(String education);
     void hideEducation();
     void updateComment(String comment);
-    void updateUserPictures(List<Bitmap> pictures);
+    void loadUserPictures();
     void updateLocationView(String locationName);
+    void showImage(Bundle b, int number);
 }
 

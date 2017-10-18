@@ -1,9 +1,10 @@
 package com.tddp2.grupo2.linkup.controller;
 
+import android.os.Bundle;
+
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
 import com.tddp2.grupo2.linkup.model.AbuseReport;
 import com.tddp2.grupo2.linkup.model.Block;
-import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.MyLinks;
@@ -98,8 +99,8 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
     }
 
     public void loadImage(String fbidCandidate) {
-        LoadImageTask task = new LoadImageTask(linksService, this);
-        task.execute(fbidCandidate);
+        LoadImageTask task = new LoadImageTask(linksService, this, false);
+        task.execute(fbidCandidate, 1);
     }
 
     public void initLoadImageTask() {
@@ -113,14 +114,10 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
     @Override
     public void onLoadImageResult(TaskResponse response) {
         if (response.hasError()) {
-            if (this.fbId.equals(response.getError())){
                 view.showImage(null);
-            }
         } else {
-            ImageBitmap image = (ImageBitmap)response.getResponse();
-            if (this.fbId.equals(image.getImageId())) {
-                view.showImage(image.getBitmap());
-            }
+            Bundle bundle = (Bundle)response.getResponse();
+            view.showImage(bundle);
         }
     }
 

@@ -40,9 +40,9 @@ public class LinksController implements LinkImageControllerInterface {
     }
 
     public void loadImage(){
-        LoadImageTask task = new LoadImageTask(linksService, this);
+        LoadImageTask task = new LoadImageTask(linksService, this, true);
         Profile p = links.getLinks().get(currentLink);
-        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p.getFbid());
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p.getFbid(), 1);
     }
 
     public void acceptCurrentLink(String tipoDeLink) {

@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -17,9 +16,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.daimajia.slider.library.SliderLayout;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.PictureSliderView;
@@ -28,12 +30,9 @@ import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-/**
- * Created by agustin on 09/09/2017.
- */
 
 public class ProfileFragment extends BroadcastFragment implements ProfileLocationView {
 
@@ -181,18 +180,12 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
     }
 
     @Override
-    public void updateUserPictures(List<Bitmap> pictures) {
+    public void loadUserPictures() {
         profilePicture.stopAutoCycle();
         profilePicture.removeAllSliders();
-        for (Bitmap picture : pictures) {
-            PictureSliderView pictureSliderView = new PictureSliderView(getActivity());
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            Bundle b = new Bundle();
-            b.putByteArray("image", byteArray);
-            pictureSliderView.bundle(b);
-            profilePicture.addSlider(pictureSliderView);
+
+        for (int i = 1; i<=5; i++){
+            controller.loadImage(i);
         }
     }
 
@@ -323,6 +316,13 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
     public void updateLocationView(String locationName) {
         cardViewUserLocation.setVisibility(View.VISIBLE);
         textViewUserLocation.setText(locationName);
+    }
+
+    @Override
+    public void showImage(Bundle b, int number) {
+            PictureSliderView pictureSliderView = new PictureSliderView(getActivity());
+            pictureSliderView.bundle(b);
+            profilePicture.addSlider(pictureSliderView);
     }
 
     private void showPopUp(String message) {

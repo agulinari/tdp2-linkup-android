@@ -1,29 +1,37 @@
 package com.tddp2.grupo2.linkup.controller;
 
-import android.graphics.Bitmap;
+import android.os.Bundle;
+
 import com.tddp2.grupo2.linkup.activity.view.ProfileView;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
-import com.tddp2.grupo2.linkup.model.ImageWrapper;
 import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
+import com.tddp2.grupo2.linkup.task.LoadImageTask;
+import com.tddp2.grupo2.linkup.task.LoadImageTaskResponse;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
-import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ProfileController {
+public class ProfileController implements LinkImageControllerInterface{
 
     private ProfileService profileService;
+    private LinksService linksService;
     private ProfileView view;
 
     public ProfileController(ProfileView view) {
         this.profileService = ServiceFactory.getProfileService();
+        this.linksService = ServiceFactory.getLinksService();
         this.view = view;
+    }
+
+
+    public void loadImage(int num) {
+        Profile profile = this.profileService.getLocalProfile();
+        LoadImageTask task = new LoadImageTask(linksService, this, false);
+        task.execute(profile.getFbid(), num);
     }
 
     public void saveProfile(String comments) {
@@ -87,16 +95,7 @@ public class ProfileController {
 
         view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
-
-        List<Bitmap> pictures = new ArrayList<>();
-        for (ImageWrapper image : profile.getImages()) {
-            String base64Image = image.getImage().getData();
-            if (base64Image != null) {
-                Bitmap bitmap = ImageUtils.base64ToBitmap(base64Image);
-                pictures.add(bitmap);
-            }
-        }
-        view.updateUserPictures(pictures);
+        view.loadUserPictures();
     }
 
     public void saveNewComment(String newComment) {
@@ -110,5 +109,26 @@ public class ProfileController {
     public void reloadDataFromFacebook() {
         UpdateFromFacebookTask task = new UpdateFromFacebookTask(profileService, this);
         task.execute();
+    }
+
+    @Override
+    public void initLoadImageTask() {
+
+    }
+
+    @Override
+    public void finishLoadImageTask() {
+
+    }
+
+    @Override
+    public void onLoadImageResult(TaskResponse response) {
+        LoadImageTaskResponse imageResponse = (LoadImageTaskResponse) response;
+        if (imageResponse.hasError()) {
+            view.showImage(null, 0);
+        } else {
+            Bundle b = (Bundle)imageResponse.getResponse();
+            view.showImage(b, imageResponse.number);
+        }
     }
 }
