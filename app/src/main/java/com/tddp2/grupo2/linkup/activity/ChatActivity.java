@@ -10,15 +10,30 @@ import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
+import com.tddp2.grupo2.linkup.utils.BannedWords;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
+
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getContext;
 
@@ -32,11 +47,13 @@ public class ChatActivity extends BroadcastActivity {
     private String linkId;
     private String chatId;
     private DatabaseReference mDatabase;
+    private Pattern urlRegex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        urlRegex = Pattern.compile("(?i)^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!(?:10|127)(?:\\.\\d{1,3}){3})(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))\\.?)(?::\\d{2,5})?(?:[/?#]\\S*)?$");
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         userId = getIntent().getStringExtra("USER_ID");
@@ -162,7 +179,10 @@ public class ChatActivity extends BroadcastActivity {
     private void postMessage(String message, final String chatId) {
         // Read the input field and push a new instance
         // of ChatMessage to the Firebase database
-        final ChatMessage chatMessage = new ChatMessage(message, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), userId, linkId);
+
+        String sanitizedMessage = this.sanitizeMessage(message);
+
+        final ChatMessage chatMessage = new ChatMessage(sanitizedMessage, FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), userId, linkId);
 
         mDatabase.child("chats")
                 .child(chatId)
@@ -191,6 +211,27 @@ public class ChatActivity extends BroadcastActivity {
                 .push()
                 .setValue(n);
 
+    }
+
+    private String sanitizeMessage(String message) {
+        StringTokenizer st = new StringTokenizer(message, " ");
+        StringBuilder sb = new StringBuilder(message.length());
+        while (st.hasMoreTokens()) {
+            if (sb.length() > 0){
+                sb.append(" ");
+            }
+            String token = st.nextToken();
+            if (BannedWords.isBadWord(token)){
+                token = token.replaceAll(".", "*");
+            }
+
+            Matcher matcher = urlRegex.matcher(token);
+            if (matcher.find()) {
+                token = token.replaceAll(".", "*");
+            }
+            sb.append(token);
+        }
+        return sb.toString();
     }
 
     private void likeMessage(int position) {
