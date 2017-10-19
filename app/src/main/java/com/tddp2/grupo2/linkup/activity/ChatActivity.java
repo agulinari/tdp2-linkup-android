@@ -221,7 +221,7 @@ public class ChatActivity extends BroadcastActivity {
                 sb.append(" ");
             }
             String token = st.nextToken();
-            if (BannedWords.isBadWord(token)){
+            if (BannedWords.isBadWord(token.toLowerCase())){
                 token = token.replaceAll(".", "*");
             }
 
