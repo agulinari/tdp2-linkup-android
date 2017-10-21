@@ -211,6 +211,7 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
         searchFemales = settings.isSearchFemales();
         notifications = settings.isNotifications();
         invisible = settings.isInvisible();
+        noPublicidad = settings.isBlockAds();
 
         seekBarDistance.setMinValue(1).setMaxValue(100).setMinStartValue(maxDistance).apply();
         seekBarAge.setMinValue(18).setMaxValue(99).setMinStartValue(minAge).setMaxStartValue(maxAge).apply();
@@ -218,8 +219,15 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
         switchFemales.setChecked(searchFemales);
         switchMales.setChecked(searchMales);
         switchInvisible.setChecked(invisible);
-        switchPublicidad.setChecked(noPublicidad);
         switchNotifications.setChecked(notifications);
+
+        if ((localProfile != null) && !(localProfile.getControl().getIsPremium())) {
+            switchPublicidad.setChecked(false);
+            switchPublicidad.setEnabled(false);
+        } else {
+            switchPublicidad.setChecked(noPublicidad);
+            switchPublicidad.setEnabled(true);
+        }
     }
 
     /* On Click button saveProfile */
