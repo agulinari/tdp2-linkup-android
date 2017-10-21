@@ -111,6 +111,10 @@
     <string name="premium_pay_form_credit_card_valid">Tarjetas de crédito aceptadas:</string>
     <string name="premium_card_data">Ingrese los datos de su tarjeta:</string>
     <string name="premium_pay_form_button">Confirmar pago</string>
+    <string name="premium_pay_attempt_success_title">¡Operación exitosa!</string>
+    <string name="premium_pay_attempt_failure_title">Ha ocurrido un error</string>
+    <string name="premium_pay_attempt_success_text">Ya puedes comenzar a disfrutar de todos tus beneficios.</string>
+    <string name="premium_pay_attempt_failure_text">No hemos podido procesar la solicitud, por favor vuelva a intentarlo.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

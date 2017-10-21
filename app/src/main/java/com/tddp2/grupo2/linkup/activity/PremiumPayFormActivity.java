@@ -4,11 +4,11 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.braintreepayments.cardform.utils.CardType;
@@ -87,7 +87,9 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
     }
 
     @Override
-    public void goToNext() {}
+    public void goToNext() {
+        showAfterPayDialog(true);
+    }
 
     @Override
     public Context getContext() {
@@ -96,7 +98,7 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
 
     @Override
     public void onError(String errorMsg) {
-        Toast.makeText(getBaseContext(), errorMsg, Toast.LENGTH_SHORT).show();
+        showAfterPayDialog(false);
     }
 
     @Override
@@ -119,6 +121,32 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
         builder.setPositiveButton(getString(R.string.pop_up_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    private void showAfterPayDialog(boolean success) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        int title = success ? R.string.premium_pay_attempt_success_title : R.string.premium_pay_attempt_failure_title;
+        builder.setTitle(title);
+        int text = success ? R.string.premium_pay_attempt_success_text : R.string.premium_pay_attempt_failure_text;
+        builder.setMessage(getString(text));
+        builder.setCancelable(Boolean.FALSE);
+        final boolean leaveActivity = success;
+        builder.setPositiveButton(getString(R.string.save_settings_ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                if (leaveActivity) {
+                    Intent intent = new Intent(getContext(), LinksActivity.class);
+                    Notification notification = new Notification();
+                    intent.putExtra("notification", notification);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         });
         AlertDialog alert = builder.create();
