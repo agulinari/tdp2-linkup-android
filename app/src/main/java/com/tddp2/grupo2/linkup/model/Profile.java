@@ -21,6 +21,7 @@ public class Profile implements Serializable {
     private ImageWrapper avatar;
     private Settings settings = new Settings();
     private Location location = new Location();
+    private Control control = new Control();
 
     public String getFbid() {
         return fbid;
@@ -132,5 +133,13 @@ public class Profile implements Serializable {
 
     public void setAvatar(ImageWrapper avatar) {
         this.avatar = avatar;
+    }
+
+    public Control getControl() {
+        return this.control;
+    }
+
+    public void setControl(Control control) {
+        this.control = control;
     }
 }

@@ -29,4 +29,6 @@ public abstract class ProfileService implements LinkupService{
     public abstract void updateFromFacebook(Profile profile) throws ServiceException;
 
     public abstract void saveLocation(com.tddp2.grupo2.linkup.model.Location location);
+
+    public abstract void upgradeAccountType() throws ServiceException;
 }

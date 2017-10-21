@@ -1,23 +1,23 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
-
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PostUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
+import com.tddp2.grupo2.linkup.infrastructure.client.request.UpgradeAccountRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
+import com.tddp2.grupo2.linkup.model.Control;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Response;
+
+import java.io.IOException;
 
 public class ProfileServiceImpl extends ProfileService {
 
@@ -90,5 +90,33 @@ public class ProfileServiceImpl extends ProfileService {
         Profile profile = this.getLocalProfile();
         profile.setLocation(location);
         this.database.setProfile(profile);
+    }
+
+    @Override
+    public void upgradeAccountType() throws ServiceException {
+        Profile profile = this.database.getProfile();
+        if (profile == null) {
+            return;
+        }
+
+        LinkupClient linkupClient = clientService.getClient();
+        UpgradeAccountRequest request = new UpgradeAccountRequest(profile.getFbid());
+        Call<UserResponse> call = linkupClient.profiles.upgradeAccount(request);
+        try {
+            Response<UserResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                if (response.body() != null) {
+                    Log.i("ACCOUNT TYPE", response.body().toString());
+                }
+                Control control = profile.getControl();
+                control.setIsPremium(true);
+                profile.setControl(control);
+                saveUser(profile);
+            } else {
+                throw new ServiceException(response.message());
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
     }
 }

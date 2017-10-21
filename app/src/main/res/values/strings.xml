@@ -89,6 +89,7 @@
     <string name="inactive_account_popup_title">Lo sentimos, tu cuenta ha sido desactivada.</string>
     <string name="inactive_account_popup_ok">Entendido</string>
     <string name="button_go_to_premium_pay_form">Quiero ser Premium</string>
+    <string name="button_pay_loading_text">Procesando solicitud</string>
 
     <string name="report_abuse_category_1">Lenguaje abusivo</string>
     <string name="report_abuse_category_2">Foto inapropiada</string>
