@@ -236,7 +236,6 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
             settings.setSearchMales(searchMales);
             settings.setNotifications(notifications);
             settings.setInvisible(invisible);
-            settings.setAccountType("Basic");
             settings.setBlockAds(noPublicidad);
             controller.saveProfile(settings);
         }

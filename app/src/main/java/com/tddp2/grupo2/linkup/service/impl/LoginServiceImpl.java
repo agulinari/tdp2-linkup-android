@@ -123,8 +123,8 @@ public class LoginServiceImpl extends LoginService {
             Log.i("LOGIN SERVICE","OTRO USUARIO");
             return false;
         }
-        String accountType = profile.getSettings().getAccountType();
-        if (accountType == null || accountType.isEmpty()){
+        Boolean isPremium = profile.getControl().getIsPremium();
+        if (isPremium == null) {
             Log.i("LOGIN SERVICE","ACCOUNT NULL");
             return false;
         }else{

@@ -39,8 +39,8 @@ public class ProfileServiceImpl extends ProfileService {
             if (response.isSuccessful()) {
                 //Save User
                 Profile profileResponse = response.body().getUser();
-                String accountType = profileResponse.getSettings().getAccountType();
-                profile.getSettings().setAccountType(accountType);
+                Boolean isPremium = profileResponse.getControl().getIsPremium();
+                profile.getControl().setIsPremium(isPremium);
                 saveUser(profile);
             } else {
                 //APIError error = ErrorUtils.parseError(response);
@@ -62,7 +62,7 @@ public class ProfileServiceImpl extends ProfileService {
             if (response.isSuccessful()) {
                 //Save User
                 Profile profileResponse = response.body().getUser();
-                Log.i("ACCOUNT TYPE", profileResponse.getSettings().getAccountType());
+                Log.i("ACCOUNT TYPE", (profileResponse.getControl().getIsPremium()) ? "premium" : "regular");
 
                 saveUser(profile);
             } else {

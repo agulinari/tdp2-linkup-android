@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class Control implements Serializable {
     //private boolean isActive = true;
-    private boolean isPremium = false;
+    private Boolean isPremium = null;
     //private String token = "";
     //private int availableSuperlinks = 5;
     //deactivationTime { type : Date, default: null }
