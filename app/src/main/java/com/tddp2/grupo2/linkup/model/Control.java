@@ -18,7 +18,7 @@ public class Control implements Serializable {
         this.isActive = isActive;
     }
 
-    public boolean getIsPremium() {
+    public Boolean getIsPremium() {
         return isPremium;
     }
 

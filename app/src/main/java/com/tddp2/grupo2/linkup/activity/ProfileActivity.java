@@ -130,6 +130,10 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
     @Override
     public void loadUserPictures() {
+        profilePicture.stopAutoCycle();
+        profilePicture.removeAllSliders();
+
+        controller.loadImage(1);
 
     }
 
@@ -265,7 +269,9 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
     @Override
     public void showImage(Bundle b, int number) {
-
+        PictureSliderView pictureSliderView = new PictureSliderView(this);
+        pictureSliderView.bundle(b);
+        profilePicture.addSlider(pictureSliderView);
     }
 
     @Override
