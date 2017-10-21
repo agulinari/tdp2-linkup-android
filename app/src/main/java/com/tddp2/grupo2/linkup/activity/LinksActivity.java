@@ -15,11 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 public class LinksActivity extends AppCompatActivity {
 
@@ -36,7 +36,6 @@ public class LinksActivity extends AppCompatActivity {
         Notification n = getIntent().getParcelableExtra("notification");
 
         setContentView(R.layout.activity_main);
-
         fragment = null;
 
         resolveFragment(n);
@@ -68,6 +67,11 @@ public class LinksActivity extends AppCompatActivity {
         };
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+
+        Boolean isPremium = ServiceFactory.getProfileService().getLocalProfile().getControl().getIsPremium();
+        Log.i(TAG, isPremium ? "premium user" : "regular user");
+        MenuItem premiumMenuOption = navigationView.getMenu().findItem(R.id.drawer_premium);
+        premiumMenuOption.setVisible(!isPremium);
     }
 
     private void resolveFragment(Notification n) {

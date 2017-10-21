@@ -1,12 +1,11 @@
 package com.tddp2.grupo2.linkup.activity;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.*;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
@@ -134,11 +133,15 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
         int text = success ? R.string.premium_pay_attempt_success_text : R.string.premium_pay_attempt_failure_text;
         builder.setMessage(getString(text));
         builder.setCancelable(Boolean.FALSE);
-        final boolean leaveActivity = success;
+        final boolean successOperation = success;
         builder.setPositiveButton(getString(R.string.save_settings_ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                if (leaveActivity) {
+                if (successOperation) {
+                    NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
+                    MenuItem premiumMenuOption = navigationView.getMenu().findItem(R.id.drawer_premium);
+                    premiumMenuOption.setVisible(false);
+
                     Intent intent = new Intent(getContext(), LinksActivity.class);
                     Notification notification = new Notification();
                     intent.putExtra("notification", notification);
@@ -146,7 +149,6 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
                     startActivity(intent);
                     finish();
                 }
-
             }
         });
         AlertDialog alert = builder.create();

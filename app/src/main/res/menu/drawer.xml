@@ -29,6 +29,7 @@
         <item
             android:id="@+id/drawer_premium"
             android:checked="false"
+            android:visible="true"
             android:icon="@drawable/ic_stars_black_24dp"
             android:title="@string/item_premium" />
 
