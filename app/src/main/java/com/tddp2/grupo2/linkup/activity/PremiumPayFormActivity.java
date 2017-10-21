@@ -44,8 +44,6 @@ public class PremiumPayFormActivity extends BroadcastActivity implements BaseVie
                 .cvvRequired(true)
                 .postalCodeRequired(false)
                 .mobileNumberRequired(false)
-                .mobileNumberExplanation("SMS is required on this number")
-                .actionLabel("Purchase")
                 .setup(this);
 
 
