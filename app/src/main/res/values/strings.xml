@@ -90,6 +90,10 @@
     <string name="inactive_account_popup_ok">Entendido</string>
     <string name="button_go_to_premium_pay_form">Quiero ser Premium</string>
     <string name="button_pay_loading_text">Procesando solicitud</string>
+    <string name="pay_missing_fields">Por favor, complete todos los campos para continuar</string>
+    <string name="pay_invalid_card">Por favor, ingrese una tarjeta de crédito Visa o MasterCard válida</string>
+
+    <string name="pop_up_ok">Entendido</string>
 
     <string name="report_abuse_category_1">Lenguaje abusivo</string>
     <string name="report_abuse_category_2">Foto inapropiada</string>
