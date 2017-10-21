@@ -14,6 +14,7 @@ public class Settings implements Serializable {
     private boolean notifications = false;
     private boolean invisible = false ;
     private String accountType;
+    private boolean blockAds = false;
 
     public int getMaxDistance() {
         return maxDistance;
@@ -85,5 +86,13 @@ public class Settings implements Serializable {
 
     public void setAccountType(String accountType) {
         this.accountType = accountType;
+    }
+
+    public boolean isBlockAds() {
+        return blockAds;
+    }
+
+    public void setBlockAds(boolean blockAds) {
+        this.blockAds = blockAds;
     }
 }

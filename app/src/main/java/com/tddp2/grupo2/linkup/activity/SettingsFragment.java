@@ -74,6 +74,9 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
     @BindView(R.id.switch_invisible)
     Switch switchInvisible;
 
+    @BindView(R.id.switch_publicidad)
+    Switch switchPublicidad;
+
     @BindView(R.id.btn_update)
     Button buttonUpdate;
 
@@ -89,6 +92,7 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
     private boolean searchFemales = false;
     private boolean notifications = false;
     private boolean invisible = false;
+    private boolean noPublicidad = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -166,6 +170,13 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
             }
         });
 
+        switchPublicidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                noPublicidad = isChecked;
+            }
+        });
+
         buttonUpdate.setOnClickListener(new Button.OnClickListener()
         {
             @Override
@@ -207,6 +218,7 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
         switchFemales.setChecked(searchFemales);
         switchMales.setChecked(searchMales);
         switchInvisible.setChecked(invisible);
+        switchPublicidad.setChecked(noPublicidad);
         switchNotifications.setChecked(notifications);
     }
 
@@ -225,6 +237,7 @@ public class SettingsFragment extends BroadcastFragment implements BaseView {
             settings.setNotifications(notifications);
             settings.setInvisible(invisible);
             settings.setAccountType("Basic");
+            settings.setBlockAds(noPublicidad);
             controller.saveProfile(settings);
         }
     }

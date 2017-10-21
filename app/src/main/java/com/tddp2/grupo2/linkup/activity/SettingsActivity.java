@@ -57,6 +57,9 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
     @BindView(R.id.switch_invisible)
     Switch switchInvisible;
 
+    @BindView(R.id.switch_publicidad)
+    Switch switchPublicidad;
+
     SettingsController controller;
 
     private ProgressDialog progressDialog;
@@ -69,6 +72,7 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
     private boolean searchFemales = false;
     private boolean notifications = false;
     private boolean invisible = false;
+    private boolean noPublicidad = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +135,13 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
                 invisible = isChecked;
             }
         });
+
+        switchPublicidad.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                noPublicidad = isChecked;
+            }
+        });
     }
 
     private void initSettings() {
@@ -147,6 +158,7 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
         searchFemales = settings.isSearchFemales();
         notifications = settings.isNotifications();
         invisible = settings.isInvisible();
+        switchPublicidad.setChecked(noPublicidad);
 
         seekBarDistance.setMinValue(1).setMaxValue(100).setMinStartValue(maxDistance).apply();
         seekBarAge.setMinValue(18).setMaxValue(99).setMinStartValue(minAge).setMaxStartValue(maxAge).apply();
@@ -171,6 +183,7 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
             settings.setSearchMales(searchMales);
             settings.setNotifications(notifications);
             settings.setInvisible(invisible);
+            settings.setBlockAds(noPublicidad);
             controller.createProfile(settings);
         }
     }
