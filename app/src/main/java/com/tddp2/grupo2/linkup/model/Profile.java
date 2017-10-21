@@ -8,7 +8,6 @@ import java.util.List;
 public class Profile implements Serializable {
 
     private String fbid;
-    private String token;
     private String firstName;
     private String lastName;
     private String birthday;
@@ -29,14 +28,6 @@ public class Profile implements Serializable {
 
     public void setFbid(String fbid) {
         this.fbid = fbid;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getFirstName() {

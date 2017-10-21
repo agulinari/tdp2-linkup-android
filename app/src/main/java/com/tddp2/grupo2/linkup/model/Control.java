@@ -4,19 +4,19 @@ import java.io.Serializable;
 
 
 public class Control implements Serializable {
-    //private boolean isActive = true;
+    private boolean isActive = true;
     private Boolean isPremium = null;
-    //private String token = "";
-    //private int availableSuperlinks = 5;
+    private String token = "";
+    private int availableSuperlinks = 5;
     //deactivationTime { type : Date, default: null }
 
-   /* public boolean getIsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
-    }*/
+    }
 
     public boolean getIsPremium() {
         return isPremium;
@@ -26,7 +26,7 @@ public class Control implements Serializable {
         this.isPremium = isPremium;
     }
 
-    /*public String getToken() {
+    public String getToken() {
         return token;
     }
 
@@ -40,5 +40,5 @@ public class Control implements Serializable {
 
     public void setAvailableSuperlinks(int availableSuperlinks) {
         this.availableSuperlinks = availableSuperlinks;
-    }*/
+    }
 }

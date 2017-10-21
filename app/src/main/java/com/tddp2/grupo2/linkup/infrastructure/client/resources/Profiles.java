@@ -26,7 +26,7 @@ public interface Profiles {
     @GET("image/{id}")
     Call<ImageResponse> getImage(@Path("id") String fbid);
 
-    @PUT("token")
+    @PUT("user")
     Call<Void> updateToken(@Body TokenRequest request);
 
     @POST("abuseReport")
