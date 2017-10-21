@@ -17,6 +17,9 @@ public interface Profiles {
     @PUT("user")
     Call<UserResponse> updateProfile(@Body PutUserRequest request);
 
+    @PUT("user")
+    Call<UserResponse> upgradeAccount(@Body UpgradeAccountRequest request);
+
     @GET("user/{id}")
     Call<UserResponse> getProfile(@Path("id") String fbid);
 
@@ -37,7 +40,4 @@ public interface Profiles {
 
     @POST("recommend")
     Call<RecommendResponse> recommendUser(@Body RecommendRequest request);
-
-    @PUT("userprofile")
-    Call<UserResponse> upgradeAccount(@Body UpgradeAccountRequest request);
 }
