@@ -8,12 +8,14 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.LoadImageTask;
-import com.tddp2.grupo2.linkup.task.LoadImageTaskResponse;
+import com.tddp2.grupo2.linkup.task.LoadImagesTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileController implements LinkImageControllerInterface{
 
@@ -28,10 +30,10 @@ public class ProfileController implements LinkImageControllerInterface{
     }
 
 
-    public void loadImage(int num) {
+    public void loadImages() {
         Profile profile = this.profileService.getLocalProfile();
-        LoadImageTask task = new LoadImageTask(linksService, this, false);
-        task.execute(profile.getFbid(), num);
+        LoadImagesTask task = new LoadImagesTask(linksService, this);
+        task.execute(profile.getFbid());
     }
 
     public void saveProfile(String comments) {
@@ -113,22 +115,21 @@ public class ProfileController implements LinkImageControllerInterface{
 
     @Override
     public void initLoadImageTask() {
-
+        view.showLoadingImage();
     }
 
     @Override
     public void finishLoadImageTask() {
-
+        view.hideLoadingImage();
     }
 
     @Override
     public void onLoadImageResult(TaskResponse response) {
-        LoadImageTaskResponse imageResponse = (LoadImageTaskResponse) response;
-        if (imageResponse.hasError()) {
-            view.showImage(null, 0);
+        if (response.hasError()) {
+            view.showImage(new ArrayList<Bundle>());
         } else {
-            Bundle b = (Bundle)imageResponse.getResponse();
-            view.showImage(b, imageResponse.number);
+            List<Bundle> bundles = (List<Bundle>)response.getResponse();
+            view.showImage(bundles);
         }
     }
 }

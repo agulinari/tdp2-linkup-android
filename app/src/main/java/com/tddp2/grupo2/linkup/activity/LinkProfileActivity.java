@@ -324,12 +324,14 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     }
 
     @Override
-    public void showImage(Bundle b) {
-        imageViewLinkProfilePhoto.stopAutoCycle();
-        imageViewLinkProfilePhoto.removeAllSliders();
-        PictureSliderView pictureSliderView = new PictureSliderView(this);
-        pictureSliderView.bundle(b);
-        imageViewLinkProfilePhoto.addSlider(pictureSliderView);
+    public void showImage(List<Bundle> bundles) {
+        for (Bundle b : bundles) {
+            imageViewLinkProfilePhoto.stopAutoCycle();
+            imageViewLinkProfilePhoto.removeAllSliders();
+            PictureSliderView pictureSliderView = new PictureSliderView(this);
+            pictureSliderView.bundle(b);
+            imageViewLinkProfilePhoto.addSlider(pictureSliderView);
+        }
     }
 
     @Override

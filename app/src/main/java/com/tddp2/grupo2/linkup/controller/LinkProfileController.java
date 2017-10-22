@@ -16,11 +16,14 @@ import com.tddp2.grupo2.linkup.service.api.MyLinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.BlockUserTask;
 import com.tddp2.grupo2.linkup.task.GetMyLinksTask;
-import com.tddp2.grupo2.linkup.task.LoadImageTask;
+import com.tddp2.grupo2.linkup.task.LoadImagesTask;
 import com.tddp2.grupo2.linkup.task.LoadLinkUserTask;
 import com.tddp2.grupo2.linkup.task.RecommendLinkTask;
 import com.tddp2.grupo2.linkup.task.ReportAbuseTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LinkProfileController implements LinkImageControllerInterface, MyLinksControllerInterface {
 
@@ -99,8 +102,8 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
     }
 
     public void loadImage(String fbidCandidate) {
-        LoadImageTask task = new LoadImageTask(linksService, this, false);
-        task.execute(fbidCandidate, 1);
+        LoadImagesTask task = new LoadImagesTask(linksService, this);
+        task.execute(fbidCandidate);
     }
 
     public void initLoadImageTask() {
@@ -114,10 +117,10 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
     @Override
     public void onLoadImageResult(TaskResponse response) {
         if (response.hasError()) {
-                view.showImage(null);
+                view.showImage(new ArrayList<Bundle>());
         } else {
-            Bundle bundle = (Bundle)response.getResponse();
-            view.showImage(bundle);
+            List<Bundle> bundles = (List<Bundle>)response.getResponse();
+            view.showImage(bundles);
         }
     }
 
