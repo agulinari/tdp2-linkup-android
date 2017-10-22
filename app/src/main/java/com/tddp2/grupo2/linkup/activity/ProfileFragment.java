@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,8 @@ import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,6 +86,9 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
 
     @BindView(R.id.userLocationCard)
     CardView cardViewUserLocation;
+
+    @BindView(R.id.profileImageProgress)
+    ProgressBar progressBarImage;
 
     private ProgressDialog progressDialog;
     private boolean savingProfile;
@@ -184,9 +190,9 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
         profilePicture.stopAutoCycle();
         profilePicture.removeAllSliders();
 
-        for (int i = 1; i<=5; i++){
-            controller.loadImage(i);
-        }
+        //TODO:mostrar el placeholder
+        controller.loadImages();
+
     }
 
     @Override
@@ -319,10 +325,22 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
     }
 
     @Override
-    public void showImage(Bundle b, int number) {
+    public void showImage(List<Bundle> bundles) {
+        for (Bundle b : bundles) {
             PictureSliderView pictureSliderView = new PictureSliderView(getActivity());
             pictureSliderView.bundle(b);
             profilePicture.addSlider(pictureSliderView);
+        }
+    }
+
+    @Override
+    public void showLoadingImage() {
+        progressBarImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingImage() {
+        progressBarImage.setVisibility(View.GONE);
     }
 
     private void showPopUp(String message) {

@@ -7,6 +7,8 @@ import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 
+import java.util.List;
+
 
 public abstract class LinksService implements LinkupService{
 
@@ -31,6 +33,8 @@ public abstract class LinksService implements LinkupService{
     public abstract Database getDatabase();
 
     public abstract ImageBitmap loadImage(String fbidCandidate, int number) throws ServiceException;
+
+    public abstract List<ImageBitmap> loadImages(String fbidCandidate) throws ServiceException;
 
     public abstract Links removeLink(String fbidCandidate);
 }

@@ -30,6 +30,7 @@ import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -158,6 +159,58 @@ public class LinksServiceImpl extends LinksService{
 
     public Database getDatabase(){
         return this.database;
+    }
+
+    @Override
+    public List<ImageBitmap> loadImages(String fbidCandidate) throws ServiceException {
+
+        List<ImageBitmap> images = new ArrayList<ImageBitmap>();
+        int i = 1;
+        while (true) {
+            Bitmap bitmap = getUserPictureFromCache(fbidCandidate, i);
+            if (bitmap != null) {
+                ImageBitmap imageBitmap = new ImageBitmap();
+                imageBitmap.setImageId(fbidCandidate);
+                imageBitmap.setBitmap(bitmap);
+                images.add(imageBitmap);
+            } else {
+                break;
+            }
+            i++;
+        }
+        if (!images.isEmpty()){
+            return images;
+        }
+        LinkupClient linkupClient = clientService.getClient();
+
+        Call<ImageResponse> call = linkupClient.profiles.getImage(fbidCandidate);
+        try {
+            Response<ImageResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                ImageResponse imageResponse = response.body();
+                if (imageResponse.getImages().isEmpty()){
+                    throw new ServiceException(fbidCandidate);
+                }else{
+                    for (Image image : imageResponse.getImages()) {
+                        if (image.getIdImage().equals("0")){
+                            continue;
+                        }
+                        Bitmap bitmap = ImageUtils.base64ToBitmap(image.getData());
+                        ImageBitmap imageBitmap = new ImageBitmap();
+                        imageBitmap.setImageId(fbidCandidate);
+                        imageBitmap.setBitmap(bitmap);
+                        saveUserPictureToCache(fbidCandidate, Integer.valueOf(image.getIdImage()), bitmap);
+                        images.add(imageBitmap);
+                    }
+                    return images;
+                }
+            } else {
+                APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(error);
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
     }
 
     @Override

@@ -13,6 +13,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,10 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
     @BindView(R.id.userLocationCard)
     CardView cardViewUserLocation;
+
+    @BindView(R.id.profileImageProgress)
+    ProgressBar progressBarImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +138,7 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
         profilePicture.stopAutoCycle();
         profilePicture.removeAllSliders();
 
-        controller.loadImage(1);
+        controller.loadImages();
 
     }
 
@@ -268,10 +273,22 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
     }
 
     @Override
-    public void showImage(Bundle b, int number) {
-        PictureSliderView pictureSliderView = new PictureSliderView(this);
-        pictureSliderView.bundle(b);
-        profilePicture.addSlider(pictureSliderView);
+    public void showImage(List<Bundle> bundles) {
+        for (Bundle bundle : bundles) {
+            PictureSliderView pictureSliderView = new PictureSliderView(this);
+            pictureSliderView.bundle(bundle);
+            profilePicture.addSlider(pictureSliderView);
+        }
+    }
+
+    @Override
+    public void showLoadingImage() {
+        progressBarImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingImage() {
+        progressBarImage.setVisibility(View.GONE);
     }
 
     @Override
