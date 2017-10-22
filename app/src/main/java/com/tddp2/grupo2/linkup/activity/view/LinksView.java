@@ -31,4 +31,6 @@ public interface LinksView  extends BaseView {
     void updateDistance(Location loggedUserLocation, Location linkLocation);
 
     void showInactiveAccountAlert();
+
+    void showAdvertisement(String advertName, String advertUrl);
 }

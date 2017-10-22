@@ -1,19 +1,15 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import android.os.AsyncTask;
-
+import android.util.Log;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import com.tddp2.grupo2.linkup.task.AcceptLinkTask;
-import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
-import com.tddp2.grupo2.linkup.task.GetLinksTask;
-import com.tddp2.grupo2.linkup.task.LoadImageTask;
-import com.tddp2.grupo2.linkup.task.RejectLinkTask;
-import com.tddp2.grupo2.linkup.task.TaskResponse;
+import com.tddp2.grupo2.linkup.task.*;
+import com.tddp2.grupo2.linkup.utils.ImageUtils;
 
 public class LinksController implements LinkImageControllerInterface {
 
@@ -67,7 +63,7 @@ public class LinksController implements LinkImageControllerInterface {
             currentLink--;
         }
         Profile profile = links.getLinks().get(currentLink);
-        view.showLink(profile, currentLink);
+        this.showLink(profile, currentLink);
     }
 
     public void nextLink(){
@@ -80,7 +76,7 @@ public class LinksController implements LinkImageControllerInterface {
             currentLink++;
         }
         Profile profile = links.getLinks().get(currentLink);
-        view.showLink(profile, currentLink);
+        this.showLink(profile, currentLink);
     }
 
     public void initGetLinksTask() {
@@ -117,7 +113,7 @@ public class LinksController implements LinkImageControllerInterface {
         if (!links.getLinks().isEmpty()){
             Profile profile = links.getLinks().get(0);
             this.currentLink = 0;
-            view.showLink(profile, currentLink);
+            this.showLink(profile, currentLink);
         }else{
             view.showEmptyLinks();
         }
@@ -138,11 +134,11 @@ public class LinksController implements LinkImageControllerInterface {
                 //si el current era el ultimo
                 Profile profile = links.getLinks().get(links.getLinks().size()-1);
                 this.currentLink = links.getLinks().size()-1;
-                view.showLink(profile, currentLink);
+                this.showLink(profile, currentLink);
             }else{
                 //si el current no era el ultimo
                 Profile profile = links.getLinks().get(currentLink);
-                view.showLink(profile, currentLink);
+                this.showLink(profile, currentLink);
             }
         }
     }
@@ -171,11 +167,11 @@ public class LinksController implements LinkImageControllerInterface {
             //si el current era el ultimo
             Profile profile = links.getLinks().get(links.getLinks().size()-1);
             this.currentLink = links.getLinks().size()-1;
-            view.showLink(profile, currentLink);
+            this.showLink(profile, currentLink);
         }else{
             //si el current no era el ultimo
             Profile profile = links.getLinks().get(currentLink);
-            view.showLink(profile, currentLink);
+            this.showLink(profile, currentLink);
         }
     }
 
@@ -198,7 +194,7 @@ public class LinksController implements LinkImageControllerInterface {
 
         } else {
             ImageBitmap image = (ImageBitmap)response.getResponse();
-            if (currentFbid.equals(image.getImageId())) {
+            if ((currentFbid != null) && (currentFbid.equals(image.getImageId()))) {
                 view.hideLoadingImage();
                 view.showImage(image.getBitmap());
             }
@@ -214,5 +210,16 @@ public class LinksController implements LinkImageControllerInterface {
 
     public void showInactiveAccountError() {
         view.showInactiveAccountAlert();
+    }
+
+    private void showLink(Profile profile, int index) {
+        if (profile.getAdvertiser() == null) {
+            view.showLink(profile, index);
+        } else {
+            Log.i("LINKS", profile.getAdvertiser());
+            view.showAdvertisement(profile.getAdvertiser(), profile.getUrl());
+            view.hideLoadingImage();
+            view.showImage(ImageUtils.base64ToBitmap(profile.getImage()));
+        }
     }
 }

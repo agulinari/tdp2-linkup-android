@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -12,19 +13,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.*;
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
@@ -36,9 +28,6 @@ import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 import com.tddp2.grupo2.linkup.utils.OnSwipeTouchListener;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.tddp2.grupo2.linkup.R.id.reloadButton;
 
@@ -87,6 +76,9 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
     @BindView(R.id.goToCandidateProfile)
     Button buttonGoToCandidateProfile;
+
+    @BindView(R.id.goToAdvertisementSite)
+    Button buttonGoToAdvertisementSite;
 
     private Context activity;
     private LinksController controller;
@@ -228,6 +220,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
     @Override
         public void showLink(Profile profile, int currentLinkIndex) {
+        showElements();
         this.currentLinkIndex = currentLinkIndex;
         linkCard.setVisibility(View.VISIBLE);
         this.enableActions();
@@ -326,5 +319,39 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    public void showAdvertisement(String advertName, String advertUrl) {
+        hideElements();
+        textViewLinkName.setText(advertName);
+        textViewLinkDistance.setText("Contenido publicitario");
+        final String url = advertUrl;
+        buttonGoToAdvertisementSite.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
+            }
+        });
+
+    }
+
+    private void hideElements() {
+        buttonYes.setVisibility(View.GONE);
+        buttonNo.setVisibility(View.GONE);
+        superlinkButton.setVisibility(View.GONE);
+        buttonGoToCandidateProfile.setVisibility(View.GONE);
+        buttonGoToAdvertisementSite.setVisibility(View.VISIBLE);
+    }
+
+    private void showElements() {
+        buttonYes.setVisibility(View.VISIBLE);
+        buttonNo.setVisibility(View.VISIBLE);
+        superlinkButton.setVisibility(View.VISIBLE);
+        buttonGoToCandidateProfile.setVisibility(View.VISIBLE);
+        buttonGoToAdvertisementSite.setVisibility(View.GONE);
     }
 }

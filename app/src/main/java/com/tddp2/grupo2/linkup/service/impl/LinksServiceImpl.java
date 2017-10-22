@@ -2,7 +2,6 @@ package com.tddp2.grupo2.linkup.service.impl;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-
 import com.google.firebase.database.FirebaseDatabase;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.APIError;
@@ -17,23 +16,17 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
-import com.tddp2.grupo2.linkup.model.Acceptance;
-import com.tddp2.grupo2.linkup.model.Image;
-import com.tddp2.grupo2.linkup.model.ImageBitmap;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Rejection;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getImageCache;
 
