@@ -326,7 +326,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     public void showAdvertisement(String advertName, String advertUrl) {
         hideElements();
         textViewLinkName.setText(advertName);
-        textViewLinkDistance.setText("Contenido publicitario");
+        textViewLinkDistance.setText(getText(R.string.ad_content));
         final String url = advertUrl;
         buttonGoToAdvertisementSite.setOnClickListener(new Button.OnClickListener()
         {
