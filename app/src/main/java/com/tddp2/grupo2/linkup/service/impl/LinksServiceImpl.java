@@ -3,6 +3,8 @@ package com.tddp2.grupo2.linkup.service.impl;
 import android.graphics.Bitmap;
 import android.util.Log;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.tddp2.grupo2.linkup.LinkupApplication;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
@@ -56,7 +58,7 @@ public class LinksServiceImpl extends LinksService{
             Response<CandidatesResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save Links
-                List<Profile> profiles = response.body().getCandidates();
+                List<Profile> profiles = this.adaptResponse(response.body().getCandidates());
                 links = new Links();
                 links.setLinks(profiles);
                 saveLinks(links);
@@ -257,5 +259,19 @@ public class LinksServiceImpl extends LinksService{
 
     private String getImageKey(String fbid, int imageIndex) {
         return fbid + ":" + String.valueOf(imageIndex);
+    }
+
+    private List<Profile> adaptResponse(List<JsonObject> elements) {
+        List<Profile> profiles = new ArrayList<>();
+        Gson gson = new Gson();
+        for (JsonObject jsonObject : elements) {
+            if (jsonObject.has("advertiser")) {
+                Log.i("LINKS", jsonObject.toString());
+            } else {
+                Profile profile = gson.fromJson(jsonObject.toString(), Profile.class);
+                profiles.add(profile);
+            }
+        }
+        return profiles;
     }
 }
