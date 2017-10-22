@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
@@ -28,7 +27,6 @@ import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.Profile;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import butterknife.BindView;
@@ -140,21 +138,6 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
         controller.loadImages();
 
-    }
-
-    public void updateUserPictures(List<Bitmap> pictures) {
-        profilePicture.stopAutoCycle();
-        profilePicture.removeAllSliders();
-        for (Bitmap picture : pictures) {
-            PictureSliderView pictureSliderView = new PictureSliderView(this);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            picture.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            Bundle b = new Bundle();
-            b.putByteArray("image", byteArray);
-            pictureSliderView.bundle(b);
-            profilePicture.addSlider(pictureSliderView);
-        }
     }
 
     @Override
@@ -274,6 +257,8 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
     @Override
     public void showImage(List<Bundle> bundles) {
+        profilePicture.stopAutoCycle();
+        profilePicture.removeAllSliders();
         for (Bundle bundle : bundles) {
             PictureSliderView pictureSliderView = new PictureSliderView(this);
             pictureSliderView.bundle(bundle);

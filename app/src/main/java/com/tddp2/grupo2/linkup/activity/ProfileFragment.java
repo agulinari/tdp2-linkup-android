@@ -326,6 +326,8 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
 
     @Override
     public void showImage(List<Bundle> bundles) {
+        profilePicture.stopAutoCycle();
+        profilePicture.removeAllSliders();
         for (Bundle b : bundles) {
             PictureSliderView pictureSliderView = new PictureSliderView(getActivity());
             pictureSliderView.bundle(b);
