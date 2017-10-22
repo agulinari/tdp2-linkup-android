@@ -21,6 +21,7 @@ public class Profile implements Serializable {
     private Settings settings = new Settings();
     private Location location = new Location();
     private Control control = new Control();
+    private String advertiser;
 
     public String getFbid() {
         return fbid;
@@ -132,5 +133,13 @@ public class Profile implements Serializable {
 
     public void setControl(Control control) {
         this.control = control;
+    }
+
+    public String getAdvertiser() {
+        return this.advertiser;
+    }
+
+    public void setAdvertiser(String advertiser) {
+        this.advertiser = advertiser;
     }
 }
