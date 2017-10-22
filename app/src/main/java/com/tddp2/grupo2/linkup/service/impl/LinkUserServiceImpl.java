@@ -1,7 +1,6 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
-
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
@@ -12,19 +11,15 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.AbuseReportRespons
 import com.tddp2.grupo2.linkup.infrastructure.client.response.BlockResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RecommendResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
-import com.tddp2.grupo2.linkup.model.AbuseReport;
-import com.tddp2.grupo2.linkup.model.Block;
-import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Recommend;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-
-import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Response;
+
+import java.util.List;
 
 public class LinkUserServiceImpl extends LinkUserService {
     private ClientService clientService;
@@ -39,10 +34,10 @@ public class LinkUserServiceImpl extends LinkUserService {
     @Override
     public Profile loadUser(String fbid) throws ServiceException {
 
-        List<Profile> links = this.database.getLinks().getLinks();
-        for (Profile profile : links){
-            if (profile.getFbid().equals(fbid)){
-                return profile;
+        List<Link> links = this.database.getLinks().getLinks();
+        for (Link link : links){
+            if (link.getFbid().equals(fbid) && !link.getFbid().equals("")){
+                return (Profile) link;
             }
         }
 

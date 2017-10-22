@@ -58,9 +58,8 @@ public class LinksServiceImpl extends LinksService{
             Response<CandidatesResponse> response = call.execute();
             if (response.isSuccessful()) {
                 //Save Links
-                List<Profile> profiles = this.adaptResponse(response.body().getCandidates());
                 links = new Links();
-                links.setLinks(profiles);
+                links.setLinks(this.adaptResponse(response.body().getCandidates()));
                 saveLinks(links);
                 return links;
             } else if (response.code() == 401) {
@@ -142,7 +141,7 @@ public class LinksServiceImpl extends LinksService{
 
     public Links removeLink(String fbidCandidate) {
         Links links = database.getLinks();
-        for (Profile p : links.getLinks()){
+        for (Link p : links.getLinks()){
             if (p.getFbid().equals(fbidCandidate)){
                 links.getLinks().remove(p);
                 break;
@@ -261,17 +260,18 @@ public class LinksServiceImpl extends LinksService{
         return fbid + ":" + String.valueOf(imageIndex);
     }
 
-    private List<Profile> adaptResponse(List<JsonObject> elements) {
-        List<Profile> profiles = new ArrayList<>();
+    private List<Link> adaptResponse(List<JsonObject> elements) {
+        List<Link> links = new ArrayList<>();
         Gson gson = new Gson();
         for (JsonObject jsonObject : elements) {
             if (jsonObject.has("advertiser")) {
-                Log.i("LINKS", jsonObject.toString());
+                Advertisement advertisement = gson.fromJson(jsonObject.toString(), Advertisement.class);
+                links.add(advertisement);
             } else {
                 Profile profile = gson.fromJson(jsonObject.toString(), Profile.class);
-                profiles.add(profile);
+                links.add(profile);
             }
         }
-        return profiles;
+        return links;
     }
 }

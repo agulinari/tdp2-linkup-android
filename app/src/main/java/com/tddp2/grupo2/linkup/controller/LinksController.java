@@ -1,11 +1,8 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import android.os.AsyncTask;
-import android.util.Log;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
-import com.tddp2.grupo2.linkup.model.ImageBitmap;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.*;
@@ -31,25 +28,28 @@ public class LinksController implements LinkImageControllerInterface {
 
     }
 
-    public Profile getCurrentLink(){
+    public Link getCurrentLink(){
         return this.links.getLinks().get(currentLink);
     }
 
     public void loadImage(){
         LoadImageTask task = new LoadImageTask(linksService, this, true);
-        Profile p = links.getLinks().get(currentLink);
+        Link p = links.getLinks().get(currentLink);
         task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, p.getFbid(), 1);
     }
 
     public void acceptCurrentLink(String tipoDeLink) {
         AcceptLinkTask task = new AcceptLinkTask(linksService, this);
-        Profile p = links.getLinks().get(currentLink);
-        task.execute(p.getFbid(), p.getFirstName(), tipoDeLink);
+        Link p = links.getLinks().get(currentLink);
+        if (!p.getFbid().equals("")) {
+            Profile profile = (Profile) p;
+            task.execute(profile.getFbid(), profile.getFirstName(), tipoDeLink);
+        }
     }
 
     public void rejectCurrentLink(){
         RejectLinkTask task = new RejectLinkTask(linksService, this);
-        Profile p = links.getLinks().get(currentLink);
+        Link p = links.getLinks().get(currentLink);
         task.execute(p.getFbid());
     }
 
@@ -62,7 +62,7 @@ public class LinksController implements LinkImageControllerInterface {
         }else{
             currentLink--;
         }
-        Profile profile = links.getLinks().get(currentLink);
+        Link profile = links.getLinks().get(currentLink);
         this.showLink(profile, currentLink);
     }
 
@@ -75,7 +75,7 @@ public class LinksController implements LinkImageControllerInterface {
         }else{
             currentLink++;
         }
-        Profile profile = links.getLinks().get(currentLink);
+        Link profile = links.getLinks().get(currentLink);
         this.showLink(profile, currentLink);
     }
 
@@ -111,7 +111,7 @@ public class LinksController implements LinkImageControllerInterface {
         //view.goToNext();
         links = (Links) response.getResponse();
         if (!links.getLinks().isEmpty()){
-            Profile profile = links.getLinks().get(0);
+            Link profile = links.getLinks().get(0);
             this.currentLink = 0;
             this.showLink(profile, currentLink);
         }else{
@@ -132,12 +132,12 @@ public class LinksController implements LinkImageControllerInterface {
             }
             else if (links.getLinks().size()<=currentLink){
                 //si el current era el ultimo
-                Profile profile = links.getLinks().get(links.getLinks().size()-1);
+                Link profile = links.getLinks().get(links.getLinks().size()-1);
                 this.currentLink = links.getLinks().size()-1;
                 this.showLink(profile, currentLink);
             }else{
                 //si el current no era el ultimo
-                Profile profile = links.getLinks().get(currentLink);
+                Link profile = links.getLinks().get(currentLink);
                 this.showLink(profile, currentLink);
             }
         }
@@ -165,12 +165,12 @@ public class LinksController implements LinkImageControllerInterface {
         }
         else if (links.getLinks().size()<=currentLink){
             //si el current era el ultimo
-            Profile profile = links.getLinks().get(links.getLinks().size()-1);
+            Link profile = links.getLinks().get(links.getLinks().size()-1);
             this.currentLink = links.getLinks().size()-1;
             this.showLink(profile, currentLink);
         }else{
             //si el current no era el ultimo
-            Profile profile = links.getLinks().get(currentLink);
+            Link profile = links.getLinks().get(currentLink);
             this.showLink(profile, currentLink);
         }
     }
@@ -202,24 +202,30 @@ public class LinksController implements LinkImageControllerInterface {
     }
 
     public void updateDistance() {
-        view.updateDistance(
-                this.linksService.getDatabase().getProfile().getLocation(),
-                this.links.getLinks().get(currentLink).getLocation()
-        );
+        Link link = this.links.getLinks().get(currentLink);
+        if (!link.getFbid().equals("")) {
+            Profile profile = (Profile) link;
+            view.updateDistance(
+                    this.linksService.getDatabase().getProfile().getLocation(),
+                    profile.getLocation()
+            );
+        }
+
     }
 
     public void showInactiveAccountError() {
         view.showInactiveAccountAlert();
     }
 
-    private void showLink(Profile profile, int index) {
-        if (profile.getAdvertiser() == null) {
-            view.showLink(profile, index);
-        } else {
-            Log.i("LINKS", profile.getAdvertiser());
-            view.showAdvertisement(profile.getAdvertiser(), profile.getUrl());
+    private void showLink(Link link, int index) {
+        if (link.getFbid().equals("")) {
+            Advertisement advertisement = (Advertisement) link;
+            view.showAdvertisement(advertisement.getAdvertiser(), advertisement.getUrl());
             view.hideLoadingImage();
-            view.showImage(ImageUtils.base64ToBitmap(profile.getImage()));
+            view.showImage(ImageUtils.base64ToBitmap(advertisement.getImage()));
+        } else {
+            Profile profile = (Profile) link;
+            view.showLink(profile, index);
         }
     }
 }

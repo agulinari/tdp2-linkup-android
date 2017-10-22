@@ -7,13 +7,13 @@ import java.util.List;
 
 public class Links implements Serializable{
 
-    private List<Profile> links = new ArrayList<Profile>();
+    private List<Link> links = new ArrayList<Link>();
 
-    public List<Profile> getLinks() {
+    public List<Link> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Profile> links) {
+    public void setLinks(List<Link> links) {
         this.links = links;
     }
 }

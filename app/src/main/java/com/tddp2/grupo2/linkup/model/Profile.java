@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Profile implements Serializable {
+public class Profile implements Serializable,Link {
 
     private String fbid;
     private String firstName;
@@ -21,9 +21,6 @@ public class Profile implements Serializable {
     private Settings settings = new Settings();
     private Location location = new Location();
     private Control control = new Control();
-    private String advertiser;
-    private String url;
-    private String image;
 
     public String getFbid() {
         return fbid;
@@ -135,29 +132,5 @@ public class Profile implements Serializable {
 
     public void setControl(Control control) {
         this.control = control;
-    }
-
-    public String getAdvertiser() {
-        return this.advertiser;
-    }
-
-    public void setAdvertiser(String advertiser) {
-        this.advertiser = advertiser;
-    }
-
-    public String getUrl() {
-        return this.url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getImage() {
-        return this.image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }

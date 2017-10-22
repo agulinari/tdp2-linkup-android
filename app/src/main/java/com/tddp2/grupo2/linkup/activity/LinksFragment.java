@@ -22,6 +22,7 @@ import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.controller.LinksController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.Link;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Location;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -144,7 +145,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
             {
                 Intent intent = new Intent(getContext(), LinkProfileActivity.class);
                 Bundle b = new Bundle();
-                Profile currentLink = controller.getCurrentLink();
+                Link currentLink = controller.getCurrentLink();
                 b.putString("LINK_USER_ID", currentLink.getFbid());
                 intent.putExtras(b);
                 startActivity(intent);
