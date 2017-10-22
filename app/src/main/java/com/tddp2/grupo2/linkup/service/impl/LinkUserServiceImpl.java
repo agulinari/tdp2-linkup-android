@@ -41,7 +41,7 @@ public class LinkUserServiceImpl extends LinkUserService {
 
         List<Profile> links = this.database.getLinks().getLinks();
         for (Profile profile : links){
-            if (profile.getFbid().equals(fbid)){
+            if ((profile.getFbid() != null) && (profile.getFbid().equals(fbid))){
                 return profile;
             }
         }
