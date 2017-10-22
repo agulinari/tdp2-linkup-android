@@ -2,12 +2,16 @@ package com.tddp2.grupo2.linkup.infrastructure;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
+import android.util.Log;
 import com.google.gson.Gson;
 import com.tddp2.grupo2.linkup.LinkupApplication;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.MyLinks;
-import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LinkupDatabase implements Database
@@ -42,7 +46,7 @@ public class LinkupDatabase implements Database
     @Override
     public Links getLinks() {
         if (links == null){
-            links = get(LINKS, Links.class);
+            links = getLinksFromDatabase();
         }
         return links;
     }
@@ -97,4 +101,29 @@ public class LinkupDatabase implements Database
         return gson.fromJson(json, classValue);
     }
 
+    private Links getLinksFromDatabase() {
+        SharedPreferences sharedPref = LinkupApplication.getContext().getSharedPreferences(DB, Context.MODE_PRIVATE);
+        String json = sharedPref.getString(LINKS, "");
+        List<Link> links = new ArrayList<>();
+        try {
+            JSONObject linksJson = new JSONObject(json);
+            JSONArray array = linksJson.getJSONArray("links");
+            Gson gson = new Gson();
+            for(int i = 0 ; i < array.length(); i++){
+                JSONObject jsonObject  = array.getJSONObject(i);
+                if (jsonObject.has("advertiser")) {
+                    Advertisement advertisement = gson.fromJson(jsonObject.toString(), Advertisement.class);
+                    links.add(advertisement);
+                } else {
+                    Profile profile = gson.fromJson(jsonObject.toString(), Profile.class);
+                    links.add(profile);
+                }
+            }
+        } catch (JSONException e) {
+            Log.i("LINKSBASE", e.getMessage());
+        }
+        Links linksObject = new Links();
+        linksObject.setLinks(links);
+        return linksObject;
+    }
 }
