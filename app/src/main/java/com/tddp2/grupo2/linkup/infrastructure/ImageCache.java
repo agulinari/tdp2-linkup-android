@@ -28,9 +28,7 @@ public class ImageCache {
     }
 
     public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
-        if (getBitmapFromMemCache(key) == null) {
-            mMemoryCache.put(key, bitmap);
-        }
+        mMemoryCache.put(key, bitmap);
     }
 
     public Bitmap getBitmapFromMemCache(String key) {
