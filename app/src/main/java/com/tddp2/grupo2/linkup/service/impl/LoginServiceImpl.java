@@ -62,9 +62,10 @@ public class LoginServiceImpl extends LoginService {
         NotificationService notificationService = ServiceFactory.getNotificationService();
         String token = notificationService.getToken();
         try {
+            Log.d("FirebaseIDService", token);
             notificationService.updateToken(token);
         } catch (ServiceException e) {
-            Log.e("LOGIN" , e.getMessage(), e);
+            Log.e("FirebaseIDService" , e.getMessage(), e);
         }
     }
 
