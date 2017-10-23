@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.tddp2.grupo2.linkup.exception.APIError;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
@@ -35,7 +36,8 @@ public class NotificationServiceImpl  extends NotificationService{
 
     @Override
     public String getToken() {
-        return this.database.getToken();
+        return FirebaseInstanceId.getInstance().getToken();
+        //return this.database.getToken();
     }
 
     @Override
