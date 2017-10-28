@@ -120,6 +120,11 @@
     <string name="premium_pay_attempt_failure_title">Ha ocurrido un error</string>
     <string name="premium_pay_attempt_success_text">Ya puedes comenzar a disfrutar de todos tus beneficios.</string>
     <string name="premium_pay_attempt_failure_text">No hemos podido procesar la solicitud, por favor vuelva a intentarlo.</string>
+    <string name="premium_paypal_user">Usuario</string>
+    <string name="premium_paypal_password">Contraseña</string>
+    <string name="premium_paypal_login">Iniciar sesión</string>
+    <string name="premium_paypal_missing_fields">Por favor, complete todos los datos</string>
+    <string name="premium_paypal_invalid_user">Lo sentimos, no encontramos ninguna cuenta con los datos ingresados.</string>
 
     <string name="go_to_advertisement_site">Ir al sitio web del anunciante</string>
     <string name="ad_content">Contenido publicitario</string>

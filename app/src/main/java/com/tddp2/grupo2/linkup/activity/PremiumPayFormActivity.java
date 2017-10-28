@@ -50,7 +50,7 @@ public class PremiumPayFormActivity extends BroadcastActivity {
     }
 
     private void startPayPalFormActivity() {
-        Intent intent = new Intent(this, PremiumPayPalPayFormActivity.class);
+        Intent intent = new Intent(this, PremiumPayPalLoginActivity.class);
         startActivity(intent);
         //finish();
     }
