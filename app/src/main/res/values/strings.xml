@@ -107,7 +107,12 @@
     <string name="premium_price_title">Membresía de por vida, a tan sólo:</string>
     <string name="premium_price">Ar$100,00</string>
     <string name="premium_pay_form_toolbar">Formulario de pago</string>
+    <string name="premium_pay_form">Formulario de pago</string>
+    <string name="premium_pay_form_select">Seleccione un medio de pago:</string>
+    <string name="premium_pay_form_credit_card_option">Tarjeta de crédito</string>
+    <string name="premium_pay_form_pay_pal_option">PayPal</string>
     <string name="premium_pay_form_credit_card">Pago con tarjeta de crédito</string>
+    <string name="premium_pay_form_pay_pal">Pago con PayPal</string>
     <string name="premium_pay_form_credit_card_valid">Tarjetas de crédito aceptadas:</string>
     <string name="premium_card_data">Ingrese los datos de su tarjeta:</string>
     <string name="premium_pay_form_button">Confirmar pago</string>

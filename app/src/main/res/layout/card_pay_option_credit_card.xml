@@ -1,0 +1,50 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/premium_pay_option_height"
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="@dimen/premium_pay_option_height_padding_top"
+    android:paddingBottom="@dimen/premium_pay_option_height_padding_bottom"
+    android:backgroundTint="@color/profileCard"
+    android:orientation="horizontal"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/creditCardOption"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="0dp" android:layout_centerHorizontal="false">
+        <ImageView
+                android:layout_width="@dimen/premium_pay_option_icon_width"
+                android:layout_height="@dimen/premium_pay_option_icon_height"
+                android:layout_margin="4dp"
+                app:srcCompat="@drawable/ic_credit_card_black_24dp"
+                android:layout_gravity="center"/>
+        <TextView
+                android:textSize="@dimen/premium_pay_option_text_size"
+                android:textStyle="bold"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_pay_form_credit_card_option"
+                android:layout_weight="1" android:layout_gravity="center"/>
+
+        <ImageView
+                android:layout_width="@dimen/premium_pay_option_card_icon_width"
+                android:layout_height="@dimen/premium_pay_option_card_icon_height"
+                android:layout_margin="4dp"
+                app:srcCompat="@drawable/visa_logo"
+                android:layout_gravity="center"/>
+
+        <ImageView
+                android:layout_width="@dimen/premium_pay_option_card_icon_width"
+                android:layout_height="@dimen/premium_pay_option_card_icon_height"
+                android:layout_margin="4dp"
+                app:srcCompat="@drawable/mastercard_logo"
+                android:layout_gravity="center"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

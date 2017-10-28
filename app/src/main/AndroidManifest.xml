@@ -77,6 +77,12 @@
         <activity
             android:name=".activity.PremiumPayFormActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PremiumCreditCardPayFormActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.PremiumPayPalPayFormActivity"
+            android:screenOrientation="portrait" />
         <service
             android:name="com.tddp2.grupo2.linkup.service.api.FetchAddressIntentService"
             android:exported="false"/>
