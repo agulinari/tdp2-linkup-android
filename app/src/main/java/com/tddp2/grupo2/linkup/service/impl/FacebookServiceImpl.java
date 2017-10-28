@@ -76,6 +76,7 @@ public class FacebookServiceImpl extends FacebookService {
 
         if (hasProfilePicture) {
             getAndSaveProfilePicture(profile);
+            loadUserPhotos(profile.getFbid(), profile);
         }
         return profile;
     }
@@ -134,6 +135,7 @@ public class FacebookServiceImpl extends FacebookService {
             JSONArray userPicturesData = getJsonArray(jsonResponse, "data");
             if (userPicturesData.length() != 0) {
                 int numberOfPictures = (userPicturesData.length() < 5) ? userPicturesData.length() : 5;
+                Log.i("FacebookData", "Cargando " + String.valueOf(numberOfPictures) + " fotos (además de la de perfil)");
                 for (int i = 0; i < numberOfPictures; i++) {
                     JSONObject pictureData = getJsonArrayElement(userPicturesData, i);
                     JSONArray pictureSizes = getJsonArray(pictureData, "images");
