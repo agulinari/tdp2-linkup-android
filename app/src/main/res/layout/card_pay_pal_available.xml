@@ -1,0 +1,39 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/premium_pay_option_height"
+    android:layout_gravity="center_horizontal"
+    android:paddingTop="@dimen/premium_pay_option_height_padding_top"
+    android:paddingBottom="@dimen/premium_pay_option_height_padding_bottom"
+    android:backgroundTint="@color/profileCard"
+    android:orientation="horizontal"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="0dp" android:layout_centerHorizontal="false">
+        <TextView
+                android:textSize="@dimen/premium_pay_option_text_size"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/premium_paypal_available"
+                android:layout_gravity="center"
+                android:layout_weight="0.7"/>
+        <TextView
+                android:id="@+id/payPalAvailableText"
+                android:textSize="@dimen/premium_pay_option_text_size"
+                android:textStyle="bold"
+                android:layout_width="100dp"
+                android:gravity="end"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.3"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

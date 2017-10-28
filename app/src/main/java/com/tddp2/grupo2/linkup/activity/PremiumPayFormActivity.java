@@ -46,13 +46,13 @@ public class PremiumPayFormActivity extends BroadcastActivity {
     private void startCreditCardFormActivity() {
         Intent intent = new Intent(this, PremiumCreditCardPayFormActivity.class);
         startActivity(intent);
-        //finish();
+        finish();
     }
 
     private void startPayPalFormActivity() {
         Intent intent = new Intent(this, PremiumPayPalLoginActivity.class);
         startActivity(intent);
-        //finish();
+        finish();
     }
 
     @Override

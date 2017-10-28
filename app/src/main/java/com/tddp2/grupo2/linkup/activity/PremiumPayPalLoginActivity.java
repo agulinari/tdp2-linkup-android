@@ -2,6 +2,7 @@ package com.tddp2.grupo2.linkup.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -51,13 +52,20 @@ public class PremiumPayPalLoginActivity extends BroadcastActivity {
                     if (!allowedUsers.containsKey(username)) {
                         showInvalidUserError();
                     } else {
-                        //Intent intent = new Intent(this, PremiumPayPalLoginActivity.class);
-                        //startActivity(intent);
-                        //finish();
+                        goToPayForm(allowedUsers.get(username).get("credit"));
                     }
                 }
             }
         });
+    }
+
+    private void goToPayForm(String saldo) {
+        Intent intent = new Intent(this, PremiumPayPalPayFormActivity.class);
+        Bundle b = new Bundle();
+        b.putInt("credit", Integer.parseInt(saldo));
+        intent.putExtras(b);
+        startActivity(intent);
+        finish();
     }
 
     private void showMissingFieldsError() {

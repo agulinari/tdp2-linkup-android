@@ -9,66 +9,71 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.braintreepayments.cardform.utils.CardType;
-import com.braintreepayments.cardform.view.CardEditText;
-import com.braintreepayments.cardform.view.CardForm;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.BaseView;
 import com.tddp2.grupo2.linkup.controller.PremiumPayFormController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
-public class PremiumCreditCardPayFormActivity extends BroadcastActivity implements BaseView {
-    @BindView(R.id.payFormButton)
-    Button buttonPayForm;
+public class PremiumPayPalPayFormActivity extends BroadcastActivity implements BaseView {
+    @BindView(R.id.payPalAvailableText)
+    TextView textAvailable;
+
+    @BindView(R.id.payPalPriceText)
+    TextView textPrice;
+
+    @BindView(R.id.payPalTotalText)
+    TextView textTotal;
+
+    @BindView(R.id.payPalPayError)
+    TextView priceError;
+
+    @BindView(R.id.payPalPayFormButton)
+    Button buttonPay;
+
+    private final int PRICE = 100;
 
     private PremiumPayFormController controller;
     private ProgressDialog progressDialog;
-    private CardForm cardForm;
-    private CardType cardType;
-
-    private static final String VISA = "VISA";
-    private static final String MASTERCARD = "MASTERCARD";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_premium_credit_card_pay_form);
+        setContentView(R.layout.activity_premium_pay_pal_pay_form);
         ButterKnife.bind(this);
-
-        this.cardForm = (CardForm) findViewById(R.id.card_form);
-        cardForm.cardRequired(true)
-                .expirationRequired(true)
-                .cvvRequired(true)
-                .postalCodeRequired(false)
-                .mobileNumberRequired(false)
-                .setup(this);
-
 
         this.controller = new PremiumPayFormController(this);
         registerListeners();
+
+        Bundle b = getIntent().getExtras();
+        int saldo = (b != null) ? b.getInt("credit") : 0;
+        showInfo(saldo);
+    }
+
+    private void showInfo(int saldo) {
+        String available = "$" + String.valueOf(saldo);
+        String price = "- $" + String.valueOf(PRICE);
+        String total = "--";
+        if (PRICE <= saldo) {
+            int res = saldo - PRICE;
+            total = "$" + String.valueOf(res);
+        } else {
+            priceError.setVisibility(View.VISIBLE);
+            buttonPay.setVisibility(View.GONE);
+        }
+        textAvailable.setText(available);
+        textPrice.setText(price);
+        textTotal.setText(total);
     }
 
     private void registerListeners() {
-        cardForm.setOnCardTypeChangedListener(new CardEditText.OnCardTypeChangedListener() {
-            @Override
-            public void onCardTypeChanged(CardType card) {
-                cardType = card;
-            }
-        });
-
-        buttonPayForm.setOnClickListener(new Button.OnClickListener() {
+        buttonPay.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!cardForm.isValid()) {
-                    showMissingFieldsAlert();
-                } else if (!cardType.name().equals(VISA) && !cardType.name().equals(MASTERCARD)) {
-                    showInvalidCardAlert();
-                } else {
-                    controller.upgradeAccount();
-                }
+                controller.upgradeAccount();
             }
         });
     }
@@ -101,32 +106,6 @@ public class PremiumCreditCardPayFormActivity extends BroadcastActivity implemen
         showAfterPayDialog(false);
     }
 
-    @Override
-    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
-        broadcastReceiver.abortBroadcast();
-    }
-
-    private void showMissingFieldsAlert() {
-        showErrorAlert(R.string.pay_missing_fields);
-    }
-
-    private void showInvalidCardAlert() {
-        showErrorAlert(R.string.pay_invalid_card);
-    }
-
-    private void showErrorAlert(int textId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(getString(textId));
-        builder.setCancelable(Boolean.FALSE);
-        builder.setPositiveButton(getString(R.string.pop_up_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
-    }
-
     private void showAfterPayDialog(boolean success) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         int title = success ? R.string.premium_pay_attempt_success_title : R.string.premium_pay_attempt_failure_title;
@@ -150,5 +129,11 @@ public class PremiumCreditCardPayFormActivity extends BroadcastActivity implemen
         });
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    @Override
+    protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        //FIXME: No la deberia handlear en vez de abortarla?
+        broadcastReceiver.abortBroadcast();
     }
 }

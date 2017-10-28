@@ -125,6 +125,10 @@
     <string name="premium_paypal_login">Iniciar sesión</string>
     <string name="premium_paypal_missing_fields">Por favor, complete todos los datos</string>
     <string name="premium_paypal_invalid_user">Lo sentimos, no encontramos ninguna cuenta con los datos ingresados.</string>
+    <string name="premium_paypal_available">Disponible:</string>
+    <string name="premium_paypal_price">Membresía:</string>
+    <string name="premium_paypal_total">Saldo restante:</string>
+    <string name="premium_paypal_price_error">No dispones de saldo suficiente para realizar esta compra.</string>
 
     <string name="go_to_advertisement_site">Ir al sitio web del anunciante</string>
     <string name="ad_content">Contenido publicitario</string>
