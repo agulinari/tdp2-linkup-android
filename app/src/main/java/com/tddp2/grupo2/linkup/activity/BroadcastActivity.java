@@ -10,6 +10,7 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 
 public abstract class BroadcastActivity extends AppCompatActivity {
@@ -22,6 +23,12 @@ public abstract class BroadcastActivity extends AppCompatActivity {
         filter.setPriority(1);
 
         registerReceiver(notificationReceiver, filter);
+
+        if (!ServiceFactory.getLinksService().getDatabase().isActive()){
+            logout();
+            return;
+        }
+
     }
 
     @Override
@@ -52,6 +59,7 @@ public abstract class BroadcastActivity extends AppCompatActivity {
             if (profile!=null && !notification.fbidTo.equals(profile.getId())){
                 notificationReceiver.abortBroadcast();
             }else if (notification.motive.equals(Notification.BAN)){
+                notificationReceiver.abortBroadcast();
                 logout();
             }else{
                 handleNotification(notification, this);

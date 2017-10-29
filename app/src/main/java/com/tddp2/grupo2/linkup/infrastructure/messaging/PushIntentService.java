@@ -44,6 +44,7 @@ public class PushIntentService extends IntentService {
                 return;
             }
             if (notification.motive.equals(Notification.BAN)){
+                ServiceFactory.getLinksService().getDatabase().setActive(false);
                 return;
             }
         }else{
