@@ -4,6 +4,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id="@+id/payPalPayFormRelativeLayout"
                 tools:context="com.tddp2.grupo2.linkup.activity.PremiumPayPalPayFormActivity">
     <android.support.v7.widget.Toolbar
         android:id="@+id/payPalPayPayFormToolbar"

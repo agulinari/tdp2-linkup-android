@@ -6,9 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,6 +22,9 @@ import com.tddp2.grupo2.linkup.controller.PremiumPayFormController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
 public class PremiumPayPalPayFormActivity extends BroadcastActivity implements BaseView {
+    @BindView(R.id.payPalPayFormRelativeLayout)
+    RelativeLayout relativeLayout;
+
     @BindView(R.id.payPalAvailableText)
     TextView textAvailable;
 
@@ -33,6 +40,7 @@ public class PremiumPayPalPayFormActivity extends BroadcastActivity implements B
     @BindView(R.id.payPalPayFormButton)
     Button buttonPay;
 
+    private static final String TAG = "PayPalPayFormActivity";
     private final int PRICE = 100;
 
     private PremiumPayFormController controller;
@@ -133,7 +141,21 @@ public class PremiumPayPalPayFormActivity extends BroadcastActivity implements B
 
     @Override
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
-        //FIXME: No la deberia handlear en vez de abortarla?
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        if (notification!=null) {
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else{
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(relativeLayout, text, Snackbar.LENGTH_INDEFINITE);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
         broadcastReceiver.abortBroadcast();
     }
 }

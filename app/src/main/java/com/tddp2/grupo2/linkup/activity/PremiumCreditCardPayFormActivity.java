@@ -6,9 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.braintreepayments.cardform.utils.CardType;
@@ -20,6 +24,9 @@ import com.tddp2.grupo2.linkup.controller.PremiumPayFormController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
 public class PremiumCreditCardPayFormActivity extends BroadcastActivity implements BaseView {
+    @BindView(R.id.creditCardPayFormRelativeLayout)
+    RelativeLayout relativeLayout;
+
     @BindView(R.id.payFormButton)
     Button buttonPayForm;
 
@@ -30,6 +37,8 @@ public class PremiumCreditCardPayFormActivity extends BroadcastActivity implemen
 
     private static final String VISA = "VISA";
     private static final String MASTERCARD = "MASTERCARD";
+
+    private static final String TAG = "CreditCardPayFormActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +112,21 @@ public class PremiumCreditCardPayFormActivity extends BroadcastActivity implemen
 
     @Override
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        if (notification!=null) {
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else{
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(relativeLayout, text, Snackbar.LENGTH_INDEFINITE);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
         broadcastReceiver.abortBroadcast();
     }
 

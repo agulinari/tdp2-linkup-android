@@ -4,10 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tddp2.grupo2.linkup.R;
@@ -17,6 +21,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PremiumPayPalLoginActivity extends BroadcastActivity {
+    @BindView(R.id.payPalLoginRelativeLayout)
+    RelativeLayout relativeLayout;
+
     @BindView(R.id.payPalLogin)
     Button buttonPayPalLogin;
 
@@ -26,6 +33,7 @@ public class PremiumPayPalLoginActivity extends BroadcastActivity {
     @BindView(R.id.payPalLoginPassword)
     EditText editTextPassword;
 
+    private static final String TAG = "PayPalLoginActivity";
     private Map<String, Map<String, String>> allowedUsers;
 
     @Override
@@ -109,7 +117,21 @@ public class PremiumPayPalLoginActivity extends BroadcastActivity {
 
     @Override
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
-        //FIXME: No la deberia handlear en vez de abortarla?
+        Log.i(TAG, "Notificacion RECIBIDA");
+
+        if (notification!=null) {
+            String text;
+            if (notification.motive.equals(Notification.CHAT)) {
+                text = notification.firstName + ": " + "'" + notification.messageBody + "'";
+            }else{
+                text = notification.messageBody;
+            }
+            Snackbar snackbar = Snackbar.make(relativeLayout, text, Snackbar.LENGTH_INDEFINITE);
+            View snackbarView = snackbar.getView();
+            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
         broadcastReceiver.abortBroadcast();
     }
 }
