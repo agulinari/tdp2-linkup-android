@@ -7,6 +7,8 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 
 
@@ -28,6 +30,16 @@ public abstract class BroadcastActivity extends AppCompatActivity {
         unregisterReceiver(notificationReceiver);
     }
 
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("notification", new Notification());
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     private BroadcastReceiver notificationReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -39,7 +51,9 @@ public abstract class BroadcastActivity extends AppCompatActivity {
             Profile profile = Profile.getCurrentProfile();
             if (profile!=null && !notification.fbidTo.equals(profile.getId())){
                 notificationReceiver.abortBroadcast();
-            }else {
+            }else if (notification.motive.equals(Notification.BAN)){
+                logout();
+            }else{
                 handleNotification(notification, this);
             }
         }

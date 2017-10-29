@@ -9,6 +9,7 @@ public class Notification implements Parcelable{
     public static String MATCH = "Match";
     public static String CHAT = "Chat";
     public static String FAKE = "Fake";
+    public static String BAN = "Ban";
 
     public String fbid;
     public String fbidTo;

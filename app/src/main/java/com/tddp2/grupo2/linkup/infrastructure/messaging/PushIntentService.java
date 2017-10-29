@@ -43,6 +43,9 @@ public class PushIntentService extends IntentService {
             if (!notification.fbidTo.equals(fbid)){
                 return;
             }
+            if (notification.motive.equals(Notification.BAN)){
+                return;
+            }
         }else{
             return;
         }
