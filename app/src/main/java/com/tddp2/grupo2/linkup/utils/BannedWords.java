@@ -22,6 +22,17 @@ public class BannedWords {
         badwords.add("boluda");
         badwords.add("culo");
         badwords.add("mierda");
+        badwords.add("pelotudo");
+        badwords.add("pelotuda");
+        badwords.add("cabron");
+        badwords.add("imbécil");
+        badwords.add("orto");
+        badwords.add("chota");
+        badwords.add("poronga");
+        badwords.add("pija");
+        badwords.add("mogólica");
+        badwords.add("mogólico");
+        badwords.add("cagón");
         //TODO: agregar o ver como llenar el set
     }
 
