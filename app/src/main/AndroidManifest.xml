@@ -81,6 +81,9 @@
             android:name=".activity.PremiumCreditCardPayFormActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.PremiumPayPalLoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.PremiumPayPalPayFormActivity"
             android:screenOrientation="portrait" />
         <service

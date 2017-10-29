@@ -135,6 +135,9 @@ public class FacebookServiceImpl extends FacebookService {
             JSONArray userPicturesData = getJsonArray(jsonResponse, "data");
             if (userPicturesData.length() != 0) {
                 int numberOfPictures = (userPicturesData.length() < 5) ? userPicturesData.length() : 5;
+                if (numberOfPictures < 5) {
+                    numberOfPictures--;
+                }
                 Log.i("FacebookData", "Cargando " + String.valueOf(numberOfPictures) + " fotos (además de la de perfil)");
                 for (int i = 0; i < numberOfPictures; i++) {
                     JSONObject pictureData = getJsonArrayElement(userPicturesData, i);
