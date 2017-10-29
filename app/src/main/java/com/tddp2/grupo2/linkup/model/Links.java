@@ -8,6 +8,7 @@ import java.util.List;
 public class Links implements Serializable{
 
     private List<Link> links = new ArrayList<Link>();
+    private int availableSuperlinks;
 
     public List<Link> getLinks() {
         return links;
@@ -15,5 +16,13 @@ public class Links implements Serializable{
 
     public void setLinks(List<Link> links) {
         this.links = links;
+    }
+
+    public int getAvailableSuperlinks() {
+        return availableSuperlinks;
+    }
+
+    public void setAvailableSuperlinks(int availableSuperlinks) {
+        this.availableSuperlinks = availableSuperlinks;
     }
 }

@@ -2,7 +2,6 @@ package com.tddp2.grupo2.linkup.service.impl;
 
 import android.graphics.Bitmap;
 import android.util.Log;
-
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -19,15 +18,7 @@ import com.tddp2.grupo2.linkup.infrastructure.client.response.CandidatesResponse
 import com.tddp2.grupo2.linkup.infrastructure.client.response.ImageResponse;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.RejectionResponse;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
-import com.tddp2.grupo2.linkup.model.Acceptance;
-import com.tddp2.grupo2.linkup.model.Advertisement;
-import com.tddp2.grupo2.linkup.model.Image;
-import com.tddp2.grupo2.linkup.model.ImageBitmap;
-import com.tddp2.grupo2.linkup.model.Images;
-import com.tddp2.grupo2.linkup.model.Link;
-import com.tddp2.grupo2.linkup.model.Links;
-import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Rejection;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.NotificationService;
@@ -35,13 +26,12 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
 import com.tddp2.grupo2.linkup.utils.ErrorUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 import static com.tddp2.grupo2.linkup.LinkupApplication.getImageCache;
 
@@ -71,7 +61,11 @@ public class LinksServiceImpl extends LinksService{
             if (response.isSuccessful()) {
                 //Save Links
                 links = new Links();
-                links.setLinks(this.adaptResponse(response.body().getCandidates()));
+                CandidatesResponse candidatesResponse = response.body();
+                links.setLinks(this.adaptResponse(candidatesResponse.getCandidates()));
+                int availableSuperlinks = candidatesResponse.getAvailableSuperlinks();
+                Log.i("SUPERLINKS", "Recibidos en candidates: " + String.valueOf(availableSuperlinks));
+                links.setAvailableSuperlinks(availableSuperlinks);
                 saveLinks(links);
                 updateToken();
                 return links;
@@ -138,10 +132,17 @@ public class LinksServiceImpl extends LinksService{
             if (response.isSuccessful()) {
                 //Elimino el link localmente
                 Links filteredLinks = removeLink(fbidCandidate);
-                Boolean isAMatch = response.body().getMatch();
+
+                AcceptanceResponse acceptanceResponse = response.body();
+
+                Boolean isAMatch = acceptanceResponse.getMatch();
                 Log.i("MATCH", "Resultado de match: " + String.valueOf(isAMatch));
+                int availableSuperlinks = acceptanceResponse.getRemainingSuperlinks();
+                Log.i("MATCH", "Superlinks restantes: " + String.valueOf(availableSuperlinks));
+
                 AcceptLinkTaskResponse acceptLinkTaskResponse = new AcceptLinkTaskResponse();
                 acceptLinkTaskResponse.setIsAMatch(isAMatch);
+                filteredLinks.setAvailableSuperlinks(availableSuperlinks);
                 acceptLinkTaskResponse.setLinks(filteredLinks);
                 if (isAMatch){
                     sendNotification(fbid, fbidCandidate);
