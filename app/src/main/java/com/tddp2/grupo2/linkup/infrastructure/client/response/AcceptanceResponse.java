@@ -6,7 +6,9 @@ public class AcceptanceResponse {
     private int remainingSuperlinks;
     private boolean match;
 
-    public AcceptanceResponse() {}
+    public AcceptanceResponse() {
+        this.remainingSuperlinks = 0;
+    }
 
     public int getRemainingSuperlinks() {
         return remainingSuperlinks;

@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.controller;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
 import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
@@ -237,5 +238,18 @@ public class LinksController implements LinkImageControllerInterface {
             Profile profile = (Profile) link;
             view.showLink(profile, index);
         }
+    }
+
+    public boolean shouldShowSuperLinkButton() {
+        Boolean isPremium = ServiceFactory.getProfileService().getLocalProfile().getControl().getIsPremium();
+        Log.i("SUPERLINKS", isPremium ? "premium user" : "regular user");
+        if (!isPremium) {
+            int availableSuperlinks = links.getAvailableSuperlinks();
+            Log.i("SUPERLINKS", String.valueOf(availableSuperlinks));
+            if (availableSuperlinks <= 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

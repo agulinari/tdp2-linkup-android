@@ -9,9 +9,10 @@ import java.util.List;
 public class CandidatesResponse implements Serializable {
 
     private List<JsonObject> candidates;
+    private int availableSuperlinks;
 
-    public CandidatesResponse(List<JsonObject> candidates) {
-        this.candidates = candidates;
+    public CandidatesResponse() {
+        this.availableSuperlinks = 0;
     }
 
     public List<JsonObject> getCandidates() {
@@ -20,5 +21,13 @@ public class CandidatesResponse implements Serializable {
 
     public void setCandidates(List<JsonObject> candidates) {
         this.candidates = candidates;
+    }
+
+    public int getAvailableSuperlinks() {
+        return availableSuperlinks;
+    }
+
+    public void setAvailableSuperlinks(int availableSuperlinks) {
+        this.availableSuperlinks = availableSuperlinks;
     }
 }

@@ -236,6 +236,12 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         }
         textViewLinkName.setText(name + ", " + age);
         controller.updateDistance();
+
+        if (controller.shouldShowSuperLinkButton()) {
+            superlinkButton.setEnabled(true);
+        } else {
+            superlinkButton.setEnabled(false);
+        }
     }
 
     @Override
