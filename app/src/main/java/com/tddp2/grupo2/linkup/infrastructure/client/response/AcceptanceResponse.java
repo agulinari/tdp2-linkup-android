@@ -3,19 +3,19 @@ package com.tddp2.grupo2.linkup.infrastructure.client.response;
 
 public class AcceptanceResponse {
 
-    private int remainingSuperlinks;
+    private int availableSuperlinks;
     private boolean match;
 
     public AcceptanceResponse() {
-        this.remainingSuperlinks = 0;
+        this.availableSuperlinks = 0;
     }
 
-    public int getRemainingSuperlinks() {
-        return remainingSuperlinks;
+    public int getAvailableSuperlinks() {
+        return availableSuperlinks;
     }
 
-    public void setRemainingSuperlinks(int remainingSuperlinks) {
-        this.remainingSuperlinks = remainingSuperlinks;
+    public void setAvailableSuperlinks(int availableSuperlinks) {
+        this.availableSuperlinks = availableSuperlinks;
     }
 
     public boolean getMatch() {

@@ -137,7 +137,7 @@ public class LinksServiceImpl extends LinksService{
 
                 Boolean isAMatch = acceptanceResponse.getMatch();
                 Log.i("MATCH", "Resultado de match: " + String.valueOf(isAMatch));
-                int availableSuperlinks = acceptanceResponse.getRemainingSuperlinks();
+                int availableSuperlinks = acceptanceResponse.getAvailableSuperlinks();
                 Log.i("MATCH", "Superlinks restantes: " + String.valueOf(availableSuperlinks));
 
                 AcceptLinkTaskResponse acceptLinkTaskResponse = new AcceptLinkTaskResponse();
