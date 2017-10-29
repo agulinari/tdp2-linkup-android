@@ -30,6 +30,7 @@ import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.LoginView;
 import com.tddp2.grupo2.linkup.controller.LoginController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 
 import java.util.Arrays;
 
@@ -83,6 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+
+        ServiceFactory.getLinksService().getDatabase().setActive(true);
     }
 
     @Override

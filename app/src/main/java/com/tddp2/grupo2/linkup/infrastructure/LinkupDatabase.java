@@ -22,14 +22,17 @@ public class LinkupDatabase implements Database
     private static final String LINKS = "LINKS";
     private static final String MY_LINKS = "MY_LINKS";
     private static final String TOKEN = "TOKEN";
+    private static final String ACTIVE = "ACTIVE";
 
     private Profile profile;
     private Links links;
     private MyLinks myLinks;
     private String token;
+    private Boolean active;
 
     public LinkupDatabase() {
         profile = get(PROFILE, Profile.class);
+        active = true;
     }
 
     @Override
@@ -83,6 +86,20 @@ public class LinkupDatabase implements Database
     public void setToken(String token) {
         this.token = token;
         save(TOKEN, token);
+    }
+
+    @Override
+    public Boolean isActive() {
+        if (active == null){
+            active = get(ACTIVE, Boolean.class);
+        }
+        return active;
+    }
+
+    @Override
+    public void setActive(Boolean active) {
+        this.active = active;
+        save(ACTIVE, active);
     }
 
     public void save(String key, Object value) {

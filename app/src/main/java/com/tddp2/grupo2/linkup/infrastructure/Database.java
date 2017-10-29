@@ -22,4 +22,8 @@ public interface Database {
     String getToken();
 
     void setToken(String token);
+
+    Boolean isActive();
+
+    void setActive(Boolean active);
 }
