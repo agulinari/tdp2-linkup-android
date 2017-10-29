@@ -9,7 +9,6 @@ import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadImagesTask;
-import com.tddp2.grupo2.linkup.task.LoadImagesTaskResponse;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
 import com.tddp2.grupo2.linkup.task.UpdateImageCacheTask;
@@ -141,9 +140,6 @@ public class ProfileController implements LinkImageControllerInterface{
         } else {
             List<Bundle> bundles = (List<Bundle>)response.getResponse();
             view.showImage(bundles);
-            if (!((LoadImagesTaskResponse)response).alreadyUpdatedFromServer) {
-                this.updateImagesFromServer(profile.getFbid());
-            }
         }
     }
 
