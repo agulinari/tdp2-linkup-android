@@ -23,6 +23,7 @@ import com.tddp2.grupo2.linkup.model.Acceptance;
 import com.tddp2.grupo2.linkup.model.Advertisement;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Images;
 import com.tddp2.grupo2.linkup.model.Link;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.model.Profile;
@@ -179,25 +180,33 @@ public class LinksServiceImpl extends LinksService{
     }
 
     @Override
-    public List<ImageBitmap> loadImages(String fbidCandidate) throws ServiceException {
+    public Images loadImages(String fbidCandidate, int count) throws ServiceException {
 
+        boolean getFromServer = false;
         List<ImageBitmap> images = new ArrayList<ImageBitmap>();
-        int i = 1;
-        while (true) {
-            Bitmap bitmap = getUserPictureFromCache(fbidCandidate, i);
-            if (bitmap != null) {
-                ImageBitmap imageBitmap = new ImageBitmap();
-                imageBitmap.setImageId(fbidCandidate);
-                imageBitmap.setBitmap(bitmap);
-                images.add(imageBitmap);
-            } else {
-                break;
+
+        if (count >= 1) {
+            for (int i = 1; i <= count; i++) {
+                Bitmap bitmap = getUserPictureFromCache(fbidCandidate, i);
+                if (bitmap != null) {
+                    ImageBitmap imageBitmap = new ImageBitmap();
+                    imageBitmap.setImageId(fbidCandidate);
+                    imageBitmap.setBitmap(bitmap);
+                    images.add(imageBitmap);
+                } else {
+                    getFromServer = true;
+                    break;
+                }
             }
-            i++;
+        }else{
+            getFromServer = true;
         }
-        if (!images.isEmpty()){
-            return images;
+
+        if (!getFromServer){
+            return new Images(images, false);
         }
+
+        images.clear();
         LinkupClient linkupClient = clientService.getClient();
 
         Call<ImageResponse> call = linkupClient.profiles.getImage(fbidCandidate);
@@ -219,7 +228,49 @@ public class LinksServiceImpl extends LinksService{
                         saveUserPictureToCache(fbidCandidate, Integer.valueOf(image.getIdImage()), bitmap);
                         images.add(imageBitmap);
                     }
-                    return images;
+                    return new Images(images, true);
+                }
+            } else {
+                APIError error = ErrorUtils.parseError(response);
+                throw new ServiceException(error);
+            }
+        } catch (IOException e) {
+            throw new ServiceException(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
+    public Boolean updateImagesCache(String fbidCandidate) throws ServiceException {
+        boolean hasChanges = false;
+        LinkupClient linkupClient = clientService.getClient();
+
+        Call<ImageResponse> call = linkupClient.profiles.getImage(fbidCandidate);
+        try {
+            Response<ImageResponse> response = call.execute();
+            if (response.isSuccessful()) {
+                ImageResponse imageResponse = response.body();
+                if (imageResponse.getImages().isEmpty()){
+                    throw new ServiceException(fbidCandidate);
+                }else{
+                    for (Image image : imageResponse.getImages()) {
+                        if (image.getIdImage().equals("0")){
+                            continue;
+                        }
+                        Bitmap bitmap = ImageUtils.base64ToBitmap(image.getData());
+                        ImageBitmap imageBitmap = new ImageBitmap();
+                        imageBitmap.setImageId(fbidCandidate);
+                        imageBitmap.setBitmap(bitmap);
+                        Bitmap oldBitmap = getUserPictureFromCache(fbidCandidate, Integer.valueOf(image.getIdImage()));
+                        if (oldBitmap == null){
+                            hasChanges = true;
+                            saveUserPictureToCache(fbidCandidate, Integer.valueOf(image.getIdImage()), bitmap);
+                        }
+                        else if (!ImageUtils.compareBitmapsFast(bitmap, oldBitmap)){
+                            hasChanges = true;
+                            saveUserPictureToCache(fbidCandidate, Integer.valueOf(image.getIdImage()), bitmap);
+                        }
+                    }
+                    return hasChanges;
                 }
             } else {
                 APIError error = ErrorUtils.parseError(response);

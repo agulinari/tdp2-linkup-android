@@ -23,4 +23,6 @@ public interface LinkProfileView extends BaseView {
     void onFinishLoadMyLinks(MyLinks links);
     void onRecommendLinkFailure();
     void onRecommendLinkSuccess();
+    void loadUserPictures();
+
 }

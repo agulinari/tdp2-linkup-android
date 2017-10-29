@@ -99,6 +99,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     private int selectedLink = -1;
     private List<MyLink> myLinks = new ArrayList<MyLink>();
     private ArrayAdapter<MyLink> adapter;
+    private String linkUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +107,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
         setContentView(R.layout.activity_link_profile);
 
         Bundle b = getIntent().getExtras();
-        String linkUserId = (b != null) ? b.getString("LINK_USER_ID") : "";
+        linkUserId = (b != null) ? b.getString("LINK_USER_ID") : "";
 
         ButterKnife.bind(this);
 
@@ -114,7 +115,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
         controller = new LinkProfileController(this);
         controller.showLinkData(linkUserId);
-        controller.loadImage(linkUserId);
+
         controller.loadMyLinks();
 
     }
@@ -429,6 +430,14 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
     @Override
     public void onRecommendLinkSuccess() {
         showAfterTaskDialog(R.string.recommend_user_success, R.string.recommend_user_success_ok, false);
+    }
+
+    @Override
+    public void loadUserPictures() {
+        imageViewLinkProfilePhoto.stopAutoCycle();
+        imageViewLinkProfilePhoto.removeAllSliders();
+
+        controller.loadImage(linkUserId);
     }
 
     @Override

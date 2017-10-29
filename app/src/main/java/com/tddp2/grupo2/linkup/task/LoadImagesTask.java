@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.tddp2.grupo2.linkup.controller.LinkImageControllerInterface;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Images;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 
 import java.io.ByteArrayOutputStream;
@@ -34,10 +35,13 @@ public class LoadImagesTask extends AsyncTask<Object, Void, TaskResponse> {
     protected TaskResponse doInBackground(Object... params) {
 
         List<ImageBitmap> images = new ArrayList<ImageBitmap>();
+        Images imagesResponse = null;
         String fbidCandidate = (String) params[0];
+        int count = (int) params[1];
 
         try {
-            images = linksService.loadImages(fbidCandidate);
+            imagesResponse = linksService.loadImages(fbidCandidate, count);
+            images = imagesResponse.getImages();
         } catch (ServiceException e) {
             TaskResponse response = new TaskResponse(fbidCandidate);
             return response;
@@ -53,7 +57,7 @@ public class LoadImagesTask extends AsyncTask<Object, Void, TaskResponse> {
             b.putByteArray("image", byteArray);
             bundles.add(b);
         }
-        TaskResponse response = new TaskResponse();
+        TaskResponse response = new LoadImagesTaskResponse(imagesResponse.isAlreadyUpdatedFromServer());
         response.setResponse(bundles);
 
         return response;

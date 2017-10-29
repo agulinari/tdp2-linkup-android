@@ -6,5 +6,7 @@ public interface LinkImageControllerInterface {
     void initLoadImageTask();
     void finishLoadImageTask();
     void onLoadImageResult(TaskResponse response);
+    void reloadImages();
+    void updateImagesFromServer(String linkUserId);
 }
 

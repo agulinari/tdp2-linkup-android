@@ -17,10 +17,12 @@ import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.BlockUserTask;
 import com.tddp2.grupo2.linkup.task.GetMyLinksTask;
 import com.tddp2.grupo2.linkup.task.LoadImagesTask;
+import com.tddp2.grupo2.linkup.task.LoadImagesTaskResponse;
 import com.tddp2.grupo2.linkup.task.LoadLinkUserTask;
 import com.tddp2.grupo2.linkup.task.RecommendLinkTask;
 import com.tddp2.grupo2.linkup.task.ReportAbuseTask;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
+import com.tddp2.grupo2.linkup.task.UpdateImageCacheTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +64,7 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
         } else {
             Profile profile = (Profile) response.getResponse();
             this.profile = profile;
+            this.loadImage(profile.getFbid());
             view.showData(profile);
         }
     }
@@ -103,7 +106,13 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
 
     public void loadImage(String fbidCandidate) {
         LoadImagesTask task = new LoadImagesTask(linksService, this);
-        task.execute(fbidCandidate);
+        task.execute(fbidCandidate, profile.getImages().size());
+    }
+
+    @Override
+    public void updateImagesFromServer(String fbId) {
+        UpdateImageCacheTask task = new UpdateImageCacheTask(linksService, this);
+        task.execute(fbId);
     }
 
     public void initLoadImageTask() {
@@ -121,7 +130,15 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
         } else {
             List<Bundle> bundles = (List<Bundle>)response.getResponse();
             view.showImage(bundles);
+            if (!((LoadImagesTaskResponse)response).alreadyUpdatedFromServer) {
+                this.updateImagesFromServer(this.fbId);
+            }
         }
+    }
+
+    @Override
+    public void reloadImages() {
+        view.loadUserPictures();
     }
 
     public void initReportAbuseTask() {

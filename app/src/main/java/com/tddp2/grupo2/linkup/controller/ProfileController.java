@@ -9,8 +9,10 @@ import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.task.LoadImagesTask;
+import com.tddp2.grupo2.linkup.task.LoadImagesTaskResponse;
 import com.tddp2.grupo2.linkup.task.TaskResponse;
 import com.tddp2.grupo2.linkup.task.UpdateFromFacebookTask;
+import com.tddp2.grupo2.linkup.task.UpdateImageCacheTask;
 import com.tddp2.grupo2.linkup.task.UpdateProfileTask;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 
@@ -33,6 +35,13 @@ public class ProfileController implements LinkImageControllerInterface{
     public void loadImages() {
         Profile profile = this.profileService.getLocalProfile();
         LoadImagesTask task = new LoadImagesTask(linksService, this);
+        task.execute(profile.getFbid(), profile.getImages().size());
+    }
+
+    @Override
+    public void updateImagesFromServer(String linkUserId) {
+        Profile profile = this.profileService.getLocalProfile();
+        UpdateImageCacheTask task = new UpdateImageCacheTask(linksService, this);
         task.execute(profile.getFbid());
     }
 
@@ -98,6 +107,7 @@ public class ProfileController implements LinkImageControllerInterface{
         view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
         view.loadUserPictures();
+
     }
 
     public void saveNewComment(String newComment) {
@@ -125,11 +135,22 @@ public class ProfileController implements LinkImageControllerInterface{
 
     @Override
     public void onLoadImageResult(TaskResponse response) {
+        Profile profile = this.profileService.getLocalProfile();
         if (response.hasError()) {
             view.showImage(new ArrayList<Bundle>());
         } else {
             List<Bundle> bundles = (List<Bundle>)response.getResponse();
             view.showImage(bundles);
+            if (!((LoadImagesTaskResponse)response).alreadyUpdatedFromServer) {
+                this.updateImagesFromServer(profile.getFbid());
+            }
         }
     }
+
+    @Override
+    public void reloadImages() {
+        view.loadUserPictures();
+    }
+
+
 }

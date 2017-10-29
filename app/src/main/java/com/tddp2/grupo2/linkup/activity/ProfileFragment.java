@@ -190,7 +190,6 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
         profilePicture.stopAutoCycle();
         profilePicture.removeAllSliders();
 
-        //TODO:mostrar el placeholder
         controller.loadImages();
 
     }

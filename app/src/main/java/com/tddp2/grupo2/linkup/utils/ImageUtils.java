@@ -43,4 +43,13 @@ public class ImageUtils {
         return Math.round(px / (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 
+    public static boolean compareBitmapsFast(Bitmap b1, Bitmap b2){
+            if (b1.getHeight() != b2.getHeight()) return false;
+            if (b1.getWidth() != b2.getWidth()) return false;
+            //comparo el 1er pixel
+            if (b1.getPixel(0, 0) != b2.getPixel(0, 0)) return false;
+
+            return true;
+    }
+
 }

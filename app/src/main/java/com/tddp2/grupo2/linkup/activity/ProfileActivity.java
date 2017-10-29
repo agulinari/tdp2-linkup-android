@@ -276,6 +276,7 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
         progressBarImage.setVisibility(View.GONE);
     }
 
+
     @Override
     protected void handleNotification(Notification notification, BroadcastReceiver broadcastReceiver) {
         broadcastReceiver.abortBroadcast();

@@ -4,10 +4,9 @@ import com.tddp2.grupo2.linkup.exception.InactiveAccountException;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.ImageBitmap;
+import com.tddp2.grupo2.linkup.model.Images;
 import com.tddp2.grupo2.linkup.model.Links;
 import com.tddp2.grupo2.linkup.task.AcceptLinkTaskResponse;
-
-import java.util.List;
 
 
 public abstract class LinksService implements LinkupService{
@@ -34,7 +33,10 @@ public abstract class LinksService implements LinkupService{
 
     public abstract ImageBitmap loadImage(String fbidCandidate, int number) throws ServiceException;
 
-    public abstract List<ImageBitmap> loadImages(String fbidCandidate) throws ServiceException;
+    public abstract Images loadImages(String fbidCandidate, int count) throws ServiceException;
 
     public abstract Links removeLink(String fbidCandidate);
+
+    public abstract Boolean updateImagesCache(String fbidCandidate) throws ServiceException;
+
 }

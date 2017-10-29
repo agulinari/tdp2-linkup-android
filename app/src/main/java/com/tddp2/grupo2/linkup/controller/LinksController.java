@@ -201,6 +201,16 @@ public class LinksController implements LinkImageControllerInterface {
         }
     }
 
+    @Override
+    public void reloadImages() {
+        //no se utiliza aqui
+    }
+
+    @Override
+    public void updateImagesFromServer(String linkUserId) {
+        //no se utiliza aqui
+    }
+
     public void updateDistance() {
         Link link = this.links.getLinks().get(currentLink);
         if (!link.getFbid().equals("")) {
