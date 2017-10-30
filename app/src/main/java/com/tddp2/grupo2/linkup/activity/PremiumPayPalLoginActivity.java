@@ -60,7 +60,11 @@ public class PremiumPayPalLoginActivity extends BroadcastActivity {
                     if (!allowedUsers.containsKey(username)) {
                         showInvalidUserError();
                     } else {
-                        goToPayForm(allowedUsers.get(username).get("credit"));
+                        if (password.equals(allowedUsers.get(username).get("password"))) {
+                            goToPayForm(allowedUsers.get(username).get("credit"));
+                        } else {
+                            showInvalidUserError();
+                        }
                     }
                 }
             }
