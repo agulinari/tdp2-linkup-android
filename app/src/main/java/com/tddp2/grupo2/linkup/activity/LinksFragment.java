@@ -316,16 +316,18 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
 
     @Override
     public void showInactiveAccountAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(R.string.inactive_account_popup_title);
-        builder.setCancelable(Boolean.FALSE);
-        builder.setPositiveButton(getString(R.string.inactive_account_popup_ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        if (isAdded()) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setTitle(R.string.inactive_account_popup_title);
+            builder.setCancelable(Boolean.FALSE);
+            builder.setPositiveButton(getString(R.string.inactive_account_popup_ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     @Override
