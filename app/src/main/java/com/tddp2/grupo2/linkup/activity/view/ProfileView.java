@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.activity.view;
 
 import android.os.Bundle;
+import com.tddp2.grupo2.linkup.model.Interest;
 
 import java.util.List;
 
@@ -17,5 +18,6 @@ public interface ProfileView extends BaseView {
     void showImage(List<Bundle> bundles);
     void showLoadingImage();
     void hideLoadingImage();
+    void loadInterests(List<Interest> interests);
 }
 

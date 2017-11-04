@@ -16,13 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import co.lujun.androidtagview.TagContainerLayout;
 import com.daimajia.slider.library.SliderLayout;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.view.PictureSliderView;
@@ -30,11 +27,10 @@ import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.Interest;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class ProfileFragment extends BroadcastFragment implements ProfileLocationView {
@@ -90,6 +86,9 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
     @BindView(R.id.profileImageProgress)
     ProgressBar progressBarImage;
 
+    @BindView(R.id.tagcontainerLayout)
+    TagContainerLayout mTagContainerLayout;
+
     private ProgressDialog progressDialog;
     private boolean savingProfile;
 
@@ -111,6 +110,7 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
         controller = new ProfileController(this);
         controller.update();
         locationController = new LocationController(this, getActivity());
+
         return mainView;
     }
 
@@ -192,6 +192,16 @@ public class ProfileFragment extends BroadcastFragment implements ProfileLocatio
 
         controller.loadImages();
 
+    }
+
+    @Override
+    public void loadInterests(List<Interest> interests) {
+        mTagContainerLayout.removeAllTags();
+        List<String> tags = new ArrayList<>();
+        for (Interest interest : interests) {
+            tags.add(interest.getInterest());
+        }
+        mTagContainerLayout.setTags(tags);
     }
 
     @Override

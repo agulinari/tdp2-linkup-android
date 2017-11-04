@@ -105,6 +105,7 @@ public class ProfileController implements LinkImageControllerInterface{
 
         view.updateFirstNameAndAge(profile.getFirstName(), age);
         view.updateComment(profile.getComments());
+        view.loadInterests(profile.getInterests());
         view.loadUserPictures();
 
     }

@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -13,12 +12,12 @@ import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.Image;
 import com.tddp2.grupo2.linkup.model.ImageWrapper;
+import com.tddp2.grupo2.linkup.model.Interest;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +32,7 @@ import java.util.List;
 public class FacebookServiceImpl extends FacebookService {
 
     private ClientService clientService;
+    private final String INTERESTS = "favorite_teams,music,movies,television,books,games";
 
     public FacebookServiceImpl(Database database, ClientService clientService) {
         super(database);
@@ -46,7 +46,7 @@ public class FacebookServiceImpl extends FacebookService {
 
         );
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,first_name,last_name,gender,birthday,work,education,about,picture");
+        parameters.putString("fields", "id,first_name,last_name,gender,birthday,work,education,about,picture," + INTERESTS);
         request.setParameters(parameters);
         GraphResponse response = request.executeAndWait();
         JSONObject jsonResponse = response.getJSONObject();
@@ -73,6 +73,7 @@ public class FacebookServiceImpl extends FacebookService {
         profile.setComments(getStringParam(jsonResponse, "about"));
         profile.setOccupation(getWork(jsonResponse));
         profile.setEducation(getEducation(jsonResponse));
+        profile.setInterests(getInterests(jsonResponse));
 
         if (hasProfilePicture) {
             getAndSaveProfilePicture(profile);
@@ -90,7 +91,7 @@ public class FacebookServiceImpl extends FacebookService {
         Log.i("FACEBOOK_API_VERSION", com.facebook.internal.ServerProtocol.getDefaultAPIVersion());
         Log.i("FACEBOOK_BASE_GRAPH_URL", com.facebook.internal.ServerProtocol.getGraphUrlBase());
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "first_name,last_name,gender,work,education,about,picture");
+        parameters.putString("fields", "first_name,last_name,gender,work,education,about,picture," + INTERESTS);
         request.setParameters(parameters);
         GraphResponse response = request.executeAndWait();
         if (response.getError() != null) {
@@ -112,6 +113,7 @@ public class FacebookServiceImpl extends FacebookService {
         profile.setComments(getStringParam(jsonResponse, "about"));
         profile.setOccupation(getWork(jsonResponse));
         profile.setEducation(getEducation(jsonResponse));
+        profile.setInterests(getInterests(jsonResponse));
 
         if (hasProfilePicture) {
             getAndSaveProfilePicture(profile);
@@ -303,6 +305,46 @@ public class FacebookServiceImpl extends FacebookService {
         } catch (JSONException e) {
             Log.i("FacebookData", "Missing parameter education");
             return "";
+        }
+    }
+
+    private List<Interest> getInterests(JSONObject jsonResponse) {
+        List<Interest> interests = new ArrayList<>();
+        loadLastFavoriteTeamInterest(jsonResponse, interests);
+        loadInterestItem("music", jsonResponse, interests);
+        loadInterestItem("movies", jsonResponse, interests);
+        loadInterestItem("television", jsonResponse, interests);
+        loadInterestItem("books", jsonResponse, interests);
+        loadInterestItem("games", jsonResponse, interests);
+        return interests;
+    }
+
+    private void loadLastFavoriteTeamInterest(JSONObject jsonResponse, List<Interest> interests) {
+        try {
+            JSONArray items = jsonResponse.getJSONArray("favorite_teams");
+            JSONObject lastInterested = items.getJSONObject(0);
+            String interestName = lastInterested.getString("name");
+            Log.i("FacebookData", "Interes de equipos recuperado: " + interestName);
+            Interest facvoriteTeamInterest = new Interest();
+            facvoriteTeamInterest.setInterest(interestName);
+            interests.add(facvoriteTeamInterest);
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter favorite_teams interest");
+        }
+    }
+
+    private void loadInterestItem(String itemName, JSONObject jsonResponse, List<Interest> interests) {
+        try {
+            JSONObject items = jsonResponse.getJSONObject(itemName);
+            JSONArray data = items.getJSONArray("data");
+            JSONObject lastInterested = data.getJSONObject(0);
+            String interestName = lastInterested.getString("name");
+            Log.i("FacebookData", "Interes de música recuperado: " + interestName);
+            Interest interest = new Interest();
+            interest.setInterest(interestName);
+            interests.add(interest);
+        } catch (JSONException e) {
+            Log.i("FacebookData", "Missing parameter " + itemName + " interest");
         }
     }
 }

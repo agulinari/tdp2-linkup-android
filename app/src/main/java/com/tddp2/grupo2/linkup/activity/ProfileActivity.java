@@ -10,12 +10,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.text.InputType;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import co.lujun.androidtagview.TagContainerLayout;
 import com.daimajia.slider.library.SliderLayout;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,12 +23,11 @@ import com.tddp2.grupo2.linkup.activity.view.ProfileLocationView;
 import com.tddp2.grupo2.linkup.controller.LocationController;
 import com.tddp2.grupo2.linkup.controller.ProfileController;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
+import com.tddp2.grupo2.linkup.model.Interest;
 import com.tddp2.grupo2.linkup.model.Profile;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ProfileActivity extends BroadcastActivity implements ProfileLocationView {
     private ProgressDialog progressDialog;
@@ -71,6 +68,8 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
     @BindView(R.id.profileImageProgress)
     ProgressBar progressBarImage;
 
+    @BindView(R.id.tagcontainerLayout)
+    TagContainerLayout mTagContainerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,6 +137,16 @@ public class ProfileActivity extends BroadcastActivity implements ProfileLocatio
 
         controller.loadImages();
 
+    }
+
+    @Override
+    public void loadInterests(List<Interest> interests) {
+        mTagContainerLayout.removeAllTags();
+        List<String> tags = new ArrayList<>();
+        for (Interest interest : interests) {
+            tags.add(interest.getInterest());
+        }
+        mTagContainerLayout.setTags(tags);
     }
 
     @Override

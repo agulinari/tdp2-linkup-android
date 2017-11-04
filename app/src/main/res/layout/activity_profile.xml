@@ -41,6 +41,12 @@
             <include
                     android:id="@+id/cardSeparator"
                     layout="@layout/card_separator" />
+            <include
+                    android:id="@+id/userInterestsCard"
+                    layout="@layout/card_user_interests" />
+            <include
+                    android:id="@+id/cardSeparator"
+                    layout="@layout/card_separator" />
             <RelativeLayout
                     android:id="@+id/loadingUser"
                     android:layout_width="match_parent"

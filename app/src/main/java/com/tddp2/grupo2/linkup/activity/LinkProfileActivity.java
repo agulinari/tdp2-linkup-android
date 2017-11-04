@@ -18,13 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import co.lujun.androidtagview.TagContainerLayout;
 import com.daimajia.slider.library.SliderLayout;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -34,19 +32,13 @@ import com.tddp2.grupo2.linkup.activity.view.PictureSliderView;
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.exception.MissingAgeException;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
-import com.tddp2.grupo2.linkup.model.Location;
-import com.tddp2.grupo2.linkup.model.MyLink;
-import com.tddp2.grupo2.linkup.model.MyLinks;
-import com.tddp2.grupo2.linkup.model.Profile;
+import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.utils.DateUtils;
 import com.tddp2.grupo2.linkup.utils.LimitedEditText;
 import com.tddp2.grupo2.linkup.utils.MapUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class LinkProfileActivity extends BroadcastActivity implements LinkProfileView, OnMapReadyCallback {
     @BindView(R.id.linkProfileCoordinatorLayout)
@@ -90,6 +82,9 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
 
     @BindView(R.id.shareLinkButton)
     Button buttonShareLink;
+
+    @BindView(R.id.tagcontainerLayout)
+    TagContainerLayout mTagContainerLayout;
 
     protected String TAG;
     private final int COMMENT_MAX_CHARS = 50;
@@ -322,6 +317,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
             cardViewEducationCard.setVisibility(View.GONE);
         }
         loadMap();
+        loadInterests(profile.getInterests());
     }
 
     @Override
@@ -454,6 +450,15 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
             adapter.addAll(myLinks);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    private void loadInterests(List<Interest> interests) {
+        mTagContainerLayout.removeAllTags();
+        List<String> tags = new ArrayList<>();
+        for (Interest interest : interests) {
+            tags.add(interest.getInterest());
+        }
+        mTagContainerLayout.setTags(tags);
     }
 
     private void showAfterTaskDialog(int description, int textButton, final boolean leaveActivity) {
