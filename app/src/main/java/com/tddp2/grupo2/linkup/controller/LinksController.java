@@ -3,6 +3,7 @@ package com.tddp2.grupo2.linkup.controller;
 import android.os.AsyncTask;
 import android.util.Log;
 import com.tddp2.grupo2.linkup.activity.view.LinksView;
+import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.model.*;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
@@ -52,6 +53,36 @@ public class LinksController implements LinkImageControllerInterface {
         RejectLinkTask task = new RejectLinkTask(linksService, this);
         Link p = links.getLinks().get(currentLink);
         task.execute(p.getFbid());
+    }
+
+    public void closeAdvertisement() {
+        Link cLink = links.getLinks().get(currentLink);
+        String fbidCandidate = cLink.getFbid();
+
+        Database database = ServiceFactory.getLinksService().getDatabase();
+        Links links = database.getLinks();
+        for (Link p : links.getLinks()){
+            if (p.getFbid().equals(fbidCandidate)){
+                links.getLinks().remove(p);
+                break;
+            }
+        }
+        database.setLinks(links);
+
+        if (links.getLinks().isEmpty()){
+            //si no hay mas candidatos
+            view.showEmptyLinks();
+        }
+        else if (links.getLinks().size()<=currentLink){
+            //si el current era el ultimo
+            Link profile = links.getLinks().get(links.getLinks().size()-1);
+            this.currentLink = links.getLinks().size()-1;
+            this.showLink(profile, currentLink);
+        }else{
+            //si el current no era el ultimo
+            Link profile = links.getLinks().get(currentLink);
+            this.showLink(profile, currentLink);
+        }
     }
 
     public void previousLink(){

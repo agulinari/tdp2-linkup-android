@@ -37,6 +37,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:visibility="gone"/>
+            <ImageView
+                    android:layout_height="40dp" card_view:srcCompat="@drawable/no_disable"
+                    android:layout_below="@+id/linkImageProgress" android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp" android:layout_marginTop="16dp" android:id="@+id/buttonCloseAd"
+                    android:visibility="gone"
+                    android:layout_width="40dp"/>
 
         </RelativeLayout>
 

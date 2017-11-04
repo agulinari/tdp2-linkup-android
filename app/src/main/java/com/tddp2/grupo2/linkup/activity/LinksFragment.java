@@ -81,6 +81,9 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     @BindView(R.id.goToAdvertisementSite)
     Button buttonGoToAdvertisementSite;
 
+    @BindView(R.id.buttonCloseAd)
+    ImageView buttonCloseAdvert;
+
     private Context activity;
     private LinksController controller;
     private Links links;
@@ -149,6 +152,15 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
                 b.putString("LINK_USER_ID", currentLink.getFbid());
                 intent.putExtras(b);
                 startActivity(intent);
+            }
+        });
+
+        buttonCloseAdvert.setOnClickListener(new Button.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                controller.closeAdvertisement();
             }
         });
 
@@ -254,6 +266,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
     public void showEmptyLinks() {
         linkCard.setVisibility(View.GONE);
         emptyView.setVisibility(View.VISIBLE);
+        buttonGoToAdvertisementSite.setVisibility(View.GONE);
         this.disableActions();
     }
 
@@ -354,6 +367,7 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         superlinkButton.setVisibility(View.GONE);
         buttonGoToCandidateProfile.setVisibility(View.GONE);
         buttonGoToAdvertisementSite.setVisibility(View.VISIBLE);
+        buttonCloseAdvert.setVisibility(View.VISIBLE);
     }
 
     private void showElements() {
@@ -362,5 +376,6 @@ public class LinksFragment extends BroadcastFragment implements LinksView {
         superlinkButton.setVisibility(View.VISIBLE);
         buttonGoToCandidateProfile.setVisibility(View.VISIBLE);
         buttonGoToAdvertisementSite.setVisibility(View.GONE);
+        buttonCloseAdvert.setVisibility(View.GONE);
     }
 }
