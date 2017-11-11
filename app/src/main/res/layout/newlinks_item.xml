@@ -4,8 +4,8 @@
     android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:paddingBottom="@dimen/row_padding"
-    android:paddingLeft="@dimen/row_padding"
-    android:paddingRight="@dimen/row_padding"
+    android:paddingLeft="@dimen/row_padding_side"
+    android:paddingRight="@dimen/row_padding_side"
     android:paddingTop="@dimen/row_padding">
 
 
@@ -16,6 +16,7 @@
         android:layout_width="76dp"
         android:layout_height="76dp"
         android:src="@drawable/user"
+        android:layout_centerHorizontal="true"
 
         android:layout_marginStart="2dp"
         android:layout_centerVertical="true"

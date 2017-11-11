@@ -40,7 +40,7 @@ public class RVChatLinksAdapter extends RecyclerView.Adapter<RVChatLinksAdapter.
     @Override
     public void onBindViewHolder(PersonViewHolder holder, int i) {
         holder.fbid.setText(myChats.get(i).getFbid());
-        holder.personName.setText(myChats.get(i).getName());
+        holder.personName.setText(myChats.get(i).getName() + " " + myChats.get(i).getLastName());
         ChatMessage lastMessage = myChats.get(i).getLastMessage();
         if (lastMessage != null) {
             holder.personLastMessage.setText(lastMessage.getMessageText());

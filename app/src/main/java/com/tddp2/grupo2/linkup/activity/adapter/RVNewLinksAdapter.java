@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.activity.ChatActivity;
 import com.tddp2.grupo2.linkup.activity.LinkProfileActivity;
@@ -18,10 +17,9 @@ import com.tddp2.grupo2.linkup.model.MyLink;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.NewLinkViewHolder>{
@@ -43,7 +41,7 @@ public class RVNewLinksAdapter  extends RecyclerView.Adapter<RVNewLinksAdapter.N
     public void onBindViewHolder(NewLinkViewHolder holder, int i) {
         holder.fbid.setText(myNewLinks.get(i).getFbid());
         holder.gender.setText(myNewLinks.get(i).getGender());
-        holder.personName.setText(myNewLinks.get(i).getName());
+        holder.personName.setText(myNewLinks.get(i).getName() + " " + myNewLinks.get(i).getLastName());
         String image = myNewLinks.get(i).getPhoto();
         Bitmap bitmap = ImageUtils.base64ToBitmap(image);
         holder.personPhoto.setImageBitmap(bitmap);
