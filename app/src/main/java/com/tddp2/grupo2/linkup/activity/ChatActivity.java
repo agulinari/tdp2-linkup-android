@@ -106,10 +106,10 @@ public class ChatActivity extends BroadcastActivity {
                 if (!model.isLiked()) {
                     // Format the date before showing it
                     messageTime.setText(DateFormat.format("HH:mm",
-                            model.getMessageTime())+ " ♡");
+                            model.getMessageTime()));
                 }else{
                     messageTime.setText(DateFormat.format("HH:mm",
-                            model.getMessageTime())+ " ❤️");
+                            model.getMessageTime())+ " \uD83D\uDC4D\uD83C\uDFFC️");
                 }
 
                 if (model.getFbid()!=null && model.getFbid().equals(userId)){
