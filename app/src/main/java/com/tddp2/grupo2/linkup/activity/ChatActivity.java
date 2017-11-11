@@ -1,32 +1,27 @@
 package com.tddp2.grupo2.linkup.activity;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-
+import android.widget.*;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.MutableData;
-import com.google.firebase.database.Transaction;
+import com.google.firebase.database.*;
 import com.tddp2.grupo2.linkup.R;
 import com.tddp2.grupo2.linkup.infrastructure.messaging.Notification;
 import com.tddp2.grupo2.linkup.model.ChatMessage;
+import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
 import com.tddp2.grupo2.linkup.utils.BannedWords;
 import com.tddp2.grupo2.linkup.utils.ImageUtils;
 import com.tddp2.grupo2.linkup.utils.LinkupUtils;
@@ -254,10 +249,43 @@ public class ChatActivity extends BroadcastActivity {
             }else {
                 text = notification.messageBody;
             }
-            Snackbar snackbar = Snackbar.make(findViewById(R.id.chatCoordinatorLayout), text, Snackbar.LENGTH_INDEFINITE);
-            View snackbarView = snackbar.getView();
-            snackbarView.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-            snackbar.show();
+            NotificationManager mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+            Log.i(TAG, "Sending notification");
+
+            if (ServiceFactory.getProfileService()!=null && ServiceFactory.getProfileService().getLocalProfile()!=null){
+                String fbid = ServiceFactory.getProfileService().getLocalProfile().getFbid();
+                if (!notification.fbidTo.equals(fbid)){
+                    return;
+                }
+                if (notification.motive.equals(Notification.BAN)){
+                    ServiceFactory.getLinksService().getDatabase().setActive(false);
+                    return;
+                }
+            }else{
+                return;
+            }
+            // First create Parcel and write your data to it
+            Parcel parcel = Parcel.obtain();
+            notification.writeToParcel(parcel, 0);
+            parcel.setDataPosition(0);
+
+            Intent notificationIntent = new Intent(this, MainActivity.class);
+            notificationIntent.putExtra("notification",parcel.marshall());
+
+            PendingIntent contentIntent = PendingIntent.getActivity(this,
+                    0, notificationIntent,
+                    PendingIntent.FLAG_CANCEL_CURRENT);
+
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+                    .setContentIntent(contentIntent)
+                    .setSmallIcon(R.mipmap.ic_linkup)
+                    .setContentTitle(notification.messageTitle)
+                    .setVibrate(new long[] { 1000, 1000})
+                    .setContentText(text)
+                    .setAutoCancel(true)
+                    .setPriority(android.app.Notification.PRIORITY_MAX);
+
+            mNotificationManager.notify("default-push", 1, mBuilder.build());
         }
         broadcastReceiver.abortBroadcast();
 
