@@ -93,16 +93,16 @@ public class LinkUserServiceImpl extends LinkUserService {
     }
 
     @Override
-    public void recommendUser(Recommend recommend) throws ServiceException {
+    public void recommendUser(Recommendation recommendation) throws ServiceException {
         LinkupClient linkupClient = clientService.getClient();
-        RecommendRequest request = new RecommendRequest(recommend);
+        RecommendRequest request = new RecommendRequest(recommendation);
         Call<RecommendResponse> call = linkupClient.profiles.recommendUser(request);
         try {
             Response<RecommendResponse> response = call.execute();
             if (response.isSuccessful()) {
                 return;
             } else {
-                throw new ServiceException("Block user error");
+                throw new ServiceException("Recommendation user error");
             }
         } catch (Exception e) {
             throw new ServiceException(e.getLocalizedMessage());

@@ -1,23 +1,23 @@
 package com.tddp2.grupo2.linkup.infrastructure.client.response;
 
 
-import com.tddp2.grupo2.linkup.model.Recommend;
+import com.tddp2.grupo2.linkup.model.Recommendation;
 
 import java.io.Serializable;
 
 public class RecommendResponse implements Serializable{
 
-    private Recommend recommend;
+    private Recommendation recommendation;
 
-    public RecommendResponse(Recommend recommend) {
-        this.recommend = recommend;
+    public RecommendResponse(Recommendation recommendation) {
+        this.recommendation = recommendation;
     }
 
-    public Recommend getRecommend() {
-        return recommend;
+    public Recommendation getRecommendation() {
+        return recommendation;
     }
 
-    public void setRecommend(Recommend recommend) {
-        this.recommend = recommend;
+    public void setRecommendation(Recommendation recommendation) {
+        this.recommendation = recommendation;
     }
 }

@@ -38,6 +38,6 @@ public interface Profiles {
     @POST("block")
     Call<BlockResponse> blockUser(@Body BlockRequest request);
 
-    @POST("recommend")
+    @POST("recommendation")
     Call<RecommendResponse> recommendUser(@Body RecommendRequest request);
 }

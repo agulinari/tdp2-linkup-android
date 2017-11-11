@@ -3,13 +3,8 @@ package com.tddp2.grupo2.linkup.controller;
 import android.os.Bundle;
 
 import com.tddp2.grupo2.linkup.activity.view.LinkProfileView;
-import com.tddp2.grupo2.linkup.model.AbuseReport;
-import com.tddp2.grupo2.linkup.model.Block;
-import com.tddp2.grupo2.linkup.model.Location;
-import com.tddp2.grupo2.linkup.model.MyLink;
-import com.tddp2.grupo2.linkup.model.MyLinks;
-import com.tddp2.grupo2.linkup.model.Profile;
-import com.tddp2.grupo2.linkup.model.Recommend;
+import com.tddp2.grupo2.linkup.model.*;
+import com.tddp2.grupo2.linkup.model.Recommendation;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 import com.tddp2.grupo2.linkup.service.api.LinksService;
 import com.tddp2.grupo2.linkup.service.api.MyLinksService;
@@ -205,10 +200,11 @@ public class LinkProfileController implements LinkImageControllerInterface, MyLi
 
     public void recommendLink(MyLink myLink) {
         RecommendLinkTask task = new RecommendLinkTask(linkUserService, this);
-        Recommend recommend = new Recommend();
-        recommend.setIdReceiverUser(myLink.getFbid());
-        recommend.setIdRecommendedUser(this.getFbid());
-        task.execute(recommend);
+        Recommendation recommendation = new Recommendation();
+        recommendation.setIdFromUser(ServiceFactory.getProfileService().getLocalProfile().getFbid());
+        recommendation.setIdToUser(myLink.getFbid());
+        recommendation.setIdRecommendedUser(this.getFbid());
+        task.execute(recommendation);
     }
 
     public void initRecommendLinkTask() {

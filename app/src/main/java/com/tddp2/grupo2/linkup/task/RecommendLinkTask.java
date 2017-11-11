@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 
 import com.tddp2.grupo2.linkup.controller.LinkProfileController;
 import com.tddp2.grupo2.linkup.exception.ServiceException;
-import com.tddp2.grupo2.linkup.model.Recommend;
+import com.tddp2.grupo2.linkup.model.Recommendation;
 import com.tddp2.grupo2.linkup.service.api.LinkUserService;
 
 public class RecommendLinkTask extends AsyncTask<Object, Void, TaskResponse> {
@@ -28,7 +28,7 @@ public class RecommendLinkTask extends AsyncTask<Object, Void, TaskResponse> {
     protected TaskResponse doInBackground(Object... params) {
         TaskResponse response = new TaskResponse();
         try {
-            linkUserService.recommendUser((Recommend) params[0]);
+            linkUserService.recommendUser((Recommendation) params[0]);
         } catch (ServiceException e) {
             response.setError(e.getMessage());
         }
