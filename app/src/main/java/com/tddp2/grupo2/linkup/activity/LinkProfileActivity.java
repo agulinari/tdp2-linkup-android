@@ -223,7 +223,7 @@ public class LinkProfileActivity extends BroadcastActivity implements LinkProfil
         adapter = new ArrayAdapter<MyLink>(this, android.R.layout.select_dialog_singlechoice, myLinks);
 
         builder.setTitle(R.string.recommend_list)
-                .setSingleChoiceItems(adapter, 0,
+                .setSingleChoiceItems(adapter, -1,
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
