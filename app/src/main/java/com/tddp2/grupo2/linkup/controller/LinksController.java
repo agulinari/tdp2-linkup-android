@@ -57,14 +57,17 @@ public class LinksController implements LinkImageControllerInterface {
 
     public void closeAdvertisement() {
         Link cLink = links.getLinks().get(currentLink);
-        String fbidCandidate = cLink.getFbid();
 
         Database database = ServiceFactory.getLinksService().getDatabase();
         Links links = database.getLinks();
         for (Link p : links.getLinks()){
-            if (p.getFbid().equals(fbidCandidate)){
-                links.getLinks().remove(p);
-                break;
+            if (p.getFbid().equals("") && cLink.getFbid().equals("")){
+                Advertisement ad = (Advertisement) p;
+                Advertisement currentAd = (Advertisement) cLink;
+                if (ad.getAdvertiser().equals(currentAd.getAdvertiser())) {
+                    links.getLinks().remove(p);
+                    break;
+                }
             }
         }
         database.setLinks(links);
