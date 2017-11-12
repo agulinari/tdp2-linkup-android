@@ -104,7 +104,7 @@ public class ChatActivity extends BroadcastActivity {
                             model.getMessageTime()));
                 }else{
                     messageTime.setText(DateFormat.format("HH:mm",
-                            model.getMessageTime())+ " \uD83D\uDC4D\uD83C\uDFFC️");
+                            model.getMessageTime())+ " \uD83D\uDC4D");
                 }
 
                 if (model.getFbid()!=null && model.getFbid().equals(userId)){
