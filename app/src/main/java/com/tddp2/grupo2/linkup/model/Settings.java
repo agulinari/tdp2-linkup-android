@@ -11,7 +11,7 @@ public class Settings implements Serializable {
     private boolean onlyFriends = false;
     private boolean searchFemales = false;
     private boolean searchMales = false;
-    private boolean notifications = false;
+    private boolean notifications = true;
     private boolean invisible = false ;
     private boolean blockAds = false;
 

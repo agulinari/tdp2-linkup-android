@@ -70,7 +70,7 @@ public class SettingsActivity extends BroadcastActivity implements BaseView {
     private boolean onlyFriends = false;
     private boolean searchMales = false;
     private boolean searchFemales = false;
-    private boolean notifications = false;
+    private boolean notifications = true;
     private boolean invisible = false;
     private boolean noPublicidad = false;
 
