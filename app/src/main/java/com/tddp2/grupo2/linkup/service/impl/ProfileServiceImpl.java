@@ -1,6 +1,7 @@
 package com.tddp2.grupo2.linkup.service.impl;
 
 import android.util.Log;
+
 import com.tddp2.grupo2.linkup.exception.ServiceException;
 import com.tddp2.grupo2.linkup.infrastructure.Database;
 import com.tddp2.grupo2.linkup.infrastructure.LinkupClient;
@@ -9,15 +10,18 @@ import com.tddp2.grupo2.linkup.infrastructure.client.request.PutUserRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.request.UpgradeAccountRequest;
 import com.tddp2.grupo2.linkup.infrastructure.client.response.UserResponse;
 import com.tddp2.grupo2.linkup.model.Control;
+import com.tddp2.grupo2.linkup.model.ImageWrapper;
 import com.tddp2.grupo2.linkup.model.Profile;
 import com.tddp2.grupo2.linkup.service.api.ClientService;
 import com.tddp2.grupo2.linkup.service.api.FacebookService;
 import com.tddp2.grupo2.linkup.service.api.ProfileService;
 import com.tddp2.grupo2.linkup.service.factory.ServiceFactory;
-import retrofit2.Call;
-import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class ProfileServiceImpl extends ProfileService {
 
@@ -55,6 +59,15 @@ public class ProfileServiceImpl extends ProfileService {
     public void updateProfile(Profile profile) throws ServiceException {
 
         LinkupClient linkupClient = clientService.getClient();
+        List<ImageWrapper> images = profile.getImages();
+        ImageWrapper avatar = profile.getAvatar();
+        for (ImageWrapper imageWrapper : images){
+            if (imageWrapper.getImage().getData() == null){
+                profile.setImages(null);
+                profile.setAvatar(null);
+                break;
+            }
+        }
         PutUserRequest request = new PutUserRequest(profile);
         Call<UserResponse> call = linkupClient.profiles.updateProfile(request);
         try {
@@ -63,7 +76,8 @@ public class ProfileServiceImpl extends ProfileService {
                 //Save User
                 Profile profileResponse = response.body().getUser();
                 Log.i("ACCOUNT TYPE", (profileResponse.getControl().getIsPremium()) ? "premium" : "regular");
-
+                profile.setImages(images);
+                profile.setAvatar(avatar);
                 saveUser(profile);
             } else {
                 //APIError error = ErrorUtils.parseError(response);
